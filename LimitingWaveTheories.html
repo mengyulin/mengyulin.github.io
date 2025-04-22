@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-03-01 三 15:32 -->
+<!-- 2025-04-22 二 13:50 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Water Waves</title>
@@ -11,31 +11,44 @@
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 <body>
 <div id="org-div-home-and-up">
@@ -48,15 +61,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org0629e13">1. Limits of Wave Theories (Matlab Code)</a>
+<li><a href="#org95fcbf3">1. Limits of Wave Theories (Matlab Code)</a>
 <ul>
-<li><a href="#org8d363b8">1.1. Graph proposed by Le Méhauté</a></li>
-<li><a href="#org71188f2">1.2. Matlab code</a>
+<li><a href="#org5e51fc3">1.1. Graph proposed by Le Méhauté</a></li>
+<li><a href="#org4374b8b">1.2. Matlab code</a>
 <ul>
-<li><a href="#orge9a6bf5">1.2.1. Source</a></li>
-<li><a href="#orgea033fd">1.2.2. Brief introduction of the code</a></li>
-<li><a href="#org509e470">1.2.3. Notes</a></li>
-<li><a href="#org2f3edd2">1.2.4. Result</a></li>
+<li><a href="#org8c89ecd">1.2.1. Source</a></li>
+<li><a href="#org1054ccc">1.2.2. Brief introduction of the code</a></li>
+<li><a href="#orgcd84422">1.2.3. Notes</a></li>
+<li><a href="#org37f84f6">1.2.4. Result</a></li>
 </ul>
 </li>
 </ul>
@@ -65,19 +78,19 @@
 </div>
 </div>
 
-<div id="outline-container-org0629e13" class="outline-2">
-<h2 id="org0629e13"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
+<div id="outline-container-org95fcbf3" class="outline-2">
+<h2 id="org95fcbf3"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org8d363b8" class="outline-3">
-<h3 id="org8d363b8"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
+<div id="outline-container-org5e51fc3" class="outline-3">
+<h3 id="org5e51fc3"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Fig. <a href="#org46b1627">1</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
+Fig. <a href="#org5a487b2">2</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
 </p>
 
 
-<div id="org46b1627" class="figure">
+<div id="orgdde273d" class="figure">
 <p><img src="./figs/LimitsWaveTheories.png" alt="LimitsWaveTheories.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Limits of validity for various wave theories (Le Méhauté, B., 2013. An introduction to hydrodynamics and water waves. Springer Science &amp; Business Media, p. 205).</p>
@@ -85,27 +98,27 @@ Fig. <a href="#org46b1627">1</a> shows the graph proposed by Le Méhauté indica
 </div>
 </div>
 
-<div id="outline-container-org71188f2" class="outline-3">
-<h3 id="org71188f2"><span class="section-number-3">1.2.</span> Matlab code</h3>
+<div id="outline-container-org4374b8b" class="outline-3">
+<h3 id="org4374b8b"><span class="section-number-3">1.2.</span> Matlab code</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orge9a6bf5" class="outline-4">
-<h4 id="orge9a6bf5"><span class="section-number-4">1.2.1.</span> Source</h4>
+<div id="outline-container-org8c89ecd" class="outline-4">
+<h4 id="org8c89ecd"><span class="section-number-4">1.2.1.</span> Source</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Brooklynn Byford (2023). Non-Linear Wave Solver Function (<a href="https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function">https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function</a>), MATLAB Central File Exchange. Retrieved February 23, 2023.
 </p>
 </div>
 </div>
-<div id="outline-container-orgea033fd" class="outline-4">
-<h4 id="orgea033fd"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
+<div id="outline-container-org1054ccc" class="outline-4">
+<h4 id="org1054ccc"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 The source code and the corresponding data files can be downloaded <a href="https://www.dropbox.com/s/x0x8ey70o9awg6a/NonLinearWaveSolver.zip?dl=0">here</a>.
 </p>
 
 <p>
-Brief introduction of the code <b>NonLinearWaveSolver.m</b>:
+Brief introduction to the code <b>NonLinearWaveSolver.m</b>:
 </p>
 <div class="org-src-container">
 <pre class="src src-octave">%%Non-Linear Wave Solver Function
@@ -131,8 +144,8 @@ function[graph,xpoint,ypoint]= NonLinearWaveSolver(height,period,depth)
 </div>
 </div>
 
-<div id="outline-container-org509e470" class="outline-4">
-<h4 id="org509e470"><span class="section-number-4">1.2.3.</span> Notes</h4>
+<div id="outline-container-orgcd84422" class="outline-4">
+<h4 id="orgcd84422"><span class="section-number-4">1.2.3.</span> Notes</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <ol class="org-ol">
 <li>The original code is with BG units, and has been modified into SI units.</li>
@@ -157,11 +170,11 @@ Outputs are
 </div>
 </div>
 
-<div id="outline-container-org2f3edd2" class="outline-4">
-<h4 id="org2f3edd2"><span class="section-number-4">1.2.4.</span> Result</h4>
+<div id="outline-container-org37f84f6" class="outline-4">
+<h4 id="org37f84f6"><span class="section-number-4">1.2.4.</span> Result</h4>
 <div class="outline-text-4" id="text-1-2-4">
 
-<div id="orgaeef342" class="figure">
+<div id="org5a487b2" class="figure">
 <p><img src="./figs/matlab_limits_waves.png" alt="matlab_limits_waves.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Limits of validity for various wave theories.</p>
@@ -173,7 +186,7 @@ Outputs are
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Lin Meng-Yu</p>
-<p class="date">Created: 2023-03-01 三 15:32</p>
+<p class="date">Created: 2025-04-22 二 13:50</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

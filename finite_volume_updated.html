@@ -1,0 +1,1761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2025-04-22 二 13:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Introduction to Finite Volume Method</title>
+<meta name="author" content="Lin Meng-Yu" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Introduction to Finite Volume Method</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgb7684df">1. 偏微分方程式 (PDE) 簡介</a>
+<ul>
+<li><a href="#org1554a68">1.1. 流體力學的控制方程式</a></li>
+<li><a href="#org815341a">1.2. PDE 的分類</a></li>
+<li><a href="#orgc82d0bd">1.3. 常見 PDE 範例</a></li>
+<li><a href="#org2992e6f">1.4. 雙曲線型 PDE 範例：Wave Equation</a></li>
+<li><a href="#org712bc96">1.5. 拋物線 PDE 範例：Diffusion Equation</a></li>
+<li><a href="#org6273b20">1.6. 橢圓型 PDE 範例：Laplace Equation</a></li>
+<li><a href="#orgb2f854e">1.7. Navier-Stokes Equations 的分類</a></li>
+<li><a href="#org2f0b298">1.8. 為何分類重要？</a></li>
+</ul>
+</li>
+<li><a href="#org0d16fd2">2. 離散方法</a>
+<ul>
+<li><a href="#org7f2ca5d">2.1. 為何需要離散化？</a></li>
+<li><a href="#orgaf3b51d">2.2. 有限差分離散化（Finite Difference Discretization）</a></li>
+<li><a href="#org103ca3e">2.3. 常見離散方法比較</a>
+<ul>
+<li><a href="#orgd77dfe4">2.3.1. FTCS (Forward-Time Central-Space)</a></li>
+<li><a href="#orgb06b98f">2.3.2. Lax-Friedrichs (LF) 方法</a></li>
+<li><a href="#orgbdfd3c4">2.3.3. Upwind 方法（迎風格式）</a></li>
+<li><a href="#orgc8f433a">2.3.4. Lax-Wendroff 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org38f5c43">3. 有限體積法 (Finite Volume Method)</a>
+<ul>
+<li><a href="#org7428449">3.1. FVM vs. FDM</a></li>
+</ul>
+</li>
+<li><a href="#org48d575e">4. CFL 條件之實例說明</a>
+<ul>
+<li><a href="#orgea5dafa">4.1. CFL 條件（Courant-Friedrichs-Lewy Condition）</a></li>
+<li><a href="#org78d938d">4.2. 一維對流問題</a></li>
+<li><a href="#org9625503">4.3. 數值方法</a></li>
+<li><a href="#org9b0f16a">4.4. Python 程式碼範例</a></li>
+<li><a href="#orgfa87ac6">4.5. 討論</a>
+<ul>
+<li><a href="#org4451bd8">4.5.1. 一階 Upwind/FTBS 方法的誤差形式</a></li>
+<li><a href="#orgbe17719">4.5.2. 結論</a></li>
+<li><a href="#orga629a30">4.5.3. 延伸問題</a></li>
+</ul>
+</li>
+<li><a href="#org0dec8b0">4.6. FTBS 數值擴散項之推導</a>
+<ul>
+<li><a href="#org0ff253c">4.6.1. 步驟 1：泰勒展開時間與空間項</a></li>
+<li><a href="#org6170506">4.6.2. 步驟 2：代入 FTBS 離散式</a></li>
+<li><a href="#org7b050c2">4.6.3. 結論：Modified Equation</a></li>
+<li><a href="#org6cd2f75">4.6.4. 小結</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgfb02970">5. FVM 進階</a>
+<ul>
+<li><a href="#orgca6f54a">5.1. Godunov 方法概述（Godunov Method）</a>
+<ul>
+<li><a href="#orgb716453">5.1.1. 特點與優點：**</a></li>
+<li><a href="#orgbe022b8">5.1.2. 低階情況：**</a></li>
+<li><a href="#org0303b1e">5.1.3. 實作考量：**</a></li>
+</ul>
+</li>
+<li><a href="#orgfb41290">5.2. 提升精度的方法（Toward Higher Order Accuracy）</a></li>
+<li><a href="#org7725e77">5.3. 說明補充：多維問題中的 CFL 條件**</a></li>
+<li><a href="#org8dfcdbf">5.4. 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</a>
+<ul>
+<li><a href="#org15fd089">5.4.1. 特性與物理解釋：**</a></li>
+<li><a href="#orgfefe048">5.4.2. 解法：Godunov 方法的應用：**</a></li>
+<li><a href="#org1917af2">5.4.3. 初始條件示例：**</a></li>
+<li><a href="#orgcc7406b">5.4.4. 觀察重點：**</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb7684df" class="outline-2">
+<h2 id="orgb7684df"><span class="section-number-2">1.</span> 偏微分方程式 (PDE) 簡介</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org1554a68" class="outline-3">
+<h3 id="org1554a68"><span class="section-number-3">1.1.</span> 流體力學的控制方程式</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+在計算流體力學 (Computational Fluid Dynamics, CFD) 中，常見的控制方程式是偏微分方程式 (Partial Differential Equations, PDEs)，例如 Navier Stokes equations:
+</p>
+
+<p>
+\[
+\nabla \cdot \mathbf{u} = 0
+\]
+</p>
+
+<p>
+\[
+\frac{\partial\mathbf{u}}{\partial t} + \mathbf{u}\cdot\nabla \mathbf{u} = -\frac{1}{\rho} \nabla p + \mathbf{g} + \nu \nabla^{2}\mathbf{u}
+\]
+</p>
+
+<p>
+若是無黏性的理想流體，其控制方程式為雙曲線型 (hyperbolic) PDE。但若考慮黏滯項，則可能引入其他型態的 PDE。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org815341a" class="outline-3">
+<h3 id="org815341a"><span class="section-number-3">1.2.</span> PDE 的分類</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+PDE 的分類主要基於其判別式（discriminant）。針對二階線性 PDE：
+</p>
+
+<p>
+\[
+A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial y} + C \frac{\partial^2 u}{\partial y^2} + \cdots = 0
+\]
+</p>
+
+<p>
+根據 \(D\) 的符號可分類如下：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">判別式 \(D = B^2 - 4AC\)</th>
+<th scope="col" class="org-left">類型</th>
+<th scope="col" class="org-left">幾何對應</th>
+<th scope="col" class="org-left">數學意義</th>
+<th scope="col" class="org-left">物理例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">\(D < 0\)</td>
+<td class="org-left">Elliptic</td>
+<td class="org-left">橢圓</td>
+<td class="org-left">無實特徵線</td>
+<td class="org-left">Laplace equqaion，Poisson equation</td>
+</tr>
+
+<tr>
+<td class="org-left">\(D = 0\)</td>
+<td class="org-left">Parabolic</td>
+<td class="org-left">拋物線</td>
+<td class="org-left">重合的特徵線</td>
+<td class="org-left">Heat equation</td>
+</tr>
+
+<tr>
+<td class="org-left">\(D > 0\)</td>
+<td class="org-left">Hyperbolic</td>
+<td class="org-left">雙曲線</td>
+<td class="org-left">兩條實特徵線</td>
+<td class="org-left">Wave equation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orgc82d0bd" class="outline-3">
+<h3 id="orgc82d0bd"><span class="section-number-3">1.3.</span> 常見 PDE 範例</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li><p>
+橢圓型： Poisson equation 或 Laplace equation (\(f = 0\))
+</p>
+
+<p>
+\[ \nabla^2 \phi = f \]
+</p>
+
+<ul class="org-ul">
+<li>應用：重力場計算、勢流理論、靜電分佈等。</li>
+</ul></li>
+
+<li><p>
+拋物線型：擴散方程式 (Diffusion equation)
+</p>
+
+<p>
+\[ \frac{\partial u}{\partial t} = \nu \nabla^2 u \]
+</p>
+
+<ul class="org-ul">
+<li>應用：黏滯性擴散、熱傳導等。</li>
+</ul></li>
+
+<li><p>
+雙曲線型：線性對流方程式（Linear advection equation）
+</p>
+
+<p>
+\[ \frac{\partial u}{\partial t} + A \frac{\partial u}{\partial x} = 0 \]
+</p>
+
+<p>
+或波動方程式 (Wave equation)
+</p>
+
+<p>
+\[
+  \frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}
+  \]
+</p>
+
+<ul class="org-ul">
+<li>應用：波動問題，如聲波、水波等</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org2992e6f" class="outline-3">
+<h3 id="org2992e6f"><span class="section-number-3">1.4.</span> 雙曲線型 PDE 範例：Wave Equation</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+考慮一維波動方程式：
+</p>
+
+<p>
+\[
+\frac{\partial^2 u}{\partial t^2} = c^2 \frac{\partial^2 u}{\partial x^2}
+\]
+</p>
+
+<p>
+其中 \(u=u(x,t)\), 表示波在時間 \(t\) 與位置 \(x\) 上的變化，\(c\) 為波速。
+</p>
+
+<p>
+若給定初始條件：
+</p>
+
+<p>
+\[
+u(x,0) = f(x), \quad u_t(x,0) = g(x)
+\]
+</p>
+
+<p>
+則波動方程的通解可由 D'Alembert 解法給出：
+</p>
+
+<p>
+\[
+u(x,t) = \frac{1}{2} \left[ f(x - ct) + f(x + ct) \right] + \frac{1}{2c} \int_{x - ct}^{x + ct} g(s) \, ds
+\]
+</p>
+
+<p>
+其中
+</p>
+<ul class="org-ul">
+<li>第一項表示從初始形狀 \(f(x)\) 沿左右兩側傳播的部分；</li>
+<li>第二項表示由初始速度 \(g(x)\) 所引發的波動。</li>
+</ul>
+
+<p>
+特徵線的物理意義是：初始擾動會沿著 \(x = x_0 \pm ct\) 傳播，也就是以速率 \(c\) 向左右兩側移動 (圖 <a href="#org51f3d03">1</a>)。
+這表示：
+</p>
+<ul class="org-ul">
+<li>解在 \(x\)-\(t\) 平面中沿著這兩條特徵線傳遞；</li>
+<li>初始條件的影響只會在「特徵線所界定的區域」內影響解；</li>
+<li>有限速度傳播 (finite propagation speed)：擾動不會即時影響全域，而是以速度 \(c\) 傳遞。</li>
+</ul>
+
+
+<div id="org51f3d03" class="figure">
+<p><img src="./figs/WaveEq.gif" alt="WaveEq.gif" width="600" />
+</p>
+<p><span class="figure-number">Figure 1: </span>波動方程式之解與特徵線。</p>
+</div>
+
+<p>
+在 \(x\)-\(t\) 平面上：
+</p>
+<ul class="org-ul">
+<li>任一點 \((x_0, t_0)\) 的解會受到初始資料在區間 \([x_0 - ct_0, x_0 + ct_0]\) 內的影響；</li>
+<li>這個區域由兩條特徵線構成，稱為「影響區 (domain of dependence)」；</li>
+<li>解本身也只會影響落在 \(x_0 \pm ct\) 所界定的範圍內的點 (未來的「影響區域」)。</li>
+</ul>
+
+<p>
+雙曲型 PDE 常與無耗散的傳播問題相關聯。當其特徵線為實數（如圖 <a href="#org91d9b4c">2</a> 所示）時，表示解函數 \(u\) 在某一點 P 處所受到的擾動，只會影響特徵線所包圍的區域 CPD 中的解；反過來說，P 點的解也只會受到位於區域 APB 的擾動所影響。此外，若初始條件設定在 \(t = 0\) 的時刻（即圖 <a href="#org91d9b4c">2</a> 中的 AB 線上），這些初始條件就足以唯一決定點 P 的解。
+</p>
+
+
+<div id="org91d9b4c" class="figure">
+<p><img src="./figs/Domain_Hyperbolic.jpg" alt="Domain_Hyperbolic.jpg" width="500" />
+</p>
+<p><span class="figure-number">Figure 2: </span>波動方程式之特徵線與影響區域。</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org712bc96" class="outline-3">
+<h3 id="org712bc96"><span class="section-number-3">1.5.</span> 拋物線 PDE 範例：Diffusion Equation</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+考慮一維擴散方程式，其中 \(D\) 為擴散係數：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} = D\frac{\partial^2 u}{\partial x^2}
+\]
+</p>
+
+<p>
+若邊界為無窮域 \((-\infty \le x \le \infty)\)，且初始條件為高斯分佈的點源 (point source) 擴散:
+</p>
+
+<p>
+\[
+u_{0}(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}
+\]
+</p>
+
+<p>
+其解可由 Green's function (格林函數) 的 convolution integral (捲積或摺積) 求得:
+</p>
+
+<p>
+\[
+u(x,t) = \int_{-\infty}^{\infty} G(x-z, t) u_{0}(z) \,dz
+\]
+</p>
+
+<p>
+其中 \(G\) 為一維擴散方程式的 Green's function:
+</p>
+
+<p>
+\[
+G(x - z, t) = \frac{1}{\sqrt{4\pi D t}} \exp\left(-\frac{(x - z)^2}{4Dt}\right)
+\]
+</p>
+
+<p>
+以下爲此解隨時間變化之程式碼，可看出 \(u\) 隨著時間而逐漸擴散的現象：
+</p>
+
+
+<div class="org-src-container">
+<pre class="src src-python"># begin_src python :file diffusion.png
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# 擴散係數 D
+D = 1.0
+
+# 空間與時間範圍
+x_vals = np.linspace(-10, 10, 100)
+t_vals = np.linspace(0.1, 5, 50)  # 避免 t=0，從 0.1 開始
+
+# 建立 x-t 平面網格
+X, T = np.meshgrid(x_vals, t_vals)
+U = np.zeros_like(X)
+
+# 定義初始條件為標準常態分布 φ(z)
+def phi(z):
+    return (1 / np.sqrt(2 * np.pi)) * np.exp(-z**2 / 2)
+
+# 計算 u(x,t)
+for i in range(T.shape[0]):
+    for j in range(T.shape[1]):
+        t = T[i, j]
+        x = X[i, j]
+        # 積分變數 z 的範圍
+        z = np.linspace(-10, 10, 500)
+        phi_z = phi(z)
+        G = (1 / np.sqrt(4 * np.pi * D * t)) * np.exp(-(x - z)**2 / (4 * D * t))
+        integrand = phi_z * G
+        U[i, j] = np.trapz(integrand, z)
+
+# 繪製三維圖
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(X, T, U, cmap='viridis')
+ax.set_xlabel('x')
+ax.set_ylabel('t')
+ax.set_zlabel('u(x,t)')
+ax.set_title('Diffusion of u(x,t) over time')
+
+plt.tight_layout()
+plt.savefig("diffusion.png")
+</pre>
+</div>
+
+
+<div id="orga94319c" class="figure">
+<p><img src="./figs/diffusion.png" alt="diffusion.png" width="800px" />
+</p>
+<p><span class="figure-number">Figure 3: </span>擴散方程式之解 \(u(x,t)\) 隨時間之擴散情形。</p>
+</div>
+
+<p>
+此 PDE 其僅有一個特徵線方向：\(dt/dx = 0\)。特徵線在拋物型 PDE 中並不像在雙曲型那樣扮演重要角色。對於拋物型 PDE，並不存在與特徵線法 (method of characteristics) 相對應的方法。如果將計算網格沿著局部特徵線排列，是無法推進解隨時間演化的。
+</p>
+
+<p>
+拋物線型問題的典型特徵是其解隨時間向前推進，同時在空間中呈現擴散特性。因此若在圖 <a href="#org905f9d4">4</a> 中的點 P 處施加擾動，則該擾動會影響所有 \(t \geq t_i\) 的計算域區域。然而擾動的強度會隨著離開 P 的距離迅速衰減。
+</p>
+
+
+<div id="org905f9d4" class="figure">
+<p><img src="./figs/Domain_Parabolic.jpg" alt="Domain_Parabolic.jpg" width="600" />
+</p>
+<p><span class="figure-number">Figure 4: </span>拋物線型 PDE 的計算區域。</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6273b20" class="outline-3">
+<h3 id="org6273b20"><span class="section-number-3">1.6.</span> 橢圓型 PDE 範例：Laplace Equation</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+最簡單的橢圓型 PDE 範例為不可壓縮勢流 (potential flow) 之控制方程式 Laplce equation:
+</p>
+
+<p>
+\[
+\frac{\partial^2 \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = 0
+\]
+</p>
+
+<p>
+若此問題之定義域為單位正方形 \( [0, 1] \times [0, 1] \)，邊界條件為：
+</p>
+<ul class="org-ul">
+<li>下邊界：\( \phi(x,0) = \sin(\pi x) \)</li>
+<li>上邊界：\( \phi(x,1) = \sin(\pi x)\, e^{-\pi} \)</li>
+<li>左右邊界：\( \phi(0,y) = \phi(1,y) = 0 \)</li>
+</ul>
+<p>
+此問題的解析解為：
+</p>
+
+<p>
+\[
+\phi(x,y) = \sin(\pi x)\, e^{-\pi y}
+\]
+</p>
+
+<p>
+下列 Python 程式碼將繪出解析解的三維圖，顯示解如何在空間中變化。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# Create grid
+nx, ny = 100, 100
+x = np.linspace(0, 1, nx)
+y = np.linspace(0, 1, ny)
+X, Y = np.meshgrid(x, y)
+
+# Analytical solution
+phi = np.sin(np.pi * X) * np.exp(-np.pi * Y)
+
+# Plot
+plt.figure(figsize=(6, 5))
+contour = plt.contourf(X, Y, phi, levels=50)
+plt.colorbar(contour, label="Potential φ")
+plt.title(r"Analytical Solution: $\phi(x,y) = \sin(\pi x) e^{-\pi y}$")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.tight_layout()
+plt.savefig("laplace_analytical.png")
+</pre>
+</div>
+
+
+<div id="org62e96cb" class="figure">
+<p><img src="./figs/laplace_analytical.png" alt="laplace_analytical.png" width="600px" />
+</p>
+<p><span class="figure-number">Figure 5: </span>解析解 \( \phi(x,y) = \sin(\pi x)\, e^{-\pi y} \) 在單位方形內的分佈情形。</p>
+</div>
+
+<p>
+對於此形式的二階橢圓型 PDE，存在一項重要的最大值原理 (maximum principle)。該原理指出，解函數 \(\phi\) 的最大值與最小值必定發生在邊界上，除非 \(\phi\) 是一個常數解 (trivial case)。此一性質在數值模擬中具有實用價值，因為它可用來檢查計算所得解是否合理，是否符合橢圓型 PDE 的基本性質。
+</p>
+
+<p>
+對於一般形式的二階橢圓型 PDE，即滿足條件 \(4AC < B^2\)，則其特徵線為複數，無法在實數域的計算區域中具體顯示。對於流體力學中的橢圓型問題而言，尋找特徵線的方向並無實際意義，因為這類問題的解通常與特徵方向無直接關聯。
+</p>
+
+<p>
+橢圓型 PDE 最重要的特徵之一是：當在某一內部點 P（如圖 <a href="#orgdf4aebb">6</a> 所示）引入一個微小擾動時，這個擾動會影響整個計算域中的所有點。雖然距離 P 越遠，擾動的影響程度會逐漸減弱，但它仍舊是全域性影響。這意味著，在求解橢圓型問題時，必須考慮整個計算區域的邊界條件與整體配置。
+</p>
+
+
+<div id="orgdf4aebb" class="figure">
+<p><img src="./figs/Domain_Elliptic.jpg" alt="Domain_Elliptic.jpg" width="600" />
+</p>
+<p><span class="figure-number">Figure 6: </span>橢圓型 PDE 的計算區域。</p>
+</div>
+
+
+<p>
+這與拋物型與雙曲型 PDE 形成對比：後者通常可以自初始條件出發，逐步向前推進地求解。而橢圓型 PDE 則不適用這種「前行計算（marching）」方法。
+</p>
+
+<p>
+此外，若邊界條件存在不連續，橢圓型 PDE 的解在內部會自然地將這些不連續「平滑化」，展現其強烈的空間耦合特性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb2f854e" class="outline-3">
+<h3 id="orgb2f854e"><span class="section-number-3">1.7.</span> Navier-Stokes Equations 的分類</h3>
+<div class="outline-text-3" id="text-1-7">
+<p>
+Navier-Stokes 方程式為非線性二階偏微分方程，其分類依據具體條件而定：
+</p>
+
+<ul class="org-ul">
+<li>不可壓縮、含時間項：為非線性拋物型（nonlinear parabolic），因黏滯項 \(\mu\nabla^2\mathbf{u}\) 提供擴散性質。</li>
+
+<li>不可壓縮、穩態：時間項消失，動量方程變為非線性橢圓型（nonlinear elliptic）。</li>
+
+<li>可壓縮流場：若忽略黏滯效應（即 Euler 方程），則呈現雙曲線型（hyperbolic）特性。</li>
+
+<li>可壓縮含黏性項：為超曲線與拋物型的混合型 PDE（hyperbolic-parabolic）。</li>
+</ul>
+
+<p>
+這些分類反映其解的傳播性質、特徵線結構與數值解法選擇方式。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f0b298" class="outline-3">
+<h3 id="org2f0b298"><span class="section-number-3">1.8.</span> 為何分類重要？</h3>
+<div class="outline-text-3" id="text-1-8">
+<p>
+不同型態的 PDE 有不同的數值性質：
+</p>
+<ul class="org-ul">
+<li>雙曲線型 PDE 具有明確的擾動傳遞方向與速度，因此需遵守 CFL 條件以確保數值穩定性 (隨後將會討論)。</li>
+<li>拋物線型 PDE 通常需要隱式方法來克服時間步長限制。</li>
+<li>橢圓型 PDE 則常作為邊界值問題處理，如壓力 Poission 方程式。</li>
+</ul>
+
+<p>
+在有限體積法中，我們關心的主要是守恆定律，這些通常是雙曲線型 PDE，因此後續的講解會以這類方程為主軸。
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0d16fd2" class="outline-2">
+<h2 id="org0d16fd2"><span class="section-number-2">2.</span> 離散方法</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org7f2ca5d" class="outline-3">
+<h3 id="org7f2ca5d"><span class="section-number-3">2.1.</span> 為何需要離散化？</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+偏微分方程式是連續的，但電腦只能處理有限維度、有限精度的數據。我們以離散網格表示空間與時間變化，並用差分、積分、或插值等方法逼近導數。
+</p>
+
+<p>
+離散化的結果通常為一組代數方程式，可使用數值方法（如顯式、隱式時間積分器）來求解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaf3b51d" class="outline-3">
+<h3 id="orgaf3b51d"><span class="section-number-3">2.2.</span> 有限差分離散化（Finite Difference Discretization）</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+數值解 PDE 的第一步通常是將連續問題轉換為離散形式，並使用有限差分法 (finite difference method, FDM) 對時間與空間導數進行近似。
+</p>
+
+<p>
+以 Cartesian 座標系為例 (圖 <a href="#orgf663ae0">7</a>)，使用均勻網格大小 \(\Delta x\)。假設網格節點為 \(x_{i-1}, x_i, x_{i+1}\)，其對應之 cell center 位於這些點上。而 cell interface 則位於 \(x_{i-1/2}, x_{i+1/2}\)。
+</p>
+
+
+<div id="orgf663ae0" class="figure">
+<p><img src="./figs/CartesianGrid.png" alt="CartesianGrid.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 7: </span>Cartesian 網格。</p>
+</div>
+
+<p>
+考慮此雙曲線型的線性對流方程式 (linear advection equation):
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + A\frac{\partial u}{\partial x} = 0,\quad A > 0
+\]
+</p>
+
+<p>
+其中 \(A\) 為常數。若初始條件為 \(u_0(x)\)，其解析解為沿著特徵線 (characteristic curve) 傳遞的形式：
+</p>
+
+<p>
+\[
+X(t) = X_0 + At \Rightarrow u(x,t) = u_0(x - At)
+\]
+</p>
+
+<p>
+這說明波形會以速度 \(A\) 向右 (若 \(A>0\)) 平移，而不改變其形狀，如圖 <a href="#org8e038c2">8</a> 所示。
+</p>
+
+
+<div id="org8e038c2" class="figure">
+<p><img src="./figs/LinearAdvection1.png" alt="LinearAdvection1.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 8: </span>線性對流方程式之特徵線。</p>
+</div>
+
+
+<p>
+如使用 FTBS (Forward Time, Backward Space) 之差分法，即一階 upwind 顯式差分法，對此線性對流方程式進行離散，可得：
+</p>
+
+<p>
+\[
+ u_i^{n+1} = u_i^n - \frac{A \Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
+\]
+</p>
+
+<p>
+其中 \(u_i^n = u(x_i, t_n)\), 而
+</p>
+
+<p>
+\[
+x_i = x_0 + i\Delta x,\quad i = 0, 1, 2, \dots
+\]
+\[
+t_n = t_0 + n\Delta t,\quad n = 0, 1, 2, \dots
+\]
+</p>
+
+<p>
+代表在時間&#x2013;空間網格中編號為 \((i,n)\) 處的解，如圖 <a href="#orgc2d76eb">9</a>。
+</p>
+
+
+<div id="orgc2d76eb" class="figure">
+<p><img src="./figs/FDMGrid.png" alt="FDMGrid.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 9: </span>均勻網格示意圖。</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org103ca3e" class="outline-3">
+<h3 id="org103ca3e"><span class="section-number-3">2.3.</span> 常見離散方法比較</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+以線性對流方程式為例：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + A\frac{\partial u}{\partial x} = 0
+\]
+</p>
+</div>
+
+<div id="outline-container-orgd77dfe4" class="outline-4">
+<h4 id="orgd77dfe4"><span class="section-number-4">2.3.1.</span> FTCS (Forward-Time Central-Space)</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<p>
+時間前進、空間中心差分法：
+</p>
+
+<p>
+\[
+\frac{u_i^{n+1} - u_i^n}{\Delta t} = -A \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta x} \right)
+\]
+</p>
+
+<ul class="org-ul">
+<li>一階時間精度</li>
+<li>二階空間精度</li>
+<li>無條件不穩定！無論時間步如何小，解都會發散。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# 參數設定
+A = 1.0
+nx = 100
+x = np.linspace(0, 1, nx, endpoint=False)
+dx = x[1] - x[0]
+cfl = 0.8
+dt = cfl * dx / A
+nt = 100
+
+# 初始條件：Gaussian
+u0 = np.exp(-100 * (x - 0.5)**2)
+u = u0.copy()
+us = [u.copy()]
+
+# FTCS 方法
+for n in range(nt):
+    u_new = np.zeros_like(u)
+    u_new[1:-1] = u[1:-1] - 0.5 * cfl * (u[2:] - u[:-2])
+    # 週期邊界條件
+    u_new[0] = u[0] - 0.5 * cfl * (u[1] - u[-1])
+    u_new[-1] = u[-1] - 0.5 * cfl * (u[0] - u[-2])
+    u = u_new
+    us.append(u.copy())
+
+# 繪圖
+plt.figure(figsize=(8, 4))
+plt.plot(x, u0, label='Initial', linestyle='--')
+plt.plot(x, u, label='FTCS (Unstable)', linewidth=2)
+plt.xlabel("x")
+plt.ylabel("u")
+plt.title(f"Linear Advection: FTCS Method, CFL = {cfl}")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("FTCS_Method.png")
+</pre>
+</div>
+
+
+<div id="org7f51a78" class="figure">
+<p><img src="./figs/FTCS_Method.png" alt="FTCS_Method.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb06b98f" class="outline-4">
+<h4 id="orgb06b98f"><span class="section-number-4">2.3.2.</span> Lax-Friedrichs (LF) 方法</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+\[
+\frac{u_i^{n+1} - \left( u_{i-1}^n + u_{i+1}^n \right)/2}{\Delta t} = -A \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta x} \right)
+\]
+</p>
+
+<ul class="org-ul">
+<li>時間差分項是以前一層時間的空間平均作為參考，可在 FTCS 基礎上加上數值黏滯效應，穩定但非常擴散。</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# 參數設定
+A = 1.0               # advection speed
+nx = 100              # 空間節點數
+x = np.linspace(0, 1, nx, endpoint=False)
+dx = x[1] - x[0]
+cfl = 0.8
+dt = cfl * dx / A
+nt = 100              # 時間步數
+
+# 初始條件：Gaussian distribution
+u0 = np.exp(-100 * (x - 0.5)**2)
+u = u0.copy()
+
+# 儲存解的演化
+us = [u.copy()]
+
+# Lax-Friedrichs method 更新式
+for n in range(nt):
+    u_new = np.zeros_like(u)
+    u_new[1:-1] = 0.5 * (u[2:] + u[:-2]) - 0.5 * cfl * (u[2:] - u[:-2])
+    # 週期邊界條件
+    u_new[0] = 0.5 * (u[1] + u[-1]) - 0.5 * cfl * (u[1] - u[-1])
+    u_new[-1] = 0.5 * (u[0] + u[-2]) - 0.5 * cfl * (u[0] - u[-2])
+    u = u_new
+    us.append(u.copy())
+
+# 畫出初始與最終解
+plt.figure(figsize=(8, 4))
+plt.plot(x, u0, label='Initial', linestyle='--')
+plt.plot(x, u, label='Lax-Friedrichs', linewidth=2)
+plt.xlabel("x")
+plt.ylabel("u")
+plt.title(f"Linear Advection: Lax-Friedrichs Method, CFL = {cfl}")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("L-F_Method.png")
+</pre>
+</div>
+
+
+<div id="org55a4523" class="figure">
+<p><img src="./figs/L-F_Method.png" alt="L-F_Method.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbdfd3c4" class="outline-4">
+<h4 id="orgbdfd3c4"><span class="section-number-4">2.3.3.</span> Upwind 方法（迎風格式）</h4>
+<div class="outline-text-4" id="text-2-3-3">
+\begin{equation*}
+\frac{u_i^{n+1} - u_i^n}{\Delta t} =
+\begin{cases}
+  -A \left( \frac{u_i^n - u_{i-1}^n}{\Delta x} \right), & A \geq 0 \\\\
+  -A \left( \frac{u_{i+1}^n - u_i^n}{\Delta x} \right), & A < 0
+\end{cases}
+\end{equation*}
+
+<ul class="org-ul">
+<li>根據訊息傳播方向（由 \(A\) 的符號決定）選擇差分方向</li>
+<li>穩定，擴散較小</li>
+<li>僅一階精度，但能保證物理解的正確性</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# 參數設定
+A = 1.0
+nx = 100
+x = np.linspace(0, 1, nx, endpoint=False)
+dx = x[1] - x[0]
+cfl = 0.8
+dt = cfl * dx / A
+nt = 100
+
+# 初始條件：Gaussian
+u0 = np.exp(-100 * (x - 0.5)**2)
+u = u0.copy()
+us = [u.copy()]
+
+# Upwind 方法（FTBS）
+for n in range(nt):
+    u_new = np.zeros_like(u)
+    u_new[1:] = u[1:] - cfl * (u[1:] - u[:-1])
+    # 週期邊界條件
+    u_new[0] = u[0] - cfl * (u[0] - u[-1])
+    u = u_new
+    us.append(u.copy())
+
+# 繪圖
+plt.figure(figsize=(8, 4))
+plt.plot(x, u0, label='Initial', linestyle='--')
+plt.plot(x, u, label='Upwind (FTBS)', linewidth=2)
+plt.xlabel("x")
+plt.ylabel("u")
+plt.title(f"Linear Advection: Upwind Method, CFL = {cfl}")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("Upwind_Method.png")
+</pre>
+</div>
+
+
+<div id="orge88be3a" class="figure">
+<p><img src="./figs/Upwind_Method.png" alt="Upwind_Method.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc8f433a" class="outline-4">
+<h4 id="orgc8f433a"><span class="section-number-4">2.3.4.</span> Lax-Wendroff 方法</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<p>
+\[
+\frac{u_i^{n+1} - u_i^n}{\Delta t}
+= -A \left( \frac{u_{i+1}^n - u_{i-1}^n}{2\Delta x} \right)+ \frac{A^2 \Delta t}{2} \left( \frac{u_{i+1}^n - 2u_i^n + u_{i-1}^n}{\Delta x^2} \right)
+\]
+</p>
+
+<ul class="org-ul">
+<li>二階精度，但會在不連續點產生振盪（Gibbs 現象）</li>
+<li>在平滑區域有相位誤差</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# 參數設定
+A = 1.0
+nx = 100
+x = np.linspace(0, 1, nx, endpoint=False)
+dx = x[1] - x[0]
+cfl = 0.8
+dt = cfl * dx / A
+nt = 100
+
+# 初始條件：Gaussian
+u0 = np.exp(-100 * (x - 0.5)**2)
+u = u0.copy()
+us = [u.copy()]
+
+# Lax-Wendroff 方法
+for n in range(nt):
+    u_new = np.zeros_like(u)
+    u_new[1:-1] = (
+        u[1:-1]
+        - 0.5 * cfl * (u[2:] - u[:-2])
+        + 0.5 * cfl**2 * (u[2:] - 2 * u[1:-1] + u[:-2])
+    )
+    # 週期邊界條件
+    u_new[0] = (
+        u[0]
+        - 0.5 * cfl * (u[1] - u[-1])
+        + 0.5 * cfl**2 * (u[1] - 2 * u[0] + u[-1])
+    )
+    u_new[-1] = (
+        u[-1]
+        - 0.5 * cfl * (u[0] - u[-2])
+        + 0.5 * cfl**2 * (u[0] - 2 * u[-1] + u[-2])
+    )
+    u = u_new
+    us.append(u.copy())
+
+# 繪圖
+plt.figure(figsize=(8, 4))
+plt.plot(x, u0, label='Initial', linestyle='--')
+plt.plot(x, u, label='Lax-Wendroff', linewidth=2)
+plt.xlabel("x")
+plt.ylabel("u")
+plt.title(f"Linear Advection: Lax-Wendroff Method, CFL = {cfl}")
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig("L-W_Method.png")
+</pre>
+</div>
+
+
+<div id="orgc7f2b14" class="figure">
+<p><img src="./figs/L-W_Method.png" alt="L-W_Method.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org38f5c43" class="outline-2">
+<h2 id="org38f5c43"><span class="section-number-2">3.</span> 有限體積法 (Finite Volume Method)</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7428449" class="outline-3">
+<h3 id="org7428449"><span class="section-number-3">3.1.</span> FVM vs. FDM</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+有限體積法 (Finite Volume Method) 使用積分的形式來滿足守衡律 (圖 <a href="#orgbd93b97">10</a>):
+</p>
+
+<p>
+\[
+U_i^n = \frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}} u(x, t_n)\,dx
+\]
+</p>
+
+
+<div id="orgbd93b97" class="figure">
+<p><img src="./figs/FVM_FDM.png" alt="FVM_FDM.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 10: </span>FVM 與 FDM 的比較。</p>
+</div>
+
+<p>
+在有限體積法中，物理量（例如密度、動量、能量等）通常定義在 cell center，而 flux（通量）則定義在 cell interface。對於一純量守恆通式 \(\partial_t u + \partial_x f(u)=0\) 而言，其離散方式為 (圖 <a href="#org7691be8">11</a>)：
+</p>
+
+
+<div id="org7691be8" class="figure">
+<p><img src="./figs/FVMGrid.png" alt="FVMGrid.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 11: </span>FVM 的離散方式。</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org48d575e" class="outline-2">
+<h2 id="org48d575e"><span class="section-number-2">4.</span> CFL 條件之實例說明</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgea5dafa" class="outline-3">
+<h3 id="orgea5dafa"><span class="section-number-3">4.1.</span> CFL 條件（Courant-Friedrichs-Lewy Condition）</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+CFL 條件為數值穩定性的一項基本準則。
+</p>
+
+<ul class="org-ul">
+<li>數值方法僅當其資訊傳遞範圍包含 PDE 的實際資訊傳遞範圍時，才會收斂。</li>
+<li>換句話說：時間步長 \(\Delta t\) 需足夠小，使得波不會在一個時間步中穿越多個 cell。</li>
+</ul>
+
+<p>
+對於線性對流方程式 \(\partial_t u + A \partial_x u = 0\)，需滿足
+</p>
+
+<p>
+\[
+\Delta t = C\frac{\Delta x}{A}, \text{where } C \le 1
+\]
+</p>
+
+<p>
+或
+</p>
+
+<p>
+\[
+C = \frac{A \Delta t}{\Delta x} \leq 1
+\]
+</p>
+
+<p>
+其中 \(C\) 稱為 Courant number (或 CFL number)。若 \(C > 1\)，則會導致不穩定，數值結果無法收斂。
+如圖 <a href="#org6b4d2b3">12</a> 所示，\(\Delta t\) 必須足夠小，如此資訊才不會在一個時步中傳遞超過一個網格。
+</p>
+
+
+<div id="org6b4d2b3" class="figure">
+<p><img src="./figs/CFL_grid.png" alt="CFL_grid.png" width="600" />
+</p>
+<p><span class="figure-number">Figure 12: </span>Courant number 的意義。</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78d938d" class="outline-3">
+<h3 id="org78d938d"><span class="section-number-3">4.2.</span> 一維對流問題</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+為了更具體了解 CFL 條件的實際意義，以下透過一個簡單的一維線性對流問題，說明不同 CFL 數值下的數值解行為。
+</p>
+
+<p>
+考慮一維對流方程式：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = 0, \quad a > 0
+\]
+</p>
+
+<p>
+初始條件為 \(u_0 = u(x, 0) = \exp[-100(x - 0.5)^2]\), 邊界條件則為週期性邊界。
+解析解則為 \(u(x,t)=u_0 (x−at)\)。
+</p>
+
+<p>
+其物理解釋可代表流體中熱量或濃度隨時間傳輸，解的正確性與穩定性受到 CFL 條件的嚴格限制。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9625503" class="outline-3">
+<h3 id="org9625503"><span class="section-number-3">4.3.</span> 數值方法</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+使用 FTBS（Forward Time, Backward Space）方法，即一階 upwind 顯式格式：
+</p>
+
+<p>
+\[
+ u_i^{n+1} = u_i^n - \frac{a\Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
+\]
+</p>
+
+<p>
+CFL 條件為：
+</p>
+
+<p>
+\[
+C = \frac{a \Delta t}{\Delta x} \leq 1
+\]
+</p>
+
+<p>
+若 \(C>1\)，即表示波在單一時間步內跨越超過一格網格，數值解將不再穩定。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9b0f16a" class="outline-3">
+<h3 id="org9b0f16a"><span class="section-number-3">4.4.</span> Python 程式碼範例</h3>
+<div class="outline-text-3" id="text-4-4">
+<div class="org-src-container">
+<pre class="src src-python">import numpy as np
+import matplotlib.pyplot as plt
+
+# 模型參數
+a = 1.0
+L = 1.0
+nx = 100
+x = np.linspace(0, L, nx, endpoint=False)
+dx = x[1] - x[0]
+cfl_values = [0.5, 0.8, 1.0, 1.2]
+T_final = 1.0  # 統一最終時間
+
+# 初始條件（Gaussian）
+u0 = np.exp(-100 * (x - 0.5)**2)
+
+# 圖1：數值解比較
+fig1, ax1 = plt.subplots(figsize=(10, 4))
+ax1.plot(x, u0, 'k--', label='Initial')
+
+errors = []  # 儲存誤差
+
+for cfl in cfl_values:
+    dt = cfl * dx / a
+    nt = int(np.ceil(T_final / dt))
+    dt = T_final / nt  # 微調步長
+    u = u0.copy()
+    for n in range(nt):
+        u_new = u.copy()
+        u_new[1:] = u[1:] - a * dt / dx * (u[1:] - u[:-1])
+        u_new[0] = u[0] - a * dt / dx * (u[0] - u[-1])  # 週期邊界
+        u = u_new
+
+    # 畫出數值解
+    ax1.plot(x, u, label=f'CFL = {cfl:.1f}')
+
+    # 計算誤差（與初始值比較）
+    error = np.sqrt(np.mean((u - u0)**2))
+    errors.append(error)
+
+ax1.set_title(f"FTBS at t = {T_final} for Different CFL")
+ax1.set_xlabel("x")
+ax1.set_ylabel("u")
+ax1.legend()
+ax1.grid(True)
+plt.tight_layout()
+plt.savefig("FVM_CFL.png")
+
+# 圖2：誤差 vs CFL 數
+fig2, ax2 = plt.subplots(figsize=(6, 4))
+ax2.plot(cfl_values, errors, 'o-', linewidth=2)
+ax2.set_xlabel("CFL Number")
+ax2.set_ylabel("L2 Error")
+ax2.set_title("L2 Error vs CFL Number (FTBS at t = 1.0)")
+ax2.grid(True)
+plt.tight_layout()
+plt.savefig("FVM_CFL_Error.png")
+</pre>
+</div>
+
+
+<div id="org5425727" class="figure">
+<p><img src="./figs/FVM_CFL.png" alt="FVM_CFL.png" />
+</p>
+</div>
+
+
+<div id="org618d3b0" class="figure">
+<p><img src="./figs/FVM_CFL_Error.png" alt="FVM_CFL_Error.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfa87ac6" class="outline-3">
+<h3 id="orgfa87ac6"><span class="section-number-3">4.5.</span> 討論</h3>
+<div class="outline-text-3" id="text-4-5">
+<p>
+為何在 FTBS 方法中，CFL 越小誤差越大？
+</p>
+
+<p>
+原因關鍵：數值擴散的大小與 CFL 成正比。
+</p>
+</div>
+
+<div id="outline-container-org4451bd8" class="outline-4">
+<h4 id="org4451bd8"><span class="section-number-4">4.5.1.</span> 一階 Upwind/FTBS 方法的誤差形式</h4>
+<div class="outline-text-4" id="text-4-5-1">
+<p>
+對於線性對流方程 \( \frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = 0 \)，FTBS 方法的離散式為：
+</p>
+
+<p>
+\[
+u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
+\]
+</p>
+
+<p>
+這其實相當於精確方程式加上一項人工黏滯項（數值擴散）的近似：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \underbrace{\nu_\text{num} \frac{\partial^2 u}{\partial x^2}}_{\text{數值擴散項}}
+\]
+</p>
+
+<p>
+其中：
+\[
+\nu_\text{num} = \frac{a \Delta x}{2} (1 - \text{CFL})
+\]
+</p>
+
+<p>
+這是透過局部截斷誤差（modified equation analysis）推導得出。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbe17719" class="outline-4">
+<h4 id="orgbe17719"><span class="section-number-4">4.5.2.</span> 結論</h4>
+<div class="outline-text-4" id="text-4-5-2">
+<ul class="org-ul">
+<li>當 <b><b>CFL 趨近 1</b></b> 時：
+\[
+  \nu_\text{num} \rightarrow 0
+  \]
+→ 數值解幾乎是無擴散的 → 誤差小</li>
+
+<li>當 <b><b>CFL 趨近 0</b></b> 時：
+\[
+  \nu_\text{num} \rightarrow \frac{a \Delta x}{2}
+  \]
+→ 數值擴散最大 → 解嚴重模糊 → 誤差大</li>
+</ul>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">現象</th>
+<th scope="col" class="org-left">原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">CFL 小時誤差大</td>
+<td class="org-left">數值擴散係數 \( \nu_\text{num} \) 變大</td>
+</tr>
+
+<tr>
+<td class="org-left">解變得模糊、波峰變矮</td>
+<td class="org-left">擴散項 \( \frac{\partial^2 u}{\partial x^2} \) 貢獻變大</td>
+</tr>
+
+<tr>
+<td class="org-left">最佳精度出現在 CFL → 1</td>
+<td class="org-left">擴散項趨近於零</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-orga629a30" class="outline-4">
+<h4 id="orga629a30"><span class="section-number-4">4.5.3.</span> 延伸問題</h4>
+<div class="outline-text-4" id="text-4-5-3">
+<ul class="org-ul">
+<li>這也說明了: <b><b>"穩定 ≠ 精確"</b></b> ，穩定只確保不發散，但數值擴散會拖垮解析度。</li>
+<li>若需同時保穩定與精度，可改用：
+<ul class="org-ul">
+<li>二階格式（如 Lax-Wendroff、MUSCL）</li>
+<li>有限制器的 Godunov 法（如 PLM + limiter）</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0dec8b0" class="outline-3">
+<h3 id="org0dec8b0"><span class="section-number-3">4.6.</span> FTBS 數值擴散項之推導</h3>
+<div class="outline-text-3" id="text-4-6">
+<p>
+目標：從 FTBS 離散式：
+\[
+u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x} (u_i^n - u_{i-1}^n)
+\]
+</p>
+
+<p>
+推導出對應的連續近似形式（modified equation）：
+\[
+\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \nu_\text{num} \frac{\partial^2 u}{\partial x^2} + \text{(高階項)}
+\]
+</p>
+</div>
+
+<div id="outline-container-org0ff253c" class="outline-4">
+<h4 id="org0ff253c"><span class="section-number-4">4.6.1.</span> 步驟 1：泰勒展開時間與空間項</h4>
+<div class="outline-text-4" id="text-4-6-1">
+<p>
+時間方向（LHS）：
+</p>
+
+<p>
+\[
+u_i^{n+1} = u(x_i, t + \Delta t) = u(x_i, t) + \Delta t \frac{\partial u}{\partial t} + \frac{\Delta t^2}{2} \frac{\partial^2 u}{\partial t^2} + \cdots
+\]
+</p>
+
+<p>
+空間方向（RHS）：
+</p>
+
+<p>
+\[
+u_i^n - u_{i-1}^n = u(x_i, t) - u(x_i - \Delta x, t)
+\]
+</p>
+
+<p>
+展開：
+</p>
+
+<p>
+\[
+u(x_i - \Delta x, t) = u(x_i, t) - \Delta x \frac{\partial u}{\partial x} + \frac{\Delta x^2}{2} \frac{\partial^2 u}{\partial x^2} - \frac{\Delta x^3}{6} \frac{\partial^3 u}{\partial x^3} + \cdots
+\]
+</p>
+
+<p>
+所以：
+</p>
+
+<p>
+\[
+u_i^n - u_{i-1}^n = \Delta x \frac{\partial u}{\partial x} - \frac{\Delta x^2}{2} \frac{\partial^2 u}{\partial x^2} + \cdots
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6170506" class="outline-4">
+<h4 id="org6170506"><span class="section-number-4">4.6.2.</span> 步驟 2：代入 FTBS 離散式</h4>
+<div class="outline-text-4" id="text-4-6-2">
+<p>
+\[
+u(x_i, t) + \Delta t \frac{\partial u}{\partial t} + \cdots = u(x_i, t) - \frac{a \Delta t}{\Delta x} \left( \Delta x \frac{\partial u}{\partial x} - \frac{\Delta x^2}{2} \frac{\partial^2 u}{\partial x^2} + \cdots \right)
+\]
+</p>
+
+<p>
+消去 \( u(x_i, t) \) 後兩邊同減，並除以 \( \Delta t \)：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} = -a \frac{\partial u}{\partial x} + \frac{a \Delta x}{2} \frac{\partial^2 u}{\partial x^2} + \cdots
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7b050c2" class="outline-4">
+<h4 id="org7b050c2"><span class="section-number-4">4.6.3.</span> 結論：Modified Equation</h4>
+<div class="outline-text-4" id="text-4-6-3">
+<p>
+\[
+\boxed{
+\frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = \underbrace{\frac{a \Delta x}{2}(1 - \text{CFL})}_{\nu_{\text{num}}} \frac{\partial^2 u}{\partial x^2} + \text{(高階項)}
+}
+\]
+</p>
+
+<p>
+其中：
+</p>
+<ul class="org-ul">
+<li>\( \text{CFL} = \frac{a \Delta t}{\Delta x} \)</li>
+<li>\( \nu_{\text{num}} \) 為數值擴散係數（依 CFL 而變）</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6cd2f75" class="outline-4">
+<h4 id="org6cd2f75"><span class="section-number-4">4.6.4.</span> 小結</h4>
+<div class="outline-text-4" id="text-4-6-4">
+<ul class="org-ul">
+<li>FTBS 是顯式、一階、穩定的 upwind 法，但伴隨「內建」擴散項</li>
+<li>擴散項會模糊解，特別是在 CFL 遠離 1 時（例如 0.3）</li>
+<li><b><b>最佳精度出現在 CFL ≈ 1</b></b></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgfb02970" class="outline-2">
+<h2 id="orgfb02970"><span class="section-number-2">5.</span> FVM 進階</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgca6f54a" class="outline-3">
+<h3 id="orgca6f54a"><span class="section-number-3">5.1.</span> Godunov 方法概述（Godunov Method）</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於 1959 年提出，最初用於解決氣體動力學中的非線性守恆律問題。
+</p>
+
+<p>
+其基本精神在於：
+</p>
+
+<ol class="org-ol">
+<li><b><b>重建（Reconstruction）</b></b>
+<ul class="org-ul">
+<li>將每個 cell 的平均值重建為一段函數。</li>
+<li>最簡單為常數重建（piecewise constant），亦可使用線性或更高階方式。</li>
+</ul></li>
+
+<li><b><b>演化（Evolution）</b></b>
+<ul class="org-ul">
+<li>在每個 cell interface 上，利用左右兩側的資料設定 Riemann 問題。</li>
+<li>求解該 Riemann 問題以獲得通量（flux）。</li>
+</ul></li>
+
+<li><b><b>平均（Averaging）</b></b>
+<ul class="org-ul">
+<li><p>
+將 flux 用來更新 cell 的平均值：
+</p>
+
+<p>
+\[
+     U_i^{n+1} = U_i^n - \frac{\Delta t}{\Delta x} (F_{i+1/2} - F_{i-1/2})
+     \]
+</p></li>
+</ul></li>
+</ol>
+
+<p>
+這三步驟構成了一個完整的 time step。
+</p>
+</div>
+
+<div id="outline-container-orgb716453" class="outline-4">
+<h4 id="orgb716453"><span class="section-number-4">5.1.1.</span> 特點與優點：**</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<ul class="org-ul">
+<li>對震波、接觸不連續有良好解析能力。</li>
+<li>自然內建 upwind 概念，可避免不實振盪。</li>
+<li>屬於保守性格式（conservative scheme），確保整體守恆量的物理正確性。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgbe022b8" class="outline-4">
+<h4 id="orgbe022b8"><span class="section-number-4">5.1.2.</span> 低階情況：**</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+若使用 piecewise constant 重建（又稱 donor cell method），Godunov 方法在解線性對流方程時與 upwind 方法一致。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0303b1e" class="outline-4">
+<h4 id="org0303b1e"><span class="section-number-4">5.1.3.</span> 實作考量：**</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<ul class="org-ul">
+<li>解 Riemann 問題通常不需完全精確，僅需近似解（approximate Riemann solvers）即可。</li>
+<li>非線性問題中常使用 Roe solver、HLL、HLLC 等方法。</li>
+<li>在高階版本中，會搭配 slope limiter，形成二階精度的 Godunov 方法。</li>
+</ul>
+
+<p>
+在後續章節中，我們將展示如何將此法應用於非線性方程（如 Burgers’ equation）與 MHD 模擬。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfb41290" class="outline-3">
+<h3 id="orgfb41290"><span class="section-number-3">5.2.</span> 提升精度的方法（Toward Higher Order Accuracy）</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+為了提升 Godunov 方法的精度，我們可以改採較高階的函數重建，例如：
+</p>
+
+<ul class="org-ul">
+<li>**線性重建（Piecewise Linear Method, PLM）**：每個 cell 內以斜率描述變化。</li>
+<li>**拋物重建（Piecewise Parabolic Method, PPM）**：每個 cell 內使用二次函數描述。</li>
+</ul>
+
+<p>
+舉例：對於線性對流問題，若使用線性重建搭配 Godunov 法，即為高階迎風法。
+</p>
+
+<p>
+<b><b>如何選擇斜率？</b></b>
+</p>
+
+<p>
+若不加限制（如中心差分），雖然為二階精度，但會產生不實振盪（overshoot）。
+</p>
+
+<p>
+為了解決此問題，引入「斜率限制器」（slope limiter），使解保持單調（monotonicity-preserving）：
+</p>
+
+<ul class="org-ul">
+<li>常見限制器：Minmod、Van Leer、MC（monotonized central）等</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7725e77" class="outline-3">
+<h3 id="org7725e77"><span class="section-number-3">5.3.</span> 說明補充：多維問題中的 CFL 條件**</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+在二維、三維問題中，不同方向皆有訊息傳遞速度，應取所有方向的最大波速來決定時間步：
+</p>
+
+<p>
+\[
+\Delta t \leq \min \left( \frac{\Delta x}{|v| + c_f}, \frac{\Delta y}{|v| + c_f}, \dots \right)
+\]
+</p>
+
+<p>
+其中 \(c_f\) 為最速磁聲波速度（fast magnetosonic speed），此在 MHD 模擬中特別重要。
+</p>
+
+<p>
+例如 Athena++ 使用 van Leer 積分器時，CFL 限制如下：
+</p>
+<ul class="org-ul">
+<li>一維問題：\(C < 1\)</li>
+<li>二維與三維問題：\(C < 0.5\)</li>
+</ul>
+
+<p>
+接下來將示範非線性守恆律（如 Burgers’ Equation）與 MHD 方程式在有限體積法中的處理。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8dfcdbf" class="outline-3">
+<h3 id="org8dfcdbf"><span class="section-number-3">5.4.</span> 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+線性方程的特性在於特徵線不交會，解為平移變化；而非線性守恆律的特點在於特徵線會交會，形成震波、激波等現象。
+</p>
+
+<p>
+最簡單的非線性守恆律範例為 **Burgers’ equation**：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + \frac{1}{2} \frac{\partial u^2}{\partial x} = 0
+\]
+</p>
+
+<p>
+此式亦可寫成保守形式：
+</p>
+
+<p>
+\[
+\frac{\partial u}{\partial t} + \frac{\partial f(u)}{\partial x} = 0, \quad \text{其中 } f(u) = \frac{1}{2}u^2
+\]
+</p>
+</div>
+
+<div id="outline-container-org15fd089" class="outline-4">
+<h4 id="org15fd089"><span class="section-number-4">5.4.1.</span> 特性與物理解釋：**</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<ul class="org-ul">
+<li>初始速度場的高峰會以較快速度傳播，因此在某時刻會與較慢點交會，形成震波（shock）。</li>
+<li>數值方法需能正確捕捉這種不連續解。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfefe048" class="outline-4">
+<h4 id="orgfefe048"><span class="section-number-4">5.4.2.</span> 解法：Godunov 方法的應用：**</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<p>
+對於此非線性守恆方程，我們可使用 Godunov 方法：
+</p>
+
+<ol class="org-ol">
+<li><b><b>重建：</b></b> 將每個 cell 內的 \(u\) 值視為常數。</li>
+<li><p>
+<b><b>界面問題：</b></b> 在 cell interface 上構造 Riemann 問題 (左右兩側的 \(u_L\), \(u_R\))，解析非線性通量：
+</p>
+
+<p>
+\[
+   f^* = \begin{cases}
+   \min(f(u_L), f(u_R)) & \text{若 } u_L > u_R \
+   f(u_L) & \text{若 } u_L = u_R \
+   f(u_R) & \text{若 } u_L < u_R
+   \end{cases}
+   \]
+</p>
+
+<p>
+這是 Burgers’ 方程的解析 Riemann 解。
+</p></li>
+
+<li><p>
+<b><b>更新公式：</b></b>
+</p>
+
+<p>
+\[
+   u_i^{n+1} = u_i^n - \frac{\Delta t}{\Delta x}(f^*_{i+1/2} - f^*_{i-1/2})
+   \]
+</p></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org1917af2" class="outline-4">
+<h4 id="org1917af2"><span class="section-number-4">5.4.3.</span> 初始條件示例：**</h4>
+<div class="outline-text-4" id="text-5-4-3">
+<p>
+在 \([0,1]\) 區間上設：
+</p>
+
+<p>
+\[
+ u(x,0) = 1 - 0.5 \sin(2\pi x)
+\]
+</p>
+
+<p>
+並採用週期性邊界條件。
+</p>
+
+<p>
+此初始條件將逐漸演化出非線性波形並形成震波，數值解應能再現此現象而無不實振盪。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcc7406b" class="outline-4">
+<h4 id="orgcc7406b"><span class="section-number-4">5.4.4.</span> 觀察重點：**</h4>
+<div class="outline-text-4" id="text-5-4-4">
+<ul class="org-ul">
+<li>若用高階格式但無斜率限制器，容易產生振盪。</li>
+<li>Godunov 方法能自然處理震波，但解的精度受限於重建階數。</li>
+</ul>
+
+<p>
+接下來將介紹如何處理向量形式的系統（例如一維 MHD 方程），進一步探索多變量守恆律的有限體積處理方式。
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Lin Meng-Yu</p>
+<p class="date">Created: 2025-04-22 二 13:50</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
