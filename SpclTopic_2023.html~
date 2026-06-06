@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-10-16 四 10:13 -->
+<!-- 2023-03-01 三 15:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>2023 年土木工程實務專題</title>
@@ -11,14 +11,10 @@
 <meta name="generator" content="Org Mode" />
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
 <link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/code-copy.css"/>
-<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
 </head>
 <body>
 <div id="content" class="content">
@@ -27,34 +23,34 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org5e6aaad">1. 成員</a>
+<li><a href="#org84f1b13">1. 成員</a>
 <ul>
-<li><a href="#org48f646a">1.1. 第一組</a></li>
-<li><a href="#org58ce311">1.2. 第二組</a></li>
+<li><a href="#orgadbb0ac">1.1. 第一組</a></li>
+<li><a href="#orge565fc5">1.2. 第二組</a></li>
 </ul>
 </li>
-<li><a href="#orgb7054bf">2. 題目 (暫定)</a>
+<li><a href="#orgdbefd74">2. 題目 (暫定)</a>
 <ul>
-<li><a href="#org7e54763">2.1. 渦激擷能裝置之開放迴路控制</a></li>
-<li><a href="#org29a123c">2.2. 尾馳效應下渦激擷能裝置之開放迴路控制</a></li>
+<li><a href="#org10ad586">2.1. 渦激擷能裝置之開放迴路控制</a></li>
+<li><a href="#orgc757400">2.2. 尾馳效應下渦激擷能裝置之開放迴路控制</a></li>
 </ul>
 </li>
-<li><a href="#org2e113e0">3. Meeting 注意事項</a></li>
-<li><a href="#org6fd5e56">4. 進度</a>
+<li><a href="#orga30a6cc">3. Meeting 注意事項</a></li>
+<li><a href="#org6d3f4c7">4. 進度</a>
 <ul>
-<li><a href="#org0e0eab3">4.1. 20230215 (1112第一週)</a></li>
+<li><a href="#orged7e1dc">4.1. 20230215 (1112第一週)</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org5e6aaad" class="outline-2">
-<h2 id="org5e6aaad"><span class="section-number-2">1.</span> 成員</h2>
+<div id="outline-container-org84f1b13" class="outline-2">
+<h2 id="org84f1b13"><span class="section-number-2">1.</span> 成員</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org48f646a" class="outline-3">
-<h3 id="org48f646a"><span class="section-number-3">1.1.</span> 第一組</h3>
+<div id="outline-container-orgadbb0ac" class="outline-3">
+<h3 id="orgadbb0ac"><span class="section-number-3">1.1.</span> 第一組</h3>
 <div class="outline-text-3" id="text-1-1">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -119,8 +115,8 @@
 </div>
 </div>
 
-<div id="outline-container-org58ce311" class="outline-3">
-<h3 id="org58ce311"><span class="section-number-3">1.2.</span> 第二組</h3>
+<div id="outline-container-orge565fc5" class="outline-3">
+<h3 id="orge565fc5"><span class="section-number-3">1.2.</span> 第二組</h3>
 <div class="outline-text-3" id="text-1-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -174,12 +170,12 @@
 </div>
 </div>
 
-<div id="outline-container-orgb7054bf" class="outline-2">
-<h2 id="orgb7054bf"><span class="section-number-2">2.</span> 題目 (暫定)</h2>
+<div id="outline-container-orgdbefd74" class="outline-2">
+<h2 id="orgdbefd74"><span class="section-number-2">2.</span> 題目 (暫定)</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org7e54763" class="outline-3">
-<h3 id="org7e54763"><span class="section-number-3">2.1.</span> 渦激擷能裝置之開放迴路控制</h3>
+<div id="outline-container-org10ad586" class="outline-3">
+<h3 id="org10ad586"><span class="section-number-3">2.1.</span> 渦激擷能裝置之開放迴路控制</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>圓柱於固定位置週期性旋轉</li>
@@ -187,8 +183,8 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org29a123c" class="outline-3">
-<h3 id="org29a123c"><span class="section-number-3">2.2.</span> 尾馳效應下渦激擷能裝置之開放迴路控制</h3>
+<div id="outline-container-orgc757400" class="outline-3">
+<h3 id="orgc757400"><span class="section-number-3">2.2.</span> 尾馳效應下渦激擷能裝置之開放迴路控制</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>兩個串聯圓柱於固定位置週期性旋轉</li>
@@ -199,8 +195,8 @@
 </div>
 </div>
 
-<div id="outline-container-org2e113e0" class="outline-2">
-<h2 id="org2e113e0"><span class="section-number-2">3.</span> Meeting 注意事項</h2>
+<div id="outline-container-orga30a6cc" class="outline-2">
+<h2 id="orga30a6cc"><span class="section-number-2">3.</span> Meeting 注意事項</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>時間：9:10 ~ 10:00 (視情況調整)</li>
@@ -211,12 +207,12 @@
 </div>
 </div>
 
-<div id="outline-container-org6fd5e56" class="outline-2">
-<h2 id="org6fd5e56"><span class="section-number-2">4.</span> 進度</h2>
+<div id="outline-container-org6d3f4c7" class="outline-2">
+<h2 id="org6d3f4c7"><span class="section-number-2">4.</span> 進度</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org0e0eab3" class="outline-3">
-<h3 id="org0e0eab3"><span class="section-number-3">4.1.</span> 20230215 (1112第一週)</h3>
+<div id="outline-container-orged7e1dc" class="outline-3">
+<h3 id="orged7e1dc"><span class="section-number-3">4.1.</span> 20230215 (1112第一週)</h3>
 <div class="outline-text-3" id="text-4-1">
 <ul class="org-ul">
 <li><a href="./taking_notes.html">持續做筆記</a></li>
@@ -228,7 +224,7 @@
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Lin Meng-Yu</p>
-<p class="date">Created: 2025-10-16 四 10:13</p>
+<p class="date">Created: 2023-03-01 三 15:25</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
