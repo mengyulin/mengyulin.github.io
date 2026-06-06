@@ -1,0 +1,1190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-06-06 六 17:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Direct Step Method</title>
+<meta name="author" content="Meng-Yu Lin" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Direct Step Method</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org3cda438">1. Direct Step Method 的基本想法</a></li>
+<li><a href="#orgb233b11">2. 能量方程式</a></li>
+<li><a href="#org7cc678b">3. 比能 \(E\) 的計算</a></li>
+<li><a href="#org7374597">4. 摩擦坡度 \(S_f\) 的計算</a></li>
+<li><a href="#org4332784">5. 平均摩擦坡度 \(\bar{S}_f\)</a></li>
+<li><a href="#org8730e40">6. 計算步驟</a>
+<ul>
+<li><a href="#org2c08089">6.1. Step 1：給定已知條件</a></li>
+<li><a href="#org09e91d7">6.2. Step 2：選擇下一個水深</a></li>
+<li><a href="#orgd60e70a">6.3. Step 3：計算兩斷面的比能</a></li>
+<li><a href="#org66c884a">6.4. Step 4：計算兩斷面的摩擦坡度</a></li>
+<li><a href="#org685e063">6.5. Step 5：計算兩水深之間的距離</a></li>
+<li><a href="#orgb22d094">6.6. Step 6：重複計算水面線</a></li>
+</ul>
+</li>
+<li><a href="#org40aa62c">7. 表格計算格式</a></li>
+<li><a href="#org73ec7ca">8. 計算方向的重要性</a>
+<ul>
+<li><a href="#orga3cdf57">8.1. 亞臨界流 subcritical flow</a></li>
+<li><a href="#org4adda01">8.2. 超臨界流 supercritical flow</a></li>
+</ul>
+</li>
+<li><a href="#orga38b7a3">9. Direct Step Method 的優點</a></li>
+<li><a href="#orgf15e4b1">10. Direct Step Method 的限制</a>
+<ul>
+<li><a href="#orgb92c860">10.1. 不適合非稜柱渠道</a></li>
+<li><a href="#org5fb8c2e">10.2. 不方便處理已知斷面位置</a></li>
+<li><a href="#org4dd2e9e">10.3. 接近臨界水深時容易出現數值困難</a></li>
+</ul>
+</li>
+<li><a href="#orgf61807a">11. 與 Standard Step Method 的差異</a></li>
+<li><a href="#orgd2acca2">12. 教學上的簡短說法</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3cda438" class="outline-2">
+<h2 id="org3cda438"><span class="section-number-2">1.</span> Direct Step Method 的基本想法</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Direct Step Method（直接步進法）是用來計算稜柱渠道中 GVF（gradually varied flow, 漸變流）水面線的方法。
+</p>
+
+<p>
+它的核心概念是：
+</p>
+
+<blockquote>
+<p>
+不是先指定距離 \(\Delta x\)，再求水深變化；而是先指定兩個相鄰水深 \(y_1\) 與 \(y_2\)，再反算這兩個水深之間的距離 \(\Delta x\)。
+</p>
+</blockquote>
+
+<p>
+也就是：
+</p>
+
+<p>
+\[
+y_1 \rightarrow y_2
+\]
+</p>
+
+<p>
+已知，求：
+</p>
+
+<p>
+\[
+\Delta x
+\]
+</p>
+
+<p>
+因此稱為 direct step。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb233b11" class="outline-2">
+<h2 id="orgb233b11"><span class="section-number-2">2.</span> 能量方程式</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+對一段短距離渠道，兩斷面之間的能量方程式可寫成：
+</p>
+
+<p>
+\[
+z_1 + E_1 = z_2 + E_2 + h_f
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<ul class="org-ul">
+<li>\(z\)：渠底高程</li>
+<li>\(E\)：比能</li>
+<li>\(h_f\)：摩擦水頭損失</li>
+</ul>
+
+<p>
+對稜柱渠道，渠底坡度為：
+</p>
+
+<p>
+\[
+S_0 = \frac{z_1-z_2}{\Delta x}
+\]
+</p>
+
+<p>
+摩擦損失可近似為：
+</p>
+
+<p>
+\[
+h_f = \bar{S}_f \Delta x
+\]
+</p>
+
+<p>
+其中 \(\bar{S}_f\) 是兩斷面平均摩擦坡度。
+</p>
+
+<p>
+代入能量方程式後可得：
+</p>
+
+<p>
+\[
+E_2 - E_1 = (S_0-\bar{S}_f)\Delta x
+\]
+</p>
+
+<p>
+因此：
+</p>
+
+<p>
+\[
+\boxed{
+\Delta x = \frac{E_2-E_1}{S_0-\bar{S}_f}
+}
+\]
+</p>
+
+<p>
+這就是 Direct Step Method 最重要的計算式。
+</p>
+
+<p>
+有些教材也會寫成：
+</p>
+
+<p>
+\[
+\Delta x = \frac{\Delta E}{S_0-\bar{S}_f}
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<p>
+\[
+\Delta E = E_2-E_1
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org7cc678b" class="outline-2">
+<h2 id="org7cc678b"><span class="section-number-2">3.</span> 比能 \(E\) 的計算</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+對一般渠道，比能為：
+</p>
+
+<p>
+\[
+E = y + \alpha \frac{V^2}{2g}
+\]
+</p>
+
+<p>
+若忽略速度分布修正係數，取 \(\alpha = 1\)，則：
+</p>
+
+<p>
+\[
+E = y + \frac{V^2}{2g}
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<p>
+\[
+V = \frac{Q}{A}
+\]
+</p>
+
+<p>
+所以每一個指定水深 \(y\)，都可以計算：
+</p>
+
+<p>
+\[
+A(y), \quad V(y), \quad E(y)
+\]
+</p>
+
+<p>
+對矩形渠道：
+</p>
+
+<p>
+\[
+A = By
+\]
+</p>
+
+<p>
+\[
+V = \frac{Q}{By}
+\]
+</p>
+
+<p>
+因此：
+</p>
+
+<p>
+\[
+E = y + \frac{1}{2g}\left(\frac{Q}{By}\right)^2
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org7374597" class="outline-2">
+<h2 id="org7374597"><span class="section-number-2">4.</span> 摩擦坡度 \(S_f\) 的計算</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+通常使用 Manning 公式：
+</p>
+
+<p>
+\[
+Q = \frac{1}{n} A R^{2/3} S_f^{1/2}
+\]
+</p>
+
+<p>
+因此摩擦坡度可寫成：
+</p>
+
+<p>
+\[
+S_f =
+\left(
+\frac{nQ}{A R^{2/3}}
+\right)^2
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<ul class="org-ul">
+<li>\(n\)：Manning 粗糙係數</li>
+<li>\(A\)：通水面積</li>
+<li>\(R\)：水力半徑</li>
+<li>\(P\)：潤周</li>
+<li>\(R=A/P\)</li>
+</ul>
+
+<p>
+對矩形渠道：
+</p>
+
+<p>
+\[
+A = By
+\]
+</p>
+
+<p>
+\[
+P = B+2y
+\]
+</p>
+
+<p>
+\[
+R = \frac{A}{P}
+= \frac{By}{B+2y}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org4332784" class="outline-2">
+<h2 id="org4332784"><span class="section-number-2">5.</span> 平均摩擦坡度 \(\bar{S}_f\)</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Direct Step Method 需要兩斷面之間的平均摩擦坡度。
+</p>
+
+<p>
+最簡單常用的近似為算術平均：
+</p>
+
+<p>
+\[
+\bar{S}_f = \frac{S_{f1}+S_{f2}}{2}
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<p>
+\[
+S_{f1}=S_f(y_1)
+\]
+</p>
+
+<p>
+\[
+S_{f2}=S_f(y_2)
+\]
+</p>
+
+<p>
+所以每一個步驟的距離為：
+</p>
+
+<p>
+\[
+\Delta x =
+\frac{E_2-E_1}
+{S_0-\frac{S_{f1}+S_{f2}}{2}}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org8730e40" class="outline-2">
+<h2 id="org8730e40"><span class="section-number-2">6.</span> 計算步驟</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org2c08089" class="outline-3">
+<h3 id="org2c08089"><span class="section-number-3">6.1.</span> Step 1：給定已知條件</h3>
+<div class="outline-text-3" id="text-6-1">
+<p>
+需要知道：
+</p>
+
+<p>
+\[
+Q, \quad B, \quad n, \quad S_0
+\]
+</p>
+
+<p>
+以及邊界水深，例如：
+</p>
+
+<p>
+\[
+y_1
+\]
+</p>
+
+<p>
+通常邊界水深可能來自：
+</p>
+
+<ul class="org-ul">
+<li>下游控制水位</li>
+<li>上游控制水位</li>
+<li>水躍後水深</li>
+<li>臨界水深附近</li>
+<li>normal depth 或其他控制條件</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org09e91d7" class="outline-3">
+<h3 id="org09e91d7"><span class="section-number-3">6.2.</span> Step 2：選擇下一個水深</h3>
+<div class="outline-text-3" id="text-6-2">
+<p>
+Direct Step Method 不是指定 \(\Delta x\)，而是指定水深變化量：
+</p>
+
+<p>
+\[
+\Delta y
+\]
+</p>
+
+<p>
+例如：
+</p>
+
+<p>
+\[
+y_2 = y_1 + \Delta y
+\]
+</p>
+
+<p>
+或：
+</p>
+
+<p>
+\[
+y_2 = y_1 - \Delta y
+\]
+</p>
+
+<p>
+方向要依照水面線類型決定。
+</p>
+
+<p>
+例如：
+</p>
+
+<ul class="org-ul">
+<li>M1 曲線：通常由下游往上游計算</li>
+<li>M2 曲線：通常由控制斷面往上游或下游延伸</li>
+<li>S 曲線：依超臨界流方向計算</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd60e70a" class="outline-3">
+<h3 id="orgd60e70a"><span class="section-number-3">6.3.</span> Step 3：計算兩斷面的比能</h3>
+<div class="outline-text-3" id="text-6-3">
+<p>
+分別計算：
+</p>
+
+<p>
+\[
+E_1 = y_1 + \frac{V_1^2}{2g}
+\]
+</p>
+
+<p>
+\[
+E_2 = y_2 + \frac{V_2^2}{2g}
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<p>
+\[
+V_1 = \frac{Q}{A_1}
+\]
+</p>
+
+<p>
+\[
+V_2 = \frac{Q}{A_2}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org66c884a" class="outline-3">
+<h3 id="org66c884a"><span class="section-number-3">6.4.</span> Step 4：計算兩斷面的摩擦坡度</h3>
+<div class="outline-text-3" id="text-6-4">
+<p>
+分別計算：
+</p>
+
+<p>
+\[
+S_{f1}
+=
+\left(
+\frac{nQ}{A_1 R_1^{2/3}}
+\right)^2
+\]
+</p>
+
+<p>
+\[
+S_{f2}
+=
+\left(
+\frac{nQ}{A_2 R_2^{2/3}}
+\right)^2
+\]
+</p>
+
+<p>
+再取平均：
+</p>
+
+<p>
+\[
+\bar{S}_f = \frac{S_{f1}+S_{f2}}{2}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org685e063" class="outline-3">
+<h3 id="org685e063"><span class="section-number-3">6.5.</span> Step 5：計算兩水深之間的距離</h3>
+<div class="outline-text-3" id="text-6-5">
+<p>
+使用：
+</p>
+
+<p>
+\[
+\Delta x =
+\frac{E_2-E_1}{S_0-\bar{S}_f}
+\]
+</p>
+
+<p>
+即可得到從 \(y_1\) 到 \(y_2\) 的水平距離。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb22d094" class="outline-3">
+<h3 id="orgb22d094"><span class="section-number-3">6.6.</span> Step 6：重複計算水面線</h3>
+<div class="outline-text-3" id="text-6-6">
+<p>
+接著令：
+</p>
+
+<p>
+\[
+y_1 \leftarrow y_2
+\]
+</p>
+
+<p>
+再選擇新的：
+</p>
+
+<p>
+\[
+y_2 = y_1 \pm \Delta y
+\]
+</p>
+
+<p>
+重複上述步驟，即可得到一系列：
+</p>
+
+<p>
+\[
+x, y
+\]
+</p>
+
+<p>
+資料點，形成水面線。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org40aa62c" class="outline-2">
+<h2 id="org40aa62c"><span class="section-number-2">7.</span> 表格計算格式</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+實際手算或 Excel 計算時，可以整理成下列表格。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Step</th>
+<th scope="col" class="org-left">\(y\)</th>
+<th scope="col" class="org-left">\(A\)</th>
+<th scope="col" class="org-left">\(P\)</th>
+<th scope="col" class="org-left">\(R\)</th>
+<th scope="col" class="org-left">\(V\)</th>
+<th scope="col" class="org-left">\(E\)</th>
+<th scope="col" class="org-left">\(S_f\)</th>
+<th scope="col" class="org-left">\(\bar{S}_f\)</th>
+<th scope="col" class="org-left">\(\Delta E\)</th>
+<th scope="col" class="org-left">\(\Delta x\)</th>
+<th scope="col" class="org-left">\(x\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-left">\(y_1\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(E_1\)</td>
+<td class="org-left">\(S_{f1}\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(x_1\)</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-left">\(y_2\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(E_2\)</td>
+<td class="org-left">\(S_{f2}\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(E_2-E_1\)</td>
+<td class="org-left">\(\Delta x\)</td>
+<td class="org-left">\(x_2\)</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-left">\(y_3\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(E_3\)</td>
+<td class="org-left">\(S_{f3}\)</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">\(E_3-E_2\)</td>
+<td class="org-left">\(\Delta x\)</td>
+<td class="org-left">\(x_3\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+其中累積距離為：
+</p>
+
+<p>
+\[
+x_2 = x_1 + \Delta x
+\]
+</p>
+
+<p>
+\[
+x_3 = x_2 + \Delta x
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org73ec7ca" class="outline-2">
+<h2 id="org73ec7ca"><span class="section-number-2">8.</span> 計算方向的重要性</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Direct Step Method 必須注意計算方向。
+</p>
+</div>
+<div id="outline-container-orga3cdf57" class="outline-3">
+<h3 id="orga3cdf57"><span class="section-number-3">8.1.</span> 亞臨界流 subcritical flow</h3>
+<div class="outline-text-3" id="text-8-1">
+<p>
+亞臨界流受下游控制，因此通常：
+</p>
+
+<blockquote>
+<p>
+由下游往上游計算。
+</p>
+</blockquote>
+
+<p>
+例如 M1、M2 曲線常常由下游控制水深開始往上游推算。
+</p>
+</div>
+</div>
+<div id="outline-container-org4adda01" class="outline-3">
+<h3 id="org4adda01"><span class="section-number-3">8.2.</span> 超臨界流 supercritical flow</h3>
+<div class="outline-text-3" id="text-8-2">
+<p>
+超臨界流受上游控制，因此通常：
+</p>
+
+<blockquote>
+<p>
+由上游往下游計算。
+</p>
+</blockquote>
+
+<p>
+例如 S2、S3 曲線常常由上游控制斷面往下游推算。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga38b7a3" class="outline-2">
+<h2 id="orga38b7a3"><span class="section-number-2">9.</span> Direct Step Method 的優點</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+Direct Step Method 的優點是：
+</p>
+
+<ol class="org-ol">
+<li><p>
+<b>概念簡單</b>
+</p>
+
+<p>
+先選水深，再算距離。
+</p></li>
+
+<li><p>
+<b>適合手算與 Excel</b>
+</p>
+
+<p>
+每一步都是代公式，不需要解非線性方程。
+</p></li>
+
+<li><p>
+<b>適合稜柱渠道</b>
+</p>
+
+<p>
+因為渠道斷面與坡度不變，所以 \(A(y)\)、\(R(y)\)、\(S_f(y)\) 都容易計算。
+</p></li>
+
+<li><p>
+<b>適合教學</b>
+</p>
+
+<p>
+可以清楚看出比能、摩擦坡度、底床坡度之間的關係。
+</p></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgf15e4b1" class="outline-2">
+<h2 id="orgf15e4b1"><span class="section-number-2">10.</span> Direct Step Method 的限制</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-orgb92c860" class="outline-3">
+<h3 id="orgb92c860"><span class="section-number-3">10.1.</span> 不適合非稜柱渠道</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+因為它假設斷面形狀沿程不變。
+</p>
+
+<p>
+若渠道斷面逐漸變化，通常應使用 Standard Step Method。
+</p>
+</div>
+</div>
+<div id="outline-container-org5fb8c2e" class="outline-3">
+<h3 id="org5fb8c2e"><span class="section-number-3">10.2.</span> 不方便處理已知斷面位置</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+Direct Step Method 是指定水深求距離。
+</p>
+
+<p>
+但工程實務上常常是：
+</p>
+
+<p>
+\[
+x_1, x_2, x_3, \dots
+\]
+</p>
+
+<p>
+斷面位置已知，要反求各斷面水深。
+</p>
+
+<p>
+這種情況 Standard Step Method 較自然。
+</p>
+</div>
+</div>
+<div id="outline-container-org4dd2e9e" class="outline-3">
+<h3 id="org4dd2e9e"><span class="section-number-3">10.3.</span> 接近臨界水深時容易出現數值困難</h3>
+<div class="outline-text-3" id="text-10-3">
+<p>
+GVF 方程式為：
+</p>
+
+<p>
+\[
+\frac{dy}{dx}
+=
+\frac{S_0-S_f}{1-Fr^2}
+\]
+</p>
+
+<p>
+當：
+</p>
+
+<p>
+\[
+Fr \approx 1
+\]
+</p>
+
+<p>
+分母接近零，水面線斜率可能變得很大，Direct Step Method 的結果也會對步長很敏感。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf61807a" class="outline-2">
+<h2 id="orgf61807a"><span class="section-number-2">11.</span> 與 Standard Step Method 的差異</h2>
+<div class="outline-text-2" id="text-11">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">方法</th>
+<th scope="col" class="org-left">已知</th>
+<th scope="col" class="org-left">求解</th>
+<th scope="col" class="org-left">適合情況</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Direct Step Method</td>
+<td class="org-left">水深變化 \(\Delta y\)</td>
+<td class="org-left">距離 \(\Delta x\)</td>
+<td class="org-left">稜柱渠道、手算、教學</td>
+</tr>
+
+<tr>
+<td class="org-left">Standard Step Method</td>
+<td class="org-left">距離 \(\Delta x\)</td>
+<td class="org-left">下一斷面水深 \(y\)</td>
+<td class="org-left">天然河道、HEC-RAS、工程實務</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+簡單說：
+</p>
+
+<blockquote>
+<p>
+Direct Step Method：給水深，算距離。  
+Standard Step Method：給距離，算水深。
+</p>
+</blockquote>
+</div>
+</div>
+<div id="outline-container-orgd2acca2" class="outline-2">
+<h2 id="orgd2acca2"><span class="section-number-2">12.</span> 教學上的簡短說法</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+可以這樣向學生說明：
+</p>
+
+<blockquote>
+<p>
+Direct Step Method 是一種利用能量方程式計算漸變流水面線的方法。它先假設相鄰兩點的水深 \(y_1\) 和 \(y_2\)，計算兩點的比能差 \(\Delta E\)，再利用底床坡度與平均摩擦坡度的差值 \(S_0-\bar{S}_f\)，反推出兩水深之間的距離 \(\Delta x\)。因此，此法特別適合稜柱渠道與手算教學，但不適合斷面位置已知、形狀沿程變化的天然河道。
+</p>
+</blockquote>
+
+<p>
+核心公式是：
+</p>
+
+<p>
+\[
+\Delta x =
+\frac{\Delta E}{S_0-\bar{S}_f}
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<p>
+\[
+\Delta E = E_2-E_1
+\]
+</p>
+
+<p>
+\[
+E = y+\frac{V^2}{2g}
+\]
+</p>
+
+<p>
+\[
+\bar{S}_f = \frac{S_{f1}+S_{f2}}{2}
+\]
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Meng-Yu Lin</p>
+<p class="date">Created: 2026-06-06 六 17:50</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
