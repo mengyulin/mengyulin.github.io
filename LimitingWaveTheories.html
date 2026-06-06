@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-06 六 18:04 -->
+<!-- 2026-06-06 六 18:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Water Waves</title>
@@ -19,37 +19,6 @@
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
 <script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
-<script type="text/javascript">
-(function () {
-var msg = "[Org export] Deprecated SETUPFILE: theme-readtheorg.setup. Update to: html-theme-readtheorg.setup";
-if (typeof console !== "undefined" && console.warn) console.warn(msg);
-
-function addBanner() {
-var d = document;
-if (!d || !d.body) return;
-if (d.getElementById("org-setupfile-deprecated-banner")) return;
-
-var div = d.createElement("div");
-div.id = "org-setupfile-deprecated-banner";
-div.setAttribute("style",
-"border:2px solid #d33; padding:0.8em; margin:0.8em 0; background:#fee; color:#600;" +
-"font-family:sans-serif; font-size:90%;"
-);
-div.innerHTML =
-"<strong>Deprecated:</strong> <code>theme-readtheorg.setup</code> has been renamed to " +
-"<code>html-theme-readtheorg.setup</code>. " +
-"Please update your Org file.";
-
-d.body.insertBefore(div, d.body.firstChild);
-}
-
-if (document.readyState === "loading") {
-document.addEventListener("DOMContentLoaded", addBanner);
-} else {
-addBanner();
-}
-})();
-</script>
 <script>
   window.MathJax = {
     tex: {
@@ -94,15 +63,15 @@ addBanner();
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org8e8cfeb">1. Limits of Wave Theories (Matlab Code)</a>
+<li><a href="#orgdae4b4c">1. Limits of Wave Theories (Matlab Code)</a>
 <ul>
-<li><a href="#orge1915c2">1.1. Graph proposed by Le Méhauté</a></li>
-<li><a href="#org7f83b58">1.2. Matlab code</a>
+<li><a href="#org55f6eb8">1.1. Graph proposed by Le Méhauté</a></li>
+<li><a href="#org039dc4a">1.2. Matlab code</a>
 <ul>
-<li><a href="#orgfe24e15">1.2.1. Source</a></li>
-<li><a href="#orgf08544a">1.2.2. Brief introduction of the code</a></li>
-<li><a href="#orgb23d0d1">1.2.3. Notes</a></li>
-<li><a href="#org20136fc">1.2.4. Result</a></li>
+<li><a href="#orgbaa4b00">1.2.1. Source</a></li>
+<li><a href="#org6f17acd">1.2.2. Brief introduction of the code</a></li>
+<li><a href="#orgd3818cd">1.2.3. Notes</a></li>
+<li><a href="#org9e07264">1.2.4. Result</a></li>
 </ul>
 </li>
 </ul>
@@ -110,39 +79,39 @@ addBanner();
 </ul>
 </div>
 </div>
-<div id="outline-container-org8e8cfeb" class="outline-2">
-<h2 id="org8e8cfeb"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
+<div id="outline-container-orgdae4b4c" class="outline-2">
+<h2 id="orgdae4b4c"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orge1915c2" class="outline-3">
-<h3 id="orge1915c2"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
+<div id="outline-container-org55f6eb8" class="outline-3">
+<h3 id="org55f6eb8"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Fig. <a href="#org79fcec0">2</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
+Fig. <a href="#org4515cef">2</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
 </p>
 
 
-<div id="org8901605" class="figure">
+<div id="org6c1eaf8" class="figure">
 <p><img src="./figs/LimitsWaveTheories.png" alt="LimitsWaveTheories.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Limits of validity for various wave theories (Le Méhauté, B., 2013. An introduction to hydrodynamics and water waves. Springer Science &amp; Business Media, p. 205).</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org7f83b58" class="outline-3">
-<h3 id="org7f83b58"><span class="section-number-3">1.2.</span> Matlab code</h3>
+<div id="outline-container-org039dc4a" class="outline-3">
+<h3 id="org039dc4a"><span class="section-number-3">1.2.</span> Matlab code</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orgfe24e15" class="outline-4">
-<h4 id="orgfe24e15"><span class="section-number-4">1.2.1.</span> Source</h4>
+<div id="outline-container-orgbaa4b00" class="outline-4">
+<h4 id="orgbaa4b00"><span class="section-number-4">1.2.1.</span> Source</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Brooklynn Byford (2023). Non-Linear Wave Solver Function (<a href="https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function">https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function</a>), MATLAB Central File Exchange. Retrieved February 23, 2023.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf08544a" class="outline-4">
-<h4 id="orgf08544a"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
+<div id="outline-container-org6f17acd" class="outline-4">
+<h4 id="org6f17acd"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 The source code and the corresponding data files can be downloaded <a href="https://www.dropbox.com/s/x0x8ey70o9awg6a/NonLinearWaveSolver.zip?dl=0">here</a>.
@@ -174,8 +143,8 @@ function[graph,xpoint,ypoint]= NonLinearWaveSolver(height,period,depth)
 </div>
 </div>
 </div>
-<div id="outline-container-orgb23d0d1" class="outline-4">
-<h4 id="orgb23d0d1"><span class="section-number-4">1.2.3.</span> Notes</h4>
+<div id="outline-container-orgd3818cd" class="outline-4">
+<h4 id="orgd3818cd"><span class="section-number-4">1.2.3.</span> Notes</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <ol class="org-ol">
 <li>The original code is with BG units, and has been modified into SI units.</li>
@@ -199,11 +168,11 @@ Outputs are
 </ol>
 </div>
 </div>
-<div id="outline-container-org20136fc" class="outline-4">
-<h4 id="org20136fc"><span class="section-number-4">1.2.4.</span> Result</h4>
+<div id="outline-container-org9e07264" class="outline-4">
+<h4 id="org9e07264"><span class="section-number-4">1.2.4.</span> Result</h4>
 <div class="outline-text-4" id="text-1-2-4">
 
-<div id="org79fcec0" class="figure">
+<div id="org4515cef" class="figure">
 <p><img src="./figs/matlab_limits_waves.png" alt="matlab_limits_waves.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Limits of validity for various wave theories.</p>
@@ -215,7 +184,7 @@ Outputs are
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-06 六 18:04</p>
+<p class="date">Created: 2026-06-06 六 18:09</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
