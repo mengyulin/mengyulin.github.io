@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-06-09 二 13:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Specific Energy 與 Alternate Depth 的試誤計算</title>
+<meta name="author" content="Meng-Yu Lin" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/code-copy.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Specific Energy 與 Alternate Depth 的試誤計算</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org48446d4">1. 教學目標</a></li>
+<li><a href="#org0d8cb98">2. 題目</a></li>
+<li><a href="#org89efafa">3. 基本理論</a>
+<ul>
+<li><a href="#org4ff5151">3.1. Specific energy</a></li>
+<li><a href="#org5c3663e">3.2. 臨界水深</a></li>
+</ul>
+</li>
+<li><a href="#orge646a00">4. 解題步驟</a>
+<ul>
+<li><a href="#orgbdddd49">4.1. Step 1：計算單位寬流量</a></li>
+<li><a href="#orge3b40a6">4.2. Step 2：計算臨界水深</a></li>
+<li><a href="#orgf6dddd3">4.3. Step 3：計算已知水深的 specific energy</a></li>
+<li><a href="#orge1e3665">4.4. Step 4：建立求根方程式</a></li>
+</ul>
+</li>
+<li><a href="#org8ae6464">5. 使用一般計算機的試誤法</a>
+<ul>
+<li><a href="#orgb095f68">5.1. Step 1：先粗略試算</a></li>
+<li><a href="#org11de464">5.2. Step 2：縮小區間</a></li>
+<li><a href="#org38e2b59">5.3. Step 3：繼續逼近</a></li>
+</ul>
+</li>
+<li><a href="#orga43b763">6. 結果檢查與物理意義</a></li>
+<li><a href="#org2d81f7a">7. 一般計算機操作建議</a></li>
+<li><a href="#org9f8a1b2">8. 常見錯誤</a></li>
+<li><a href="#orgd1cb485">9. 課後練習</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org48446d4" class="outline-2">
+<h2 id="org48446d4"><span class="section-number-2">1.</span> 教學目標</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本講義說明如何在矩形渠道中，利用 specific energy 的分析，
+以一般計算機進行試誤法（try and error）或二分法（bisection method），
+求出 alternate depth。
+</p>
+
+<p>
+學習完成後，應能：
+</p>
+
+<ol class="org-ol">
+<li>寫出矩形渠道的 specific energy 方程式。</li>
+<li>計算臨界水深 \(y_c\)，並判斷已知水深屬於亞臨界或超臨界。</li>
+<li>建立求 alternate depth 的方程式 \(f(y)=0\)。</li>
+<li>使用一般計算機以試誤法逐步逼近 alternate depth。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org0d8cb98" class="outline-2">
+<h2 id="org0d8cb98"><span class="section-number-2">2.</span> 題目</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+一矩形明渠之渠寬為
+</p>
+
+<p>
+\[
+b = 3.0~\mathrm{m},
+\]
+</p>
+
+<p>
+流量為
+</p>
+
+<p>
+\[
+Q = 9.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+某一斷面量得水深為
+</p>
+
+<p>
+\[
+y_1 = 1.80~\mathrm{m}.
+\]
+</p>
+
+<p>
+假設能量損失可忽略，且該斷面與另一可能流況具有相同的 specific energy。
+試求與 \(y_1\) 對應之 alternate depth \(y_2\)。
+</p>
+
+<p>
+計算時取
+</p>
+
+<p>
+\[
+g = 9.81~\mathrm{m/s^2}.
+\]
+</p>
+
+<p>
+要求：
+</p>
+
+<ol class="org-ol">
+<li>先計算單位寬流量 \(q\)。</li>
+<li>計算臨界水深 \(y_c\)。</li>
+<li>判斷 \(y_1\) 是亞臨界或超臨界水深。</li>
+<li>使用試誤法求出 alternate depth \(y_2\)。</li>
+<li>說明為什麼求根時應在 \(y_c\) 的另一側尋找。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org89efafa" class="outline-2">
+<h2 id="org89efafa"><span class="section-number-2">3.</span> 基本理論</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org4ff5151" class="outline-3">
+<h3 id="org4ff5151"><span class="section-number-3">3.1.</span> Specific energy</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+矩形渠道之單位寬流量為
+</p>
+
+<p>
+\[
+q=\frac{Q}{b}.
+\]
+</p>
+
+<p>
+矩形渠道中，單位寬流量與平均流速的關係為
+</p>
+
+<p>
+\[
+V=\frac{q}{y}.
+\]
+</p>
+
+<p>
+因此 specific energy 可寫為
+</p>
+
+<p>
+\[
+E
+=
+y+\frac{V^2}{2g}
+=
+y+\frac{q^2}{2gy^2}.
+\]
+</p>
+
+<p>
+若已知水深 \(y_1\)，其 specific energy 為
+</p>
+
+<p>
+\[
+E_1
+=
+y_1+\frac{q^2}{2gy_1^2}.
+\]
+</p>
+
+<p>
+alternate depth \(y_2\) 是指另一個水深，使其具有相同的 specific energy：
+</p>
+
+<p>
+\[
+y_2+\frac{q^2}{2gy_2^2}=E_1.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org5c3663e" class="outline-3">
+<h3 id="org5c3663e"><span class="section-number-3">3.2.</span> 臨界水深</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+矩形渠道的臨界水深為
+</p>
+
+<p>
+\[
+y_c=\left(\frac{q^2}{g}\right)^{1/3}.
+\]
+</p>
+
+<p>
+specific energy 曲線在 \(y=y_c\) 時有最小值。若 \(E>E_{\min}\)，則通常會有兩個水深
+對應到同一個 specific energy：
+</p>
+
+<ul class="org-ul">
+<li>較大的水深：亞臨界水深。</li>
+<li>較小的水深：超臨界水深。</li>
+</ul>
+
+<p>
+因此，若已知水深 \( y_1 > y_c \)，則 alternate depth 應在
+</p>
+
+<p>
+\[
+0 < y_2 < y_c
+\]
+</p>
+
+<p>
+中尋找。反之，若 \( y_1 < y_c \)，則 alternate depth 應在
+</p>
+
+<p>
+\[
+y_2 > y_c
+\]
+</p>
+
+<p>
+中尋找。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orge646a00" class="outline-2">
+<h2 id="orge646a00"><span class="section-number-2">4.</span> 解題步驟</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-orgbdddd49" class="outline-3">
+<h3 id="orgbdddd49"><span class="section-number-3">4.1.</span> Step 1：計算單位寬流量</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+\[
+q=\frac{Q}{b}
+=
+\frac{9.0}{3.0}
+=
+3.0~\mathrm{m^2/s}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orge3b40a6" class="outline-3">
+<h3 id="orge3b40a6"><span class="section-number-3">4.2.</span> Step 2：計算臨界水深</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+\[
+y_c
+=
+\left(\frac{q^2}{g}\right)^{1/3}
+=
+\left(\frac{3.0^2}{9.81}\right)^{1/3}.
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+y_c \approx 0.972~\mathrm{m}.
+\]
+</p>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+y_1=1.80~\mathrm{m}>y_c,
+\]
+</p>
+
+<p>
+所以 \(y_1\) 是亞臨界水深，而 alternate depth 應該在
+</p>
+
+<p>
+\[
+0 < y_2 < 0.972~\mathrm{m}
+\]
+</p>
+
+<p>
+中尋找。
+</p>
+</div>
+</div>
+<div id="outline-container-orgf6dddd3" class="outline-3">
+<h3 id="orgf6dddd3"><span class="section-number-3">4.3.</span> Step 3：計算已知水深的 specific energy</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+\[
+E_1
+=
+1.80+\frac{3.0^2}{2(9.81)(1.80)^2}.
+\]
+</p>
+
+<p>
+計算得
+</p>
+
+<p>
+\[
+E_1 \approx 1.9416~\mathrm{m}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orge1e3665" class="outline-3">
+<h3 id="orge1e3665"><span class="section-number-3">4.4.</span> Step 4：建立求根方程式</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+令
+</p>
+
+<p>
+\[
+f(y)
+=
+y+\frac{q^2}{2gy^2}-E_1.
+\]
+</p>
+
+<p>
+代入本題數值：
+</p>
+
+<p>
+\[
+f(y)
+=
+y+\frac{3.0^2}{2(9.81)y^2}-1.9416.
+\]
+</p>
+
+<p>
+也就是
+</p>
+
+<p>
+\[
+f(y)
+=
+y+\frac{9.0}{19.62y^2}-1.9416.
+\]
+</p>
+
+<p>
+我們要找的是
+</p>
+
+<p>
+\[
+f(y)=0.
+\]
+</p>
+
+<p>
+由於已知 \(y_1=1.80~\mathrm{m}\) 已經是一個解，為了找 alternate depth，
+不要在 \(y>y_c\) 的區間中尋找，而應該在
+</p>
+
+<p>
+\[
+0 < y < 0.972
+\]
+</p>
+
+<p>
+中尋找。
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org8ae6464" class="outline-2">
+<h2 id="org8ae6464"><span class="section-number-2">5.</span> 使用一般計算機的試誤法</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgb095f68" class="outline-3">
+<h3 id="orgb095f68"><span class="section-number-3">5.1.</span> Step 1：先粗略試算</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+先在 \(0 < y <0.972\) 之間選幾個值，計算 \(E(y)\) 或 \(f(y)\)。
+</p>
+
+<p>
+\[
+E(y)=y+\frac{9.0}{19.62y^2}.
+\]
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 第一次粗略試算</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(E(y)\) (m)</th>
+<th scope="col" class="org-right">\(f(y)=E(y)-E_1\)</th>
+<th scope="col" class="org-left">判斷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0.40</td>
+<td class="org-right">3.2670</td>
+<td class="org-right">+1.3254</td>
+<td class="org-left">\(E(y)\) 太大</td>
+</tr>
+
+<tr>
+<td class="org-right">0.50</td>
+<td class="org-right">2.3349</td>
+<td class="org-right">+0.3933</td>
+<td class="org-left">\(E(y)\) 太大</td>
+</tr>
+
+<tr>
+<td class="org-right">0.60</td>
+<td class="org-right">1.8742</td>
+<td class="org-right">-0.0674</td>
+<td class="org-left">\(E(y)\) 太小</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+由於
+</p>
+
+<p>
+\[
+f(0.50) > 0,\qquad f(0.60) < 0,
+\]
+</p>
+
+<p>
+因此根位於
+</p>
+
+<p>
+\[
+0.50 < y_2 < 0.60.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org11de464" class="outline-3">
+<h3 id="org11de464"><span class="section-number-3">5.2.</span> Step 2：縮小區間</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+接著試中間附近的值。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 縮小根所在區間</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(E(y)\) (m)</th>
+<th scope="col" class="org-right">\(f(y)=E(y)-E_1\)</th>
+<th scope="col" class="org-left">判斷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0.55</td>
+<td class="org-right">2.0664</td>
+<td class="org-right">+0.1248</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.575</td>
+<td class="org-right">1.9624</td>
+<td class="org-right">+0.0208</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.5875</td>
+<td class="org-right">1.9165</td>
+<td class="org-right">-0.0251</td>
+<td class="org-left">根在較小水深</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因此根位於
+</p>
+
+<p>
+\[
+0.575 < y_2 < 0.5875.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org38e2b59" class="outline-3">
+<h3 id="org38e2b59"><span class="section-number-3">5.3.</span> Step 3：繼續逼近</h3>
+<div class="outline-text-3" id="text-5-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 進一步逼近 alternate depth</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(E(y)\) (m)</th>
+<th scope="col" class="org-right">\(f(y)=E(y)-E_1\)</th>
+<th scope="col" class="org-left">判斷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0.578125</td>
+<td class="org-right">1.9506</td>
+<td class="org-right">+0.0090</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.58125</td>
+<td class="org-right">1.9390</td>
+<td class="org-right">-0.0026</td>
+<td class="org-left">根在較小水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.5800</td>
+<td class="org-right">1.9436</td>
+<td class="org-right">+0.0020</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.5810</td>
+<td class="org-right">1.9399</td>
+<td class="org-right">-0.0017</td>
+<td class="org-left">根在較小水深</td>
+</tr>
+
+<tr>
+<td class="org-right">0.5805</td>
+<td class="org-right">1.9418</td>
+<td class="org-right">+0.0002</td>
+<td class="org-left">已接近</td>
+</tr>
+
+<tr>
+<td class="org-right">0.5806</td>
+<td class="org-right">1.9414</td>
+<td class="org-right">-0.0002</td>
+<td class="org-left">已接近</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+由最後兩列可知，根約在
+</p>
+
+<p>
+\[
+0.5805 < y_2 < 0.5806.
+\]
+</p>
+
+<p>
+因此可取
+</p>
+
+<p>
+\[
+\boxed{y_2\approx 0.581~\mathrm{m}}.
+\]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orga43b763" class="outline-2">
+<h2 id="orga43b763"><span class="section-number-2">6.</span> 結果檢查與物理意義</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+本題得到
+</p>
+
+<p>
+\[
+y_c\approx 0.972~\mathrm{m},
+\]
+</p>
+
+<p>
+而 alternate depth 為
+</p>
+
+<p>
+\[
+y_2\approx 0.581~\mathrm{m}.
+\]
+</p>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+y_2 < y_c,
+\]
+</p>
+
+<p>
+所以 \(y_2\) 為超臨界水深。這與原來的
+</p>
+
+<p>
+\[
+y_1=1.80~\mathrm{m}>y_c
+\]
+</p>
+
+<p>
+形成一組 alternate depths：
+</p>
+
+<p>
+\[
+\boxed{
+y_1=1.80~\mathrm{m}
+\quad \text{and} \quad
+y_2\approx 0.581~\mathrm{m}
+}
+\]
+</p>
+
+<p>
+這兩個水深具有相同的 specific energy，但流況不同：
+</p>
+
+<ul class="org-ul">
+<li>\(y_1\)：亞臨界流，水深較大，流速較小。</li>
+<li>\(y_2\)：超臨界流，水深較小，流速較大。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org2d81f7a" class="outline-2">
+<h2 id="org2d81f7a"><span class="section-number-2">7.</span> 一般計算機操作建議</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+若只能使用一般計算機，可依下列方式進行：
+</p>
+
+<ol class="org-ol">
+<li>先算 \(q=Q/b\)。</li>
+<li>算 \(y_c=(q^2/g)^{1/3}\)。</li>
+<li>算已知水深的 \(E_1\)。</li>
+<li>建立
+\[
+   f(y)=y+\frac{q^2}{2gy^2}-E_1.
+   \]</li>
+<li>根據 \(y_c\) 判斷要在臨界水深的哪一側找 alternate depth。</li>
+<li>選兩個水深，使 \(f(y)\) 一正一負。</li>
+<li>在該區間內繼續試算，逐步縮小範圍。</li>
+<li>當 \(f(y)\) 接近 0，或相鄰兩個試算水深已足夠接近時，即可停止。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org9f8a1b2" class="outline-2">
+<h2 id="org9f8a1b2"><span class="section-number-2">8.</span> 常見錯誤</h2>
+<div class="outline-text-2" id="text-8">
+<ol class="org-ol">
+<li>沒有先計算 \(y_c\)，導致在錯誤區間找根。</li>
+<li>已知 \(y_1\) 是亞臨界水深，卻仍在 \(y>y_c\) 區間尋找，最後又找到原來的 \(y_1\)。</li>
+<li>將 specific energy 與總能量混淆。specific energy 是相對於渠底的能量：
+\[
+   E=y+\frac{V^2}{2g}.
+   \]</li>
+<li>單位不一致。本題使用公制，因此 \(g=9.81~\mathrm{m/s^2}\)，
+\(Q\) 使用 \(\mathrm{m^3/s}\)，\(b\) 與 \(y\) 使用 \(\mathrm{m}\)。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgd1cb485" class="outline-2">
+<h2 id="orgd1cb485"><span class="section-number-2">9.</span> 課後練習</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+同一矩形渠道中，令
+</p>
+
+<p>
+\[
+b=3.0~\mathrm{m}, \qquad Q=9.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+若某斷面水深改為
+</p>
+
+<p>
+\[
+y_1=0.70~\mathrm{m},
+\]
+</p>
+
+<p>
+請計算其 alternate depth。提示：
+</p>
+
+<ol class="org-ol">
+<li>先判斷 \(y_1\) 與 \(y_c\) 的大小關係。</li>
+<li>若 \(y_1 < y_c\)，則 alternate depth 應在 \(y > y_c\) 區間尋找。</li>
+<li>使用試誤法求出另一個水深。</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Meng-Yu Lin</p>
+<p class="date">Created: 2026-06-09 二 13:03</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,1064 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-06-09 二 13:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>梯形渠道正規水深之試誤計算</title>
+<meta name="author" content="Meng-Yu Lin" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/code-copy.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">梯形渠道正規水深之試誤計算</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org58f0edf">1. 教學目標</a></li>
+<li><a href="#org87db502">2. 題目</a></li>
+<li><a href="#orgdaf2aca">3. 梯形渠道的幾何關係</a></li>
+<li><a href="#org775c74c">4. 公制 Manning 公式</a></li>
+<li><a href="#org15c2aee">5. 試誤法的基本判斷</a></li>
+<li><a href="#orge9cfa80">6. 第一次粗略試算</a></li>
+<li><a href="#orgb9ec8c9">7. 縮小範圍</a></li>
+<li><a href="#org153f060">8. 繼續用二分法逼近</a></li>
+<li><a href="#orgc917d9d">9. 給學生的計算流程</a></li>
+<li><a href="#org4c05c6e">10. 與其他求根問題的比較</a></li>
+<li><a href="#org4017de6">11. 教學提醒</a></li>
+<li><a href="#org4acbee7">12. 常見錯誤</a></li>
+<li><a href="#org054ff78">13. 課後練習</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org58f0edf" class="outline-2">
+<h2 id="org58f0edf"><span class="section-number-2">1.</span> 教學目標</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本講義說明如何使用一般計算機，以試誤法（try and error）或二分法
+（bisection method），由 Manning 公式求梯形渠道的正規水深
+（normal depth）。
+</p>
+
+<p>
+在渠道水力學中，若已知流量 \(Q\)、渠道斷面形狀、Manning 粗糙係數
+\(n\) 與底床坡度 \(S_0\)，要求正規水深 \(y_n\)，通常必須解一個
+非線性方程。若沒有電腦或可程式計算機，也可以利用一般計算機逐步試算。
+</p>
+
+<p>
+本講義使用下列符號：
+</p>
+
+<ul class="org-ul">
+<li>\(b\)：梯形渠道底寬。</li>
+<li>\(B\)：水面寬。</li>
+<li>\(m\)：單側邊坡，水平比垂直。</li>
+<li>\(A\)：通水面積。</li>
+<li>\(P\)：潤周。</li>
+<li>\(R\)：水力半徑。</li>
+<li>\(Q\)：已知流量。</li>
+<li>\(Q_M(y)\)：由 Manning 公式對某一試算水深 \(y\) 所算出的流量。</li>
+<li>\(S_0\)：底床坡度。</li>
+<li>\(n\)：Manning 粗糙係數。</li>
+<li>\(y_n\)：正規水深。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org87db502" class="outline-2">
+<h2 id="org87db502"><span class="section-number-2">2.</span> 題目</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+一梯形渠道之底寬為
+</p>
+
+<p>
+\[
+b=3.0~\mathrm{m},
+\]
+</p>
+
+<p>
+邊坡為
+</p>
+
+<p>
+\[
+m=1.5,
+\]
+</p>
+
+<p>
+也就是水平：垂直為 \(1.5:1\)。渠道底床坡度為
+</p>
+
+<p>
+\[
+S_0=0.0016,
+\]
+</p>
+
+<p>
+Manning 粗糙係數為
+</p>
+
+<p>
+\[
+n=0.015,
+\]
+</p>
+
+<p>
+流量為
+</p>
+
+<p>
+\[
+Q=15.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+試使用一般計算機，以試誤法求正規水深 \(y_n\)。
+</p>
+</div>
+</div>
+<div id="outline-container-orgdaf2aca" class="outline-2">
+<h2 id="orgdaf2aca"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+若水深為 \(y\)，則水面寬為
+</p>
+
+<p>
+\[
+B=b+2my.
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<ul class="org-ul">
+<li>\(b\) 為底寬。</li>
+<li>\(B\) 為水面寬。</li>
+<li>\(m\) 為單側邊坡，表示水平距離與垂直距離之比。</li>
+</ul>
+
+<p>
+本題中
+</p>
+
+<p>
+\[
+b=3.0,
+\qquad
+m=1.5,
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+B=3.0+2(1.5)y,
+\]
+</p>
+
+<p>
+也就是
+</p>
+
+<p>
+\[
+B=3.0+3.0y.
+\]
+</p>
+
+<p>
+通水面積為梯形面積：
+</p>
+
+<p>
+\[
+A=\frac{(b+B)y}{2}.
+\]
+</p>
+
+<p>
+由於
+</p>
+
+<p>
+\[
+B=b+2my,
+\]
+</p>
+
+<p>
+所以通水面積也可寫成
+</p>
+
+<p>
+\[
+A=by+my^2.
+\]
+</p>
+
+<p>
+本題中
+</p>
+
+<p>
+\[
+A=3.0y+1.5y^2.
+\]
+</p>
+
+<p>
+潤周為
+</p>
+
+<p>
+\[
+P=b+2y\sqrt{1+m^2}.
+\]
+</p>
+
+<p>
+本題中
+</p>
+
+<p>
+\[
+P=3.0+2y\sqrt{1+1.5^2}.
+\]
+</p>
+
+<p>
+水力半徑為
+</p>
+
+<p>
+\[
+R=\frac{A}{P}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org775c74c" class="outline-2">
+<h2 id="org775c74c"><span class="section-number-2">4.</span> 公制 Manning 公式</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+公制 Manning 公式為
+</p>
+
+<p>
+\[
+Q=
+\frac{1}{n}AR^{2/3}S_0^{1/2}.
+\]
+</p>
+
+<p>
+正規水深 \(y_n\) 是使 Manning 公式算出的流量等於已知流量的水深。
+</p>
+
+<p>
+因此，對某一個試算水深 \(y\)，定義
+</p>
+
+<p>
+\[
+Q_M(y)=
+\frac{1}{n}A(y)R(y)^{2/3}S_0^{1/2}.
+\]
+</p>
+
+<p>
+我們要找的是
+</p>
+
+<p>
+\[
+Q_M(y)=Q.
+\]
+</p>
+
+<p>
+也可寫成求根形式：
+</p>
+
+<p>
+\[
+f(y)=Q_M(y)-Q.
+\]
+</p>
+
+<p>
+正規水深 \(y_n\) 即為使
+</p>
+
+<p>
+\[
+f(y)=0
+\]
+</p>
+
+<p>
+的水深。
+</p>
+
+<p>
+本題中，因為
+</p>
+
+<p>
+\[
+Q=15.0~\mathrm{m^3/s},
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+f(y)=Q_M(y)-15.0.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org15c2aee" class="outline-2">
+<h2 id="org15c2aee"><span class="section-number-2">5.</span> 試誤法的基本判斷</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+在一般渠道中，當水深 \(y\) 增加時，通水面積 \(A\) 會增加，
+水力半徑 \(R\) 通常也會增加，因此由 Manning 公式算出的流量
+\(Q_M(y)\) 也會增加。
+</p>
+
+<p>
+因此可用下列方式判斷：
+</p>
+
+<ul class="org-ul">
+<li>若 \(Q_M(y) < Q\)，表示試算水深太小。</li>
+<li>若 \(Q_M(y) > Q\)，表示試算水深太大。</li>
+<li>若 \(Q_M(y) \approx Q\)，表示該水深接近正規水深。</li>
+</ul>
+
+<p>
+也就是說：
+</p>
+
+<p>
+\[
+f(y) < 0
+\quad\Rightarrow\quad
+\text{水深太小},
+\]
+</p>
+
+<p>
+\[
+f(y) > 0
+\quad\Rightarrow\quad
+\text{水深太大}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orge9cfa80" class="outline-2">
+<h2 id="orge9cfa80"><span class="section-number-2">6.</span> 第一次粗略試算</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+先試幾個水深，計算 \(B\)、\(A\)、\(P\)、\(R\)、\(Q_M\) 與 \(f(y)\)。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 第一次粗略試算</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(B\) (m)</th>
+<th scope="col" class="org-right">\(A\) (\(\mathrm{m^2}\))</th>
+<th scope="col" class="org-right">\(R\) (m)</th>
+<th scope="col" class="org-right">\(Q_M\) (\(\mathrm{m^3/s}\))</th>
+<th scope="col" class="org-right">\(f(y)=Q_M-Q\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.20</td>
+<td class="org-right">6.60</td>
+<td class="org-right">5.760</td>
+<td class="org-right">0.786</td>
+<td class="org-right">13.084</td>
+<td class="org-right">-1.916</td>
+</tr>
+
+<tr>
+<td class="org-right">1.30</td>
+<td class="org-right">6.90</td>
+<td class="org-right">6.435</td>
+<td class="org-right">0.837</td>
+<td class="org-right">15.242</td>
+<td class="org-right">+0.242</td>
+</tr>
+
+<tr>
+<td class="org-right">1.40</td>
+<td class="org-right">7.20</td>
+<td class="org-right">7.140</td>
+<td class="org-right">0.887</td>
+<td class="org-right">17.580</td>
+<td class="org-right">+2.580</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+由表中可知
+</p>
+
+<p>
+\[
+f(1.20) < 0,
+\]
+</p>
+
+<p>
+而
+</p>
+
+<p>
+\[
+f(1.30) > 0.
+\]
+</p>
+
+<p>
+所以正規水深位於
+</p>
+
+<p>
+\[
+1.20 < y_n < 1.30.
+\]
+</p>
+
+<p>
+也就是說，根被夾在 1.20 m 與 1.30 m 之間。
+</p>
+</div>
+</div>
+<div id="outline-container-orgb9ec8c9" class="outline-2">
+<h2 id="orgb9ec8c9"><span class="section-number-2">7.</span> 縮小範圍</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+接著試中間值
+</p>
+
+<p>
+\[
+y=1.25~\mathrm{m}.
+\]
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 縮小根所在區間</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(Q_M\) (\(\mathrm{m^3/s}\))</th>
+<th scope="col" class="org-right">\(f(y)=Q_M-15.0\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.20</td>
+<td class="org-right">13.084</td>
+<td class="org-right">-1.916</td>
+</tr>
+
+<tr>
+<td class="org-right">1.25</td>
+<td class="org-right">14.141</td>
+<td class="org-right">-0.859</td>
+</tr>
+
+<tr>
+<td class="org-right">1.30</td>
+<td class="org-right">15.242</td>
+<td class="org-right">+0.242</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+f(1.25) < 0,
+\]
+</p>
+
+<p>
+而
+</p>
+
+<p>
+\[
+f(1.30) > 0,
+\]
+</p>
+
+<p>
+所以根位於
+</p>
+
+<p>
+\[
+1.25 < y_n < 1.30.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org153f060" class="outline-2">
+<h2 id="org153f060"><span class="section-number-2">8.</span> 繼續用二分法逼近</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+繼續在目前的區間內試算。每次選擇區間中間附近的水深，重新計算
+\(B\)、\(A\)、\(P\)、\(R\)、\(Q_M\) 與 \(f(y)\)，並根據 \(f(y)\)
+的正負號縮小根所在範圍。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 進一步逼近正規水深</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(Q_M\) (\(\mathrm{m^3/s}\))</th>
+<th scope="col" class="org-right">\(f(y)=Q_M-15.0\)</th>
+<th scope="col" class="org-left">判斷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.2750</td>
+<td class="org-right">14.686</td>
+<td class="org-right">-0.314</td>
+<td class="org-left">水深太小</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2875</td>
+<td class="org-right">14.962</td>
+<td class="org-right">-0.038</td>
+<td class="org-left">水深太小</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2938</td>
+<td class="org-right">15.102</td>
+<td class="org-right">+0.102</td>
+<td class="org-left">水深太大</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2900</td>
+<td class="org-right">15.018</td>
+<td class="org-right">+0.018</td>
+<td class="org-left">水深稍大</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2888</td>
+<td class="org-right">14.990</td>
+<td class="org-right">-0.010</td>
+<td class="org-left">水深稍小</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2894</td>
+<td class="org-right">15.004</td>
+<td class="org-right">+0.004</td>
+<td class="org-left">已接近</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2891</td>
+<td class="org-right">14.997</td>
+<td class="org-right">-0.003</td>
+<td class="org-left">已接近</td>
+</tr>
+
+<tr>
+<td class="org-right">1.2892</td>
+<td class="org-right">15.000</td>
+<td class="org-right">約 0</td>
+<td class="org-left">可接受</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因此可取
+</p>
+
+<p>
+\[
+\boxed{
+y_n \approx 1.289~\mathrm{m}
+}
+\]
+</p>
+
+<p>
+作為本題的正規水深。
+</p>
+</div>
+</div>
+<div id="outline-container-orgc917d9d" class="outline-2">
+<h2 id="orgc917d9d"><span class="section-number-2">9.</span> 給學生的計算流程</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+使用一般計算機時，可按照以下步驟：
+</p>
+
+<ol class="org-ol">
+<li>假設一個水深 \(y\)。</li>
+
+<li><p>
+計算水面寬：
+</p>
+
+<p>
+\[
+   B=b+2my.
+   \]
+</p></li>
+
+<li><p>
+計算通水面積：
+</p>
+
+<p>
+\[
+   A=\frac{(b+B)y}{2},
+   \]
+</p>
+
+<p>
+或使用等價形式
+</p>
+
+<p>
+\[
+   A=by+my^2.
+   \]
+</p></li>
+
+<li><p>
+計算潤周：
+</p>
+
+<p>
+\[
+   P=b+2y\sqrt{1+m^2}.
+   \]
+</p></li>
+
+<li><p>
+計算水力半徑：
+</p>
+
+<p>
+\[
+   R=\frac{A}{P}.
+   \]
+</p></li>
+
+<li><p>
+用 Manning 公式計算流量：
+</p>
+
+<p>
+\[
+   Q_M=
+   \frac{1}{n}AR^{2/3}S_0^{1/2}.
+   \]
+</p></li>
+
+<li><p>
+比較 \(Q_M\) 與已知流量 \(Q\)：
+</p>
+
+<p>
+\[
+   f(y)=Q_M-Q.
+   \]
+</p></li>
+
+<li>若 \(f(y) < 0\)，表示水深太小。</li>
+
+<li>若 \(f(y) > 0\)，表示水深太大。</li>
+
+<li>找到 \(f(y)\) 正負號改變的區間後，繼續取中間值逼近。</li>
+
+<li>當 \(Q_M\) 已接近 \(Q\)，或 \(f(y)\) 已接近 0 時，該水深即為正規水深。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org4c05c6e" class="outline-2">
+<h2 id="org4c05c6e"><span class="section-number-2">10.</span> 與其他求根問題的比較</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+在渠道水力學中，常見需要用試誤法或數值方法求根的問題包括：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 渠道水力學常見求根問題</caption>
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">問題</th>
+<th scope="col" class="org-left">要求的未知量</th>
+<th scope="col" class="org-left">求根方程式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Alternate depth</td>
+<td class="org-left">\(y\)</td>
+<td class="org-left">\(E(y)-E_1=0\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Critical depth</td>
+<td class="org-left">\(y_c\)</td>
+<td class="org-left">\(\dfrac{Q^2B}{gA^3}-1=0\)</td>
+</tr>
+
+<tr>
+<td class="org-left">Normal depth</td>
+<td class="org-left">\(y_n\)</td>
+<td class="org-left">\(Q_M(y)-Q=0\)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+其中正規水深問題的求解重點是：
+</p>
+
+<p>
+\[
+\boxed{
+\text{猜水深 } y
+\rightarrow
+\text{算 } A,P,R
+\rightarrow
+\text{算 } Q_M
+\rightarrow
+\text{比較 } Q_M \text{ 與 } Q
+}
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org4017de6" class="outline-2">
+<h2 id="org4017de6"><span class="section-number-2">11.</span> 教學提醒</h2>
+<div class="outline-text-2" id="text-11">
+<ol class="org-ol">
+<li><p>
+公制 Manning 公式為
+</p>
+
+<p>
+\[
+   Q=
+   \frac{1}{n}AR^{2/3}S_0^{1/2}.
+   \]
+</p>
+
+<p>
+不需要乘上英制係數 1.49。
+</p></li>
+
+<li><p>
+每次試算新的水深 \(y\) 時，都必須重新計算：
+</p>
+
+<p>
+\[
+   B,\quad A,\quad P,\quad R,\quad Q_M.
+   \]
+</p></li>
+
+<li><p>
+梯形渠道中，水面寬為
+</p>
+
+<p>
+\[
+   B=b+2my,
+   \]
+</p>
+
+<p>
+不是常數。
+</p></li>
+
+<li><p>
+潤周不是 \(b+2y\)，而是
+</p>
+
+<p>
+\[
+   P=b+2y\sqrt{1+m^2}.
+   \]
+</p>
+
+<p>
+其中 \(\sqrt{1+m^2}\) 是邊坡斜邊長與垂直水深的比例。
+</p></li>
+
+<li>若 \(Q_M < Q\)，表示水深太小；若 \(Q_M > Q\)，表示水深太大。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org4acbee7" class="outline-2">
+<h2 id="org4acbee7"><span class="section-number-2">12.</span> 常見錯誤</h2>
+<div class="outline-text-2" id="text-12">
+<ol class="org-ol">
+<li>將梯形渠道的水面寬 \(B\) 誤認為底寬 \(b\)。</li>
+<li>將潤周誤寫為 \(P=b+2y\)，這是矩形渠道的公式，不適用於梯形渠道。</li>
+<li>忘記 Manning 公式中的水力半徑指數是 \(2/3\)。</li>
+<li>在公制公式中誤乘英制係數 1.49。</li>
+<li>每次改變水深時，沒有重新計算 \(A\)、\(P\) 與 \(R\)。</li>
+<li>單位不一致。本題使用公制，因此
+\[
+   Q: \mathrm{m^3/s},\quad
+   b,B,y: \mathrm{m},\quad
+   A: \mathrm{m^2},\quad
+   S_0: \text{無因次}.
+   \]</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org054ff78" class="outline-2">
+<h2 id="org054ff78"><span class="section-number-2">13.</span> 課後練習</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+一梯形渠道底寬為
+</p>
+
+<p>
+\[
+b=4.0~\mathrm{m},
+\]
+</p>
+
+<p>
+邊坡為
+</p>
+
+<p>
+\[
+m=2.0,
+\]
+</p>
+
+<p>
+底床坡度為
+</p>
+
+<p>
+\[
+S_0=0.0010,
+\]
+</p>
+
+<p>
+Manning 粗糙係數為
+</p>
+
+<p>
+\[
+n=0.018,
+\]
+</p>
+
+<p>
+流量為
+</p>
+
+<p>
+\[
+Q=20.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+請使用一般計算機，以試誤法求其正規水深 \(y_n\)。
+</p>
+
+<p>
+提示：
+</p>
+
+<ol class="org-ol">
+<li><p>
+先寫出
+</p>
+
+<p>
+\[
+   B=b+2my.
+   \]
+</p></li>
+
+<li><p>
+再寫出
+</p>
+
+<p>
+\[
+   A=by+my^2.
+   \]
+</p></li>
+
+<li><p>
+計算
+</p>
+
+<p>
+\[
+   P=b+2y\sqrt{1+m^2}.
+   \]
+</p></li>
+
+<li><p>
+計算
+</p>
+
+<p>
+\[
+   R=\frac{A}{P}.
+   \]
+</p></li>
+
+<li><p>
+建立
+</p>
+
+<p>
+\[
+   f(y)=
+   \frac{1}{n}AR^{2/3}S_0^{1/2}-Q.
+   \]
+</p></li>
+
+<li>找出 \(f(y)\) 由負變正的區間，再逐步縮小。</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Meng-Yu Lin</p>
+<p class="date">Created: 2026-06-09 二 13:03</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

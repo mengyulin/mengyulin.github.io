@@ -1,0 +1,867 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-06-09 二 13:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>梯形渠道臨界水深之試誤計算</title>
+<meta name="author" content="Meng-Yu Lin" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/code-copy.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">梯形渠道臨界水深之試誤計算</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org26228c1">1. 教學目標</a></li>
+<li><a href="#org5ac7775">2. 題目</a></li>
+<li><a href="#org83e4043">3. 梯形渠道的幾何關係</a></li>
+<li><a href="#org5832654">4. 臨界流條件</a></li>
+<li><a href="#orgacf16bc">5. 第一次粗略試算</a></li>
+<li><a href="#org9b3c496">6. 縮小範圍</a></li>
+<li><a href="#orgcfb8d49">7. 繼續用二分法逼近</a></li>
+<li><a href="#orgf679d9f">8. 給學生的計算流程</a></li>
+<li><a href="#org0cfb475">9. 為什麼可以用正負號判斷？</a></li>
+<li><a href="#orgd5d812a">10. 教學提醒</a></li>
+<li><a href="#orge8aeb7e">11. 常見錯誤</a></li>
+<li><a href="#orgb06b499">12. 課後練習</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org26228c1" class="outline-2">
+<h2 id="org26228c1"><span class="section-number-2">1.</span> 教學目標</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本講義說明如何使用一般計算機，以試誤法（try and error）或二分法
+（bisection method）計算梯形渠道的臨界水深。
+</p>
+
+<p>
+梯形渠道的臨界水深通常無法像矩形渠道一樣直接寫成簡單的顯式公式，
+因此需要求解非線性方程。若沒有電腦或可程式計算機，也可以利用一般計算機
+逐步試算並逼近答案。
+</p>
+
+<p>
+本講義中使用下列符號：
+</p>
+
+<ul class="org-ul">
+<li>\(b\)：梯形渠道底寬。</li>
+<li>\(B\)：水面寬。</li>
+<li>\(m\)：單側邊坡，水平比垂直。</li>
+<li>\(A\)：通水面積。</li>
+<li>\(Q\)：流量。</li>
+<li>\(g\)：重力加速度。</li>
+<li>\(y_c\)：臨界水深。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org5ac7775" class="outline-2">
+<h2 id="org5ac7775"><span class="section-number-2">2.</span> 題目</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+一梯形渠道之底寬為
+</p>
+
+<p>
+\[
+b=2.0~\mathrm{m},
+\]
+</p>
+
+<p>
+邊坡為
+</p>
+
+<p>
+\[
+m=1.5,
+\]
+</p>
+
+<p>
+也就是水平：垂直為 \(1.5:1\)。流量為
+</p>
+
+<p>
+\[
+Q=10.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+取
+</p>
+
+<p>
+\[
+g=9.81~\mathrm{m/s^2}.
+\]
+</p>
+
+<p>
+試使用一般計算機，以試誤法求此梯形渠道的臨界水深 \(y_c\)。
+</p>
+</div>
+</div>
+<div id="outline-container-org83e4043" class="outline-2">
+<h2 id="org83e4043"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+若水深為 \(y\)，則水面寬為
+</p>
+
+<p>
+\[
+B=b+2my.
+\]
+</p>
+
+<p>
+其中：
+</p>
+
+<ul class="org-ul">
+<li>\(b\) 為底寬。</li>
+<li>\(B\) 為水面寬。</li>
+<li>\(m\) 為單側邊坡，表示水平距離與垂直距離之比。</li>
+</ul>
+
+<p>
+梯形渠道的通水面積為
+</p>
+
+<p>
+\[
+A=\frac{(b+B)y}{2}.
+\]
+</p>
+
+<p>
+由於
+</p>
+
+<p>
+\[
+B=b+2my,
+\]
+</p>
+
+<p>
+所以也可寫成
+</p>
+
+<p>
+\[
+A=by+my^2.
+\]
+</p>
+
+<p>
+本題中
+</p>
+
+<p>
+\[
+b=2.0,
+\qquad
+m=1.5.
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+B=2.0+3.0y,
+\]
+</p>
+
+<p>
+\[
+A=2.0y+1.5y^2.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org5832654" class="outline-2">
+<h2 id="org5832654"><span class="section-number-2">4.</span> 臨界流條件</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+一般渠道的臨界流條件可寫為
+</p>
+
+<p>
+\[
+\frac{Q^2B}{gA^3}=1.
+\]
+</p>
+
+<p>
+其中 \(B\) 是水面寬，不是底寬。
+</p>
+
+<p>
+因此可定義
+</p>
+
+<p>
+\[
+f(y)=\frac{Q^2B}{gA^3}-1.
+\]
+</p>
+
+<p>
+臨界水深 \(y_c\) 即為使
+</p>
+
+<p>
+\[
+f(y)=0
+\]
+</p>
+
+<p>
+的水深。
+</p>
+
+<p>
+本題中
+</p>
+
+<p>
+\[
+Q=10.0~\mathrm{m^3/s},
+\qquad
+g=9.81~\mathrm{m/s^2}.
+\]
+</p>
+
+<p>
+又因為
+</p>
+
+<p>
+\[
+B=2.0+3.0y,
+\]
+</p>
+
+<p>
+\[
+A=2.0y+1.5y^2,
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+f(y)=
+\frac{10.0^2(2.0+3.0y)}
+{9.81(2.0y+1.5y^2)^3}
+-1.
+\]
+</p>
+
+<p>
+我們要使用一般計算機找出使 \(f(y)\) 接近 0 的水深。
+</p>
+</div>
+</div>
+<div id="outline-container-orgacf16bc" class="outline-2">
+<h2 id="orgacf16bc"><span class="section-number-2">5.</span> 第一次粗略試算</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+先猜幾個水深，計算 \(B\)、\(A\)、\(f(y)\)。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> 第一次粗略試算</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(B=2+3y\) (m)</th>
+<th scope="col" class="org-right">\(A=2y+1.5y^2\) (\(\mathrm{m^2}\))</th>
+<th scope="col" class="org-right">\(f(y)\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0.80</td>
+<td class="org-right">4.40</td>
+<td class="org-right">2.560</td>
+<td class="org-right">+1.673</td>
+</tr>
+
+<tr>
+<td class="org-right">0.90</td>
+<td class="org-right">4.70</td>
+<td class="org-right">3.015</td>
+<td class="org-right">+0.748</td>
+</tr>
+
+<tr>
+<td class="org-right">1.00</td>
+<td class="org-right">5.00</td>
+<td class="org-right">3.500</td>
+<td class="org-right">+0.189</td>
+</tr>
+
+<tr>
+<td class="org-right">1.10</td>
+<td class="org-right">5.30</td>
+<td class="org-right">4.015</td>
+<td class="org-right">-0.165</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+由表中可知
+</p>
+
+<p>
+\[
+f(1.00) > 0,
+\]
+</p>
+
+<p>
+而
+</p>
+
+<p>
+\[
+f(1.10) < 0.
+\]
+</p>
+
+<p>
+因此臨界水深位於
+</p>
+
+<p>
+\[
+1.00 < y_c < 1.10.
+\]
+</p>
+
+<p>
+這表示根被夾在 1.00 m 與 1.10 m 之間。
+</p>
+</div>
+</div>
+<div id="outline-container-org9b3c496" class="outline-2">
+<h2 id="org9b3c496"><span class="section-number-2">6.</span> 縮小範圍</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+接著試中間值
+</p>
+
+<p>
+\[
+y=1.05~\mathrm{m}.
+\]
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 2:</span> 縮小根所在區間</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(B\) (m)</th>
+<th scope="col" class="org-right">\(A\) (\(\mathrm{m^2}\))</th>
+<th scope="col" class="org-right">\(f(y)\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.00</td>
+<td class="org-right">5.000</td>
+<td class="org-right">3.500</td>
+<td class="org-right">+0.1888</td>
+</tr>
+
+<tr>
+<td class="org-right">1.05</td>
+<td class="org-right">5.150</td>
+<td class="org-right">3.754</td>
+<td class="org-right">-0.0075</td>
+</tr>
+
+<tr>
+<td class="org-right">1.10</td>
+<td class="org-right">5.300</td>
+<td class="org-right">4.015</td>
+<td class="org-right">-0.1653</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+f(1.00) > 0,
+\]
+</p>
+
+<p>
+而
+</p>
+
+<p>
+\[
+f(1.05) < 0,
+\]
+</p>
+
+<p>
+所以根位於
+</p>
+
+<p>
+\[
+1.00 < y_c < 1.05.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgcfb8d49" class="outline-2">
+<h2 id="orgcfb8d49"><span class="section-number-2">7.</span> 繼續用二分法逼近</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+繼續在目前的區間內試算。每次選擇區間中間附近的水深，重新計算
+\(B\)、\(A\)、\(f(y)\)，並根據 \(f(y)\) 的正負號縮小根所在範圍。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 3:</span> 進一步逼近臨界水深</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(B\) (m)</th>
+<th scope="col" class="org-right">\(A\) (\(\mathrm{m^2}\))</th>
+<th scope="col" class="org-right">\(f(y)\)</th>
+<th scope="col" class="org-left">判斷</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.0250</td>
+<td class="org-right">5.075</td>
+<td class="org-right">3.626</td>
+<td class="org-right">+0.0852</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">1.0375</td>
+<td class="org-right">5.113</td>
+<td class="org-right">3.690</td>
+<td class="org-right">+0.0376</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">1.0438</td>
+<td class="org-right">5.131</td>
+<td class="org-right">3.722</td>
+<td class="org-right">+0.0147</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">1.0469</td>
+<td class="org-right">5.141</td>
+<td class="org-right">3.738</td>
+<td class="org-right">+0.0036</td>
+<td class="org-left">根在較大水深</td>
+</tr>
+
+<tr>
+<td class="org-right">1.0484</td>
+<td class="org-right">5.145</td>
+<td class="org-right">3.746</td>
+<td class="org-right">-0.0020</td>
+<td class="org-left">根在較小水深</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+1.0469 < y_c < 1.0484.
+\]
+</p>
+
+<p>
+再試更接近的值：
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 4:</span> 最後逼近</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">\(y\) (m)</th>
+<th scope="col" class="org-right">\(f(y)\)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">1.0477</td>
+<td class="org-right">+0.0008</td>
+</tr>
+
+<tr>
+<td class="org-right">1.0479</td>
+<td class="org-right">-0.0001</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+因此可取
+</p>
+
+<p>
+\[
+\boxed{
+y_c \approx 1.048~\mathrm{m}
+}
+\]
+</p>
+
+<p>
+作為本題的臨界水深。
+</p>
+</div>
+</div>
+<div id="outline-container-orgf679d9f" class="outline-2">
+<h2 id="orgf679d9f"><span class="section-number-2">8.</span> 給學生的計算流程</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+使用一般計算機時，可按照以下步驟：
+</p>
+
+<ol class="org-ol">
+<li>寫出水面寬
+\[
+   B=b+2my.
+   \]</li>
+
+<li>寫出通水面積
+\[
+   A=\frac{(b+B)y}{2},
+   \]
+或使用等價形式
+\[
+   A=by+my^2.
+   \]</li>
+
+<li>建立臨界流條件
+\[
+   f(y)=\frac{Q^2B}{gA^3}-1.
+   \]</li>
+
+<li>隨便試幾個水深，例如
+\[
+   y=0.8,\ 0.9,\ 1.0,\ 1.1~\mathrm{m}.
+   \]</li>
+
+<li>找出 \(f(y)\) 正負號改變的區間。</li>
+
+<li>在該區間中取中間值繼續試算。</li>
+
+<li>重複直到 \(f(y)\) 接近 0，或水深範圍已足夠小為止。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org0cfb475" class="outline-2">
+<h2 id="org0cfb475"><span class="section-number-2">9.</span> 為什麼可以用正負號判斷？</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+我們要求的是
+</p>
+
+<p>
+\[
+f(y)=0.
+\]
+</p>
+
+<p>
+若在兩個水深 \(y_a\)、\(y_b\) 之間有
+</p>
+
+<p>
+\[
+f(y_a) > 0,
+\qquad
+f(y_b) < 0,
+\]
+</p>
+
+<p>
+則表示 \(f(y)\) 在此區間中由正變負。只要函數在此區間內連續，
+中間必定有某一個水深使得
+</p>
+
+<p>
+\[
+f(y)=0.
+\]
+</p>
+
+<p>
+因此，可以利用正負號改變來夾住根，再逐步縮小範圍。這就是二分法的基本概念。
+</p>
+</div>
+</div>
+<div id="outline-container-orgd5d812a" class="outline-2">
+<h2 id="orgd5d812a"><span class="section-number-2">10.</span> 教學提醒</h2>
+<div class="outline-text-2" id="text-10">
+<p>
+梯形渠道與矩形渠道最大的差異是：
+</p>
+
+<p>
+矩形渠道中，水面寬為常數，
+</p>
+
+<p>
+\[
+B=b.
+\]
+</p>
+
+<p>
+但梯形渠道中，水面寬會隨水深改變：
+</p>
+
+<p>
+\[
+B=b+2my.
+\]
+</p>
+
+<p>
+因此計算臨界水深時，每猜一個水深 \(y\)，都必須重新計算：
+</p>
+
+<p>
+\[
+B,\quad A,\quad f(y).
+\]
+</p>
+
+<p>
+尤其要注意：
+</p>
+
+<ul class="org-ul">
+<li>\(b\) 是底寬。</li>
+<li>\(B\) 是水面寬。</li>
+<li>在臨界流條件
+\[
+  \frac{Q^2B}{gA^3}=1
+  \]
+中使用的是水面寬 \(B\)，不是底寬 \(b\)。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge8aeb7e" class="outline-2">
+<h2 id="orge8aeb7e"><span class="section-number-2">11.</span> 常見錯誤</h2>
+<div class="outline-text-2" id="text-11">
+<ol class="org-ol">
+<li>將水面寬 \(B\) 誤用為底寬 \(b\)。</li>
+<li>每次改變 \(y\) 時，沒有重新計算 \(B\) 和 \(A\)。</li>
+<li>將梯形面積寫錯。正確公式為
+\[
+   A=\frac{(b+B)y}{2}=by+my^2.
+   \]</li>
+<li>忘記臨界流條件中的 \(A^3\) 是三次方。</li>
+<li>單位不一致。本題全部使用公制，因此
+\[
+   Q: \mathrm{m^3/s},\quad
+   b,B,y: \mathrm{m},\quad
+   g: \mathrm{m/s^2}.
+   \]</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-orgb06b499" class="outline-2">
+<h2 id="orgb06b499"><span class="section-number-2">12.</span> 課後練習</h2>
+<div class="outline-text-2" id="text-12">
+<p>
+一梯形渠道底寬為
+</p>
+
+<p>
+\[
+b=3.0~\mathrm{m},
+\]
+</p>
+
+<p>
+邊坡為
+</p>
+
+<p>
+\[
+m=2.0,
+\]
+</p>
+
+<p>
+流量為
+</p>
+
+<p>
+\[
+Q=18.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+取
+</p>
+
+<p>
+\[
+g=9.81~\mathrm{m/s^2}.
+\]
+</p>
+
+<p>
+請使用一般計算機，以試誤法求其臨界水深 \(y_c\)。
+</p>
+
+<p>
+提示：
+</p>
+
+<ol class="org-ol">
+<li>先寫出
+\[
+   B=b+2my.
+   \]</li>
+
+<li>再寫出
+\[
+   A=by+my^2.
+   \]</li>
+
+<li>建立
+\[
+   f(y)=\frac{Q^2B}{gA^3}-1.
+   \]</li>
+
+<li>找出 \(f(y)\) 由正變負的區間，再逐步縮小。</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Meng-Yu Lin</p>
+<p class="date">Created: 2026-06-09 二 13:03</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
