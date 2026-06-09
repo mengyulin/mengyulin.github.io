@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-09 二 13:03 -->
+<!-- 2026-06-09 二 18:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>梯形渠道臨界水深之試誤計算</title>
@@ -53,29 +53,33 @@
 </script>
 </head>
 <body>
-<div id="content" class="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
 <h1 class="title">梯形渠道臨界水深之試誤計算</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org26228c1">1. 教學目標</a></li>
-<li><a href="#org5ac7775">2. 題目</a></li>
-<li><a href="#org83e4043">3. 梯形渠道的幾何關係</a></li>
-<li><a href="#org5832654">4. 臨界流條件</a></li>
-<li><a href="#orgacf16bc">5. 第一次粗略試算</a></li>
-<li><a href="#org9b3c496">6. 縮小範圍</a></li>
-<li><a href="#orgcfb8d49">7. 繼續用二分法逼近</a></li>
-<li><a href="#orgf679d9f">8. 給學生的計算流程</a></li>
-<li><a href="#org0cfb475">9. 為什麼可以用正負號判斷？</a></li>
-<li><a href="#orgd5d812a">10. 教學提醒</a></li>
-<li><a href="#orge8aeb7e">11. 常見錯誤</a></li>
-<li><a href="#orgb06b499">12. 課後練習</a></li>
+<li><a href="#org3bf0f4e">1. 教學目標</a></li>
+<li><a href="#org6ad981f">2. 題目</a></li>
+<li><a href="#orgb9ac67d">3. 梯形渠道的幾何關係</a></li>
+<li><a href="#org986624a">4. 臨界流條件</a></li>
+<li><a href="#orgfe4c78e">5. 第一次粗略試算</a></li>
+<li><a href="#org8879fd5">6. 縮小範圍</a></li>
+<li><a href="#org357c603">7. 繼續用二分法逼近</a></li>
+<li><a href="#orga8d959c">8. 給學生的計算流程</a></li>
+<li><a href="#org5c16211">9. 為什麼可以用正負號判斷？</a></li>
+<li><a href="#orgfa0be28">10. 教學提醒</a></li>
+<li><a href="#orgabd65d9">11. 常見錯誤</a></li>
+<li><a href="#orgf7b03fe">12. 課後練習</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org26228c1" class="outline-2">
-<h2 id="org26228c1"><span class="section-number-2">1.</span> 教學目標</h2>
+<div id="outline-container-org3bf0f4e" class="outline-2">
+<h2 id="org3bf0f4e"><span class="section-number-2">1.</span> 教學目標</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本講義說明如何使用一般計算機，以試誤法（try and error）或二分法
@@ -103,8 +107,8 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org5ac7775" class="outline-2">
-<h2 id="org5ac7775"><span class="section-number-2">2.</span> 題目</h2>
+<div id="outline-container-org6ad981f" class="outline-2">
+<h2 id="org6ad981f"><span class="section-number-2">2.</span> 題目</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 一梯形渠道之底寬為
@@ -151,8 +155,8 @@ g=9.81~\mathrm{m/s^2}.
 </p>
 </div>
 </div>
-<div id="outline-container-org83e4043" class="outline-2">
-<h2 id="org83e4043"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
+<div id="outline-container-orgb9ac67d" class="outline-2">
+<h2 id="orgb9ac67d"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 若水深為 \(y\)，則水面寬為
@@ -233,8 +237,8 @@ A=2.0y+1.5y^2.
 </p>
 </div>
 </div>
-<div id="outline-container-org5832654" class="outline-2">
-<h2 id="org5832654"><span class="section-number-2">4.</span> 臨界流條件</h2>
+<div id="outline-container-org986624a" class="outline-2">
+<h2 id="org986624a"><span class="section-number-2">4.</span> 臨界流條件</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 一般渠道的臨界流條件可寫為
@@ -320,8 +324,8 @@ f(y)=
 </p>
 </div>
 </div>
-<div id="outline-container-orgacf16bc" class="outline-2">
-<h2 id="orgacf16bc"><span class="section-number-2">5.</span> 第一次粗略試算</h2>
+<div id="outline-container-orgfe4c78e" class="outline-2">
+<h2 id="orgfe4c78e"><span class="section-number-2">5.</span> 第一次粗略試算</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 先猜幾個水深，計算 \(B\)、\(A\)、\(f(y)\)。
@@ -413,8 +417,8 @@ f(1.10) < 0.
 </p>
 </div>
 </div>
-<div id="outline-container-org9b3c496" class="outline-2">
-<h2 id="org9b3c496"><span class="section-number-2">6.</span> 縮小範圍</h2>
+<div id="outline-container-org8879fd5" class="outline-2">
+<h2 id="org8879fd5"><span class="section-number-2">6.</span> 縮小範圍</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 接著試中間值
@@ -501,8 +505,8 @@ f(1.05) < 0,
 </p>
 </div>
 </div>
-<div id="outline-container-orgcfb8d49" class="outline-2">
-<h2 id="orgcfb8d49"><span class="section-number-2">7.</span> 繼續用二分法逼近</h2>
+<div id="outline-container-org357c603" class="outline-2">
+<h2 id="org357c603"><span class="section-number-2">7.</span> 繼續用二分法逼近</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 繼續在目前的區間內試算。每次選擇區間中間附近的水深，重新計算
@@ -633,8 +637,8 @@ y_c \approx 1.048~\mathrm{m}
 </p>
 </div>
 </div>
-<div id="outline-container-orgf679d9f" class="outline-2">
-<h2 id="orgf679d9f"><span class="section-number-2">8.</span> 給學生的計算流程</h2>
+<div id="outline-container-orga8d959c" class="outline-2">
+<h2 id="orga8d959c"><span class="section-number-2">8.</span> 給學生的計算流程</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 使用一般計算機時，可按照以下步驟：
@@ -673,8 +677,8 @@ y_c \approx 1.048~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-org0cfb475" class="outline-2">
-<h2 id="org0cfb475"><span class="section-number-2">9.</span> 為什麼可以用正負號判斷？</h2>
+<div id="outline-container-org5c16211" class="outline-2">
+<h2 id="org5c16211"><span class="section-number-2">9.</span> 為什麼可以用正負號判斷？</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 我們要求的是
@@ -714,8 +718,8 @@ f(y)=0.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd5d812a" class="outline-2">
-<h2 id="orgd5d812a"><span class="section-number-2">10.</span> 教學提醒</h2>
+<div id="outline-container-orgfa0be28" class="outline-2">
+<h2 id="orgfa0be28"><span class="section-number-2">10.</span> 教學提醒</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 梯形渠道與矩形渠道最大的差異是：
@@ -766,8 +770,8 @@ B,\quad A,\quad f(y).
 </ul>
 </div>
 </div>
-<div id="outline-container-orge8aeb7e" class="outline-2">
-<h2 id="orge8aeb7e"><span class="section-number-2">11.</span> 常見錯誤</h2>
+<div id="outline-container-orgabd65d9" class="outline-2">
+<h2 id="orgabd65d9"><span class="section-number-2">11.</span> 常見錯誤</h2>
 <div class="outline-text-2" id="text-11">
 <ol class="org-ol">
 <li>將水面寬 \(B\) 誤用為底寬 \(b\)。</li>
@@ -786,8 +790,8 @@ B,\quad A,\quad f(y).
 </ol>
 </div>
 </div>
-<div id="outline-container-orgb06b499" class="outline-2">
-<h2 id="orgb06b499"><span class="section-number-2">12.</span> 課後練習</h2>
+<div id="outline-container-orgf7b03fe" class="outline-2">
+<h2 id="orgf7b03fe"><span class="section-number-2">12.</span> 課後練習</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 一梯形渠道底寬為
@@ -860,7 +864,7 @@ g=9.81~\mathrm{m/s^2}.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-09 二 13:03</p>
+<p class="date">Created: 2026-06-09 二 18:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

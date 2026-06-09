@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-09 二 13:03 -->
+<!-- 2026-06-09 二 18:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Specific Energy 與 Alternate Depth 的試誤計算</title>
@@ -53,44 +53,48 @@
 </script>
 </head>
 <body>
-<div id="content" class="content">
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
 <h1 class="title">Specific Energy 與 Alternate Depth 的試誤計算</h1>
 <div id="table-of-contents" role="doc-toc">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org48446d4">1. 教學目標</a></li>
-<li><a href="#org0d8cb98">2. 題目</a></li>
-<li><a href="#org89efafa">3. 基本理論</a>
+<li><a href="#orga7fa224">1. 教學目標</a></li>
+<li><a href="#org1914f05">2. 題目</a></li>
+<li><a href="#org1f3d547">3. 基本理論</a>
 <ul>
-<li><a href="#org4ff5151">3.1. Specific energy</a></li>
-<li><a href="#org5c3663e">3.2. 臨界水深</a></li>
+<li><a href="#org8126898">3.1. Specific energy</a></li>
+<li><a href="#org06dba9e">3.2. 臨界水深</a></li>
 </ul>
 </li>
-<li><a href="#orge646a00">4. 解題步驟</a>
+<li><a href="#orgdfacdd9">4. 解題步驟</a>
 <ul>
-<li><a href="#orgbdddd49">4.1. Step 1：計算單位寬流量</a></li>
-<li><a href="#orge3b40a6">4.2. Step 2：計算臨界水深</a></li>
-<li><a href="#orgf6dddd3">4.3. Step 3：計算已知水深的 specific energy</a></li>
-<li><a href="#orge1e3665">4.4. Step 4：建立求根方程式</a></li>
+<li><a href="#org68c815f">4.1. Step 1：計算單位寬流量</a></li>
+<li><a href="#orgc36d66c">4.2. Step 2：計算臨界水深</a></li>
+<li><a href="#org03d33d0">4.3. Step 3：計算已知水深的 specific energy</a></li>
+<li><a href="#orgbe9dc65">4.4. Step 4：建立求根方程式</a></li>
 </ul>
 </li>
-<li><a href="#org8ae6464">5. 使用一般計算機的試誤法</a>
+<li><a href="#orgf825ad8">5. 使用一般計算機的試誤法</a>
 <ul>
-<li><a href="#orgb095f68">5.1. Step 1：先粗略試算</a></li>
-<li><a href="#org11de464">5.2. Step 2：縮小區間</a></li>
-<li><a href="#org38e2b59">5.3. Step 3：繼續逼近</a></li>
+<li><a href="#orgff0a24f">5.1. Step 1：先粗略試算</a></li>
+<li><a href="#org28e3deb">5.2. Step 2：縮小區間</a></li>
+<li><a href="#orgd4febf0">5.3. Step 3：繼續逼近</a></li>
 </ul>
 </li>
-<li><a href="#orga43b763">6. 結果檢查與物理意義</a></li>
-<li><a href="#org2d81f7a">7. 一般計算機操作建議</a></li>
-<li><a href="#org9f8a1b2">8. 常見錯誤</a></li>
-<li><a href="#orgd1cb485">9. 課後練習</a></li>
+<li><a href="#org05955c0">6. 結果檢查與物理意義</a></li>
+<li><a href="#org5cf932b">7. 一般計算機操作建議</a></li>
+<li><a href="#orge65261b">8. 常見錯誤</a></li>
+<li><a href="#org2804168">9. 課後練習</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org48446d4" class="outline-2">
-<h2 id="org48446d4"><span class="section-number-2">1.</span> 教學目標</h2>
+<div id="outline-container-orga7fa224" class="outline-2">
+<h2 id="orga7fa224"><span class="section-number-2">1.</span> 教學目標</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本講義說明如何在矩形渠道中，利用 specific energy 的分析，
@@ -110,8 +114,8 @@
 </ol>
 </div>
 </div>
-<div id="outline-container-org0d8cb98" class="outline-2">
-<h2 id="org0d8cb98"><span class="section-number-2">2.</span> 題目</h2>
+<div id="outline-container-org1914f05" class="outline-2">
+<h2 id="org1914f05"><span class="section-number-2">2.</span> 題目</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 一矩形明渠之渠寬為
@@ -171,12 +175,12 @@ g = 9.81~\mathrm{m/s^2}.
 </ol>
 </div>
 </div>
-<div id="outline-container-org89efafa" class="outline-2">
-<h2 id="org89efafa"><span class="section-number-2">3.</span> 基本理論</h2>
+<div id="outline-container-org1f3d547" class="outline-2">
+<h2 id="org1f3d547"><span class="section-number-2">3.</span> 基本理論</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org4ff5151" class="outline-3">
-<h3 id="org4ff5151"><span class="section-number-3">3.1.</span> Specific energy</h3>
+<div id="outline-container-org8126898" class="outline-3">
+<h3 id="org8126898"><span class="section-number-3">3.1.</span> Specific energy</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 矩形渠道之單位寬流量為
@@ -235,8 +239,8 @@ y_2+\frac{q^2}{2gy_2^2}=E_1.
 </p>
 </div>
 </div>
-<div id="outline-container-org5c3663e" class="outline-3">
-<h3 id="org5c3663e"><span class="section-number-3">3.2.</span> 臨界水深</h3>
+<div id="outline-container-org06dba9e" class="outline-3">
+<h3 id="org06dba9e"><span class="section-number-3">3.2.</span> 臨界水深</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 矩形渠道的臨界水深為
@@ -284,12 +288,12 @@ y_2 > y_c
 </div>
 </div>
 </div>
-<div id="outline-container-orge646a00" class="outline-2">
-<h2 id="orge646a00"><span class="section-number-2">4.</span> 解題步驟</h2>
+<div id="outline-container-orgdfacdd9" class="outline-2">
+<h2 id="orgdfacdd9"><span class="section-number-2">4.</span> 解題步驟</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-orgbdddd49" class="outline-3">
-<h3 id="orgbdddd49"><span class="section-number-3">4.1.</span> Step 1：計算單位寬流量</h3>
+<div id="outline-container-org68c815f" class="outline-3">
+<h3 id="org68c815f"><span class="section-number-3">4.1.</span> Step 1：計算單位寬流量</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 \[
@@ -302,8 +306,8 @@ q=\frac{Q}{b}
 </p>
 </div>
 </div>
-<div id="outline-container-orge3b40a6" class="outline-3">
-<h3 id="orge3b40a6"><span class="section-number-3">4.2.</span> Step 2：計算臨界水深</h3>
+<div id="outline-container-orgc36d66c" class="outline-3">
+<h3 id="orgc36d66c"><span class="section-number-3">4.2.</span> Step 2：計算臨界水深</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 \[
@@ -350,8 +354,8 @@ y_1=1.80~\mathrm{m}>y_c,
 </p>
 </div>
 </div>
-<div id="outline-container-orgf6dddd3" class="outline-3">
-<h3 id="orgf6dddd3"><span class="section-number-3">4.3.</span> Step 3：計算已知水深的 specific energy</h3>
+<div id="outline-container-org03d33d0" class="outline-3">
+<h3 id="org03d33d0"><span class="section-number-3">4.3.</span> Step 3：計算已知水深的 specific energy</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 \[
@@ -372,8 +376,8 @@ E_1 \approx 1.9416~\mathrm{m}.
 </p>
 </div>
 </div>
-<div id="outline-container-orge1e3665" class="outline-3">
-<h3 id="orge1e3665"><span class="section-number-3">4.4.</span> Step 4：建立求根方程式</h3>
+<div id="outline-container-orgbe9dc65" class="outline-3">
+<h3 id="orgbe9dc65"><span class="section-number-3">4.4.</span> Step 4：建立求根方程式</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 令
@@ -438,12 +442,12 @@ f(y)=0.
 </div>
 </div>
 </div>
-<div id="outline-container-org8ae6464" class="outline-2">
-<h2 id="org8ae6464"><span class="section-number-2">5.</span> 使用一般計算機的試誤法</h2>
+<div id="outline-container-orgf825ad8" class="outline-2">
+<h2 id="orgf825ad8"><span class="section-number-2">5.</span> 使用一般計算機的試誤法</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgb095f68" class="outline-3">
-<h3 id="orgb095f68"><span class="section-number-3">5.1.</span> Step 1：先粗略試算</h3>
+<div id="outline-container-orgff0a24f" class="outline-3">
+<h3 id="orgff0a24f"><span class="section-number-3">5.1.</span> Step 1：先粗略試算</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 先在 \(0 < y <0.972\) 之間選幾個值，計算 \(E(y)\) 或 \(f(y)\)。
@@ -520,8 +524,8 @@ f(0.50) > 0,\qquad f(0.60) < 0,
 </p>
 </div>
 </div>
-<div id="outline-container-org11de464" class="outline-3">
-<h3 id="org11de464"><span class="section-number-3">5.2.</span> Step 2：縮小區間</h3>
+<div id="outline-container-org28e3deb" class="outline-3">
+<h3 id="org28e3deb"><span class="section-number-3">5.2.</span> Step 2：縮小區間</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 接著試中間附近的值。
@@ -582,8 +586,8 @@ f(0.50) > 0,\qquad f(0.60) < 0,
 </p>
 </div>
 </div>
-<div id="outline-container-org38e2b59" class="outline-3">
-<h3 id="org38e2b59"><span class="section-number-3">5.3.</span> Step 3：繼續逼近</h3>
+<div id="outline-container-orgd4febf0" class="outline-3">
+<h3 id="orgd4febf0"><span class="section-number-3">5.3.</span> Step 3：繼續逼近</h3>
 <div class="outline-text-3" id="text-5-3">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 <caption class="t-above"><span class="table-number">Table 3:</span> 進一步逼近 alternate depth</caption>
@@ -672,8 +676,8 @@ f(0.50) > 0,\qquad f(0.60) < 0,
 </div>
 </div>
 </div>
-<div id="outline-container-orga43b763" class="outline-2">
-<h2 id="orga43b763"><span class="section-number-2">6.</span> 結果檢查與物理意義</h2>
+<div id="outline-container-org05955c0" class="outline-2">
+<h2 id="org05955c0"><span class="section-number-2">6.</span> 結果檢查與物理意義</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 本題得到
@@ -739,8 +743,8 @@ y_2\approx 0.581~\mathrm{m}
 </ul>
 </div>
 </div>
-<div id="outline-container-org2d81f7a" class="outline-2">
-<h2 id="org2d81f7a"><span class="section-number-2">7.</span> 一般計算機操作建議</h2>
+<div id="outline-container-org5cf932b" class="outline-2">
+<h2 id="org5cf932b"><span class="section-number-2">7.</span> 一般計算機操作建議</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 若只能使用一般計算機，可依下列方式進行：
@@ -761,8 +765,8 @@ y_2\approx 0.581~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-org9f8a1b2" class="outline-2">
-<h2 id="org9f8a1b2"><span class="section-number-2">8.</span> 常見錯誤</h2>
+<div id="outline-container-orge65261b" class="outline-2">
+<h2 id="orge65261b"><span class="section-number-2">8.</span> 常見錯誤</h2>
 <div class="outline-text-2" id="text-8">
 <ol class="org-ol">
 <li>沒有先計算 \(y_c\)，導致在錯誤區間找根。</li>
@@ -776,8 +780,8 @@ y_2\approx 0.581~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd1cb485" class="outline-2">
-<h2 id="orgd1cb485"><span class="section-number-2">9.</span> 課後練習</h2>
+<div id="outline-container-org2804168" class="outline-2">
+<h2 id="org2804168"><span class="section-number-2">9.</span> 課後練習</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 同一矩形渠道中，令
@@ -813,7 +817,7 @@ y_1=0.70~\mathrm{m},
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-09 二 13:03</p>
+<p class="date">Created: 2026-06-09 二 18:08</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
