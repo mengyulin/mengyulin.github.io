@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:24 -->
+<!-- 2026-06-14 日 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Fenton 直接迭代法計算梯形渠道正規水深</title>
@@ -63,33 +63,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgdb023a8">1. 教學目標</a></li>
-<li><a href="#orgc97257f">2. 正規水深問題</a></li>
-<li><a href="#orgcd3be1f">3. Fenton 直接迭代法的想法</a></li>
-<li><a href="#orgba3d190">4. 為什麼這個方法通常會收斂很快？</a></li>
-<li><a href="#orgdae0659">5. 初始值的選取</a></li>
-<li><a href="#org93336e6">6. 梯形渠道的幾何關係</a></li>
-<li><a href="#org9f5fa19">7. 梯形渠道的 Fenton 迭代式</a></li>
-<li><a href="#orgf7c156c">8. 計算流程整理</a></li>
-<li><a href="#org905fd9f">9. 例題</a></li>
-<li><a href="#org246a232">10. 例題解答</a>
+<li><a href="#orgeceeeb8">1. 教學目標</a></li>
+<li><a href="#org7922bb6">2. 正規水深問題</a></li>
+<li><a href="#org034c556">3. Fenton 直接迭代法的想法</a></li>
+<li><a href="#orga222983">4. 為什麼這個方法通常會收斂很快？</a></li>
+<li><a href="#org8783b6e">5. 初始值的選取</a></li>
+<li><a href="#org1199651">6. 梯形渠道的幾何關係</a></li>
+<li><a href="#org8825b1c">7. 梯形渠道的 Fenton 迭代式</a></li>
+<li><a href="#org7b84c63">8. 計算流程整理</a></li>
+<li><a href="#org9c979bf">9. 例題</a></li>
+<li><a href="#org0e894a9">10. 例題解答</a>
 <ul>
-<li><a href="#org30c418a">10.1. Step 1：寫出梯形渠道幾何式</a></li>
-<li><a href="#org1306253">10.2. Step 2：計算常數 \(C\)</a></li>
-<li><a href="#org8506a88">10.3. Step 3：寫出本題的迭代公式</a></li>
-<li><a href="#orgd563937">10.4. Step 4：選取初始值</a></li>
-<li><a href="#orgf3fb1c8">10.5. Step 5：逐步迭代</a></li>
+<li><a href="#org6aba04a">10.1. Step 1：寫出梯形渠道幾何式</a></li>
+<li><a href="#orge289fea">10.2. Step 2：計算常數 \(C\)</a></li>
+<li><a href="#org8735d76">10.3. Step 3：寫出本題的迭代公式</a></li>
+<li><a href="#org35132e8">10.4. Step 4：選取初始值</a></li>
+<li><a href="#org3a59443">10.5. Step 5：逐步迭代</a></li>
 </ul>
 </li>
-<li><a href="#org490103b">11. 與 try and error 方法的比較</a></li>
-<li><a href="#orge1e1ef3">12. 學習提醒</a></li>
-<li><a href="#org1c471ad">13. 結論</a></li>
-<li><a href="#org562592f">14. 參考資料</a></li>
+<li><a href="#org7edd837">11. 與 try and error 方法的比較</a></li>
+<li><a href="#orgd7a31cc">12. 學習提醒</a></li>
+<li><a href="#orga6130f7">13. 結論</a></li>
+<li><a href="#org5326b60">14. 參考資料</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdb023a8" class="outline-2">
-<h2 id="orgdb023a8"><span class="section-number-2">1.</span> 教學目標</h2>
+<div id="outline-container-orgeceeeb8" class="outline-2">
+<h2 id="orgeceeeb8"><span class="section-number-2">1.</span> 教學目標</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本講義說明如何使用 Fenton 所提出的直接迭代法，計算梯形渠道的正規水深
@@ -125,8 +125,8 @@ y_{i+1}=F(y_i).
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc97257f" class="outline-2">
-<h2 id="orgc97257f"><span class="section-number-2">2.</span> 正規水深問題</h2>
+<div id="outline-container-org7922bb6" class="outline-2">
+<h2 id="org7922bb6"><span class="section-number-2">2.</span> 正規水深問題</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 對一均勻流而言，水深稱為正規水深 \(y_n\)。
@@ -196,8 +196,8 @@ S_0^{1/2}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgcd3be1f" class="outline-2">
-<h2 id="orgcd3be1f"><span class="section-number-2">3.</span> Fenton 直接迭代法的想法</h2>
+<div id="outline-container-org034c556" class="outline-2">
+<h2 id="org034c556"><span class="section-number-2">3.</span> Fenton 直接迭代法的想法</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Fenton 方法的關鍵是將 Manning 公式改寫成容易迭代的形式。
@@ -299,8 +299,8 @@ y_{i+1}
 </p>
 </div>
 </div>
-<div id="outline-container-orgba3d190" class="outline-2">
-<h2 id="orgba3d190"><span class="section-number-2">4.</span> 為什麼這個方法通常會收斂很快？</h2>
+<div id="outline-container-orga222983" class="outline-2">
+<h2 id="orga222983"><span class="section-number-2">4.</span> 為什麼這個方法通常會收斂很快？</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 在許多渠道中，尤其是寬度相對水深較大的渠道，\(A/y\) 可以視為一種
@@ -328,8 +328,8 @@ y_{i+1}
 </p>
 </div>
 </div>
-<div id="outline-container-orgdae0659" class="outline-2">
-<h2 id="orgdae0659"><span class="section-number-2">5.</span> 初始值的選取</h2>
+<div id="outline-container-org8783b6e" class="outline-2">
+<h2 id="org8783b6e"><span class="section-number-2">5.</span> 初始值的選取</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Fenton 建議先取一個代表性寬度，並用寬渠道近似估計初始水深。
@@ -393,8 +393,8 @@ B_{\mathrm{est}}=b.
 </p>
 </div>
 </div>
-<div id="outline-container-org93336e6" class="outline-2">
-<h2 id="org93336e6"><span class="section-number-2">6.</span> 梯形渠道的幾何關係</h2>
+<div id="outline-container-org1199651" class="outline-2">
+<h2 id="org1199651"><span class="section-number-2">6.</span> 梯形渠道的幾何關係</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 對梯形渠道，若底寬為 \(b\)，單側邊坡為 \(m\)，水深為 \(y\)，則水面寬為
@@ -467,8 +467,8 @@ P=b+2y\sqrt{1+m^2}.
 </p>
 </div>
 </div>
-<div id="outline-container-org9f5fa19" class="outline-2">
-<h2 id="org9f5fa19"><span class="section-number-2">7.</span> 梯形渠道的 Fenton 迭代式</h2>
+<div id="outline-container-org8825b1c" class="outline-2">
+<h2 id="org8825b1c"><span class="section-number-2">7.</span> 梯形渠道的 Fenton 迭代式</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 將梯形渠道的幾何關係代入 Fenton 公式：
@@ -555,8 +555,8 @@ C
 </p>
 </div>
 </div>
-<div id="outline-container-orgf7c156c" class="outline-2">
-<h2 id="orgf7c156c"><span class="section-number-2">8.</span> 計算流程整理</h2>
+<div id="outline-container-org7b84c63" class="outline-2">
+<h2 id="org7b84c63"><span class="section-number-2">8.</span> 計算流程整理</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 使用一般計算機時，可按照下列步驟：
@@ -663,8 +663,8 @@ C
 </ol>
 </div>
 </div>
-<div id="outline-container-org905fd9f" class="outline-2">
-<h2 id="org905fd9f"><span class="section-number-2">9.</span> 例題</h2>
+<div id="outline-container-org9c979bf" class="outline-2">
+<h2 id="org9c979bf"><span class="section-number-2">9.</span> 例題</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 一梯形渠道之底寬為
@@ -721,12 +721,12 @@ Q=15.0~\mathrm{m^3/s}.
 </p>
 </div>
 </div>
-<div id="outline-container-org246a232" class="outline-2">
-<h2 id="org246a232"><span class="section-number-2">10.</span> 例題解答</h2>
+<div id="outline-container-org0e894a9" class="outline-2">
+<h2 id="org0e894a9"><span class="section-number-2">10.</span> 例題解答</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-org30c418a" class="outline-3">
-<h3 id="org30c418a"><span class="section-number-3">10.1.</span> Step 1：寫出梯形渠道幾何式</h3>
+<div id="outline-container-org6aba04a" class="outline-3">
+<h3 id="org6aba04a"><span class="section-number-3">10.1.</span> Step 1：寫出梯形渠道幾何式</h3>
 <div class="outline-text-3" id="text-10-1">
 <p>
 本題中
@@ -834,8 +834,8 @@ P=3.0+3.6056y.
 </p>
 </div>
 </div>
-<div id="outline-container-org1306253" class="outline-3">
-<h3 id="org1306253"><span class="section-number-3">10.2.</span> Step 2：計算常數 \(C\)</h3>
+<div id="outline-container-orge289fea" class="outline-3">
+<h3 id="orge289fea"><span class="section-number-3">10.2.</span> Step 2：計算常數 \(C\)</h3>
 <div class="outline-text-3" id="text-10-2">
 <p>
 \[
@@ -900,8 +900,8 @@ C\approx 2.8189.
 </p>
 </div>
 </div>
-<div id="outline-container-org8506a88" class="outline-3">
-<h3 id="org8506a88"><span class="section-number-3">10.3.</span> Step 3：寫出本題的迭代公式</h3>
+<div id="outline-container-org8735d76" class="outline-3">
+<h3 id="org8735d76"><span class="section-number-3">10.3.</span> Step 3：寫出本題的迭代公式</h3>
 <div class="outline-text-3" id="text-10-3">
 <p>
 \[
@@ -932,8 +932,8 @@ y_{i+1}
 </p>
 </div>
 </div>
-<div id="outline-container-orgd563937" class="outline-3">
-<h3 id="orgd563937"><span class="section-number-3">10.4.</span> Step 4：選取初始值</h3>
+<div id="outline-container-org35132e8" class="outline-3">
+<h3 id="org35132e8"><span class="section-number-3">10.4.</span> Step 4：選取初始值</h3>
 <div class="outline-text-3" id="text-10-4">
 <p>
 取代表性寬度為底寬：
@@ -994,8 +994,8 @@ y_0\approx 1.4581~\mathrm{m}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf3fb1c8" class="outline-3">
-<h3 id="orgf3fb1c8"><span class="section-number-3">10.5.</span> Step 5：逐步迭代</h3>
+<div id="outline-container-org3a59443" class="outline-3">
+<h3 id="org3a59443"><span class="section-number-3">10.5.</span> Step 5：逐步迭代</h3>
 <div class="outline-text-3" id="text-10-5">
 <p>
 使用
@@ -1113,8 +1113,8 @@ y_n \approx 1.289~\mathrm{m}
 </div>
 </div>
 </div>
-<div id="outline-container-org490103b" class="outline-2">
-<h2 id="org490103b"><span class="section-number-2">11.</span> 與 try and error 方法的比較</h2>
+<div id="outline-container-org7edd837" class="outline-2">
+<h2 id="org7edd837"><span class="section-number-2">11.</span> 與 try and error 方法的比較</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 前一份講義中的 try and error 方法是：
@@ -1176,8 +1176,8 @@ Fenton 方法則是：
 </p>
 </div>
 </div>
-<div id="outline-container-orge1e1ef3" class="outline-2">
-<h2 id="orge1e1ef3"><span class="section-number-2">12.</span> 學習提醒</h2>
+<div id="outline-container-orgd7a31cc" class="outline-2">
+<h2 id="orgd7a31cc"><span class="section-number-2">12.</span> 學習提醒</h2>
 <div class="outline-text-2" id="text-12">
 <ol class="org-ol">
 <li>初始估計式中的 \(B_{\mathrm{est}}\) 是代表性寬度，不一定等於實際水面寬。</li>
@@ -1192,8 +1192,8 @@ Fenton 方法則是：
 </ol>
 </div>
 </div>
-<div id="outline-container-org1c471ad" class="outline-2">
-<h2 id="org1c471ad"><span class="section-number-2">13.</span> 結論</h2>
+<div id="outline-container-orga6130f7" class="outline-2">
+<h2 id="orga6130f7"><span class="section-number-2">13.</span> 結論</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 Fenton 直接迭代法將 Manning 正規水深問題整理成
@@ -1228,8 +1228,8 @@ y_{i+1}
 </p>
 </div>
 </div>
-<div id="outline-container-org562592f" class="outline-2">
-<h2 id="org562592f"><span class="section-number-2">14.</span> 參考資料</h2>
+<div id="outline-container-org5326b60" class="outline-2">
+<h2 id="org5326b60"><span class="section-number-2">14.</span> 參考資料</h2>
 <div class="outline-text-2" id="text-14">
 <ul class="org-ul">
 <li>John D. Fenton, <i>River Engineering</i>, Section 2.8, Computation of normal flow.</li>
@@ -1239,7 +1239,7 @@ y_{i+1}
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:24</p>
+<p class="date">Created: 2026-06-14 日 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

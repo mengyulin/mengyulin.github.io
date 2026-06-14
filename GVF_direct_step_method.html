@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:24 -->
+<!-- 2026-06-14 日 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Direct Step Method</title>
@@ -63,43 +63,43 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org4e9520b">1. Direct Step Method 的基本想法</a></li>
-<li><a href="#org6e76b4d">2. 能量方程式</a></li>
-<li><a href="#orgb375725">3. 比能 \(E\) 的計算</a></li>
-<li><a href="#orge02995d">4. 摩擦坡度 \(S_f\) 的計算</a></li>
-<li><a href="#org8df7a14">5. 平均摩擦坡度 \(\bar{S}_f\)</a></li>
-<li><a href="#orgc55f379">6. 計算步驟</a>
+<li><a href="#org82655f1">1. Direct Step Method 的基本想法</a></li>
+<li><a href="#org95d4182">2. 能量方程式</a></li>
+<li><a href="#org4b3f1bd">3. 比能 \(E\) 的計算</a></li>
+<li><a href="#orgc9e0534">4. 摩擦坡度 \(S_f\) 的計算</a></li>
+<li><a href="#orge3b345b">5. 平均摩擦坡度 \(\bar{S}_f\)</a></li>
+<li><a href="#orgebe87f8">6. 計算步驟</a>
 <ul>
-<li><a href="#org8d54829">6.1. Step 1：給定已知條件</a></li>
-<li><a href="#orgc55378e">6.2. Step 2：選擇下一個水深</a></li>
-<li><a href="#org5c669c4">6.3. Step 3：計算兩斷面的比能</a></li>
-<li><a href="#org83d6321">6.4. Step 4：計算兩斷面的摩擦坡度</a></li>
-<li><a href="#org3be696c">6.5. Step 5：計算兩水深之間的距離</a></li>
-<li><a href="#org2fc82d6">6.6. Step 6：重複計算水面線</a></li>
+<li><a href="#orgb9796bb">6.1. Step 1：給定已知條件</a></li>
+<li><a href="#orga65c28d">6.2. Step 2：選擇下一個水深</a></li>
+<li><a href="#org6c58fa7">6.3. Step 3：計算兩斷面的比能</a></li>
+<li><a href="#org124d04a">6.4. Step 4：計算兩斷面的摩擦坡度</a></li>
+<li><a href="#org480d9d7">6.5. Step 5：計算兩水深之間的距離</a></li>
+<li><a href="#org9a0a245">6.6. Step 6：重複計算水面線</a></li>
 </ul>
 </li>
-<li><a href="#orgae20b38">7. 表格計算格式</a></li>
-<li><a href="#orga28a11d">8. 計算方向的重要性</a>
+<li><a href="#org07ffbc4">7. 表格計算格式</a></li>
+<li><a href="#org1c0de91">8. 計算方向的重要性</a>
 <ul>
-<li><a href="#org3048434">8.1. 亞臨界流 subcritical flow</a></li>
-<li><a href="#orgb43c205">8.2. 超臨界流 supercritical flow</a></li>
+<li><a href="#org87e254c">8.1. 亞臨界流 subcritical flow</a></li>
+<li><a href="#orgedc07bc">8.2. 超臨界流 supercritical flow</a></li>
 </ul>
 </li>
-<li><a href="#orge0f4509">9. Direct Step Method 的優點</a></li>
-<li><a href="#orgb05bd57">10. Direct Step Method 的限制</a>
+<li><a href="#org470731f">9. Direct Step Method 的優點</a></li>
+<li><a href="#orgd976117">10. Direct Step Method 的限制</a>
 <ul>
-<li><a href="#org8c40d8d">10.1. 不適合非稜柱渠道</a></li>
-<li><a href="#org4132eb5">10.2. 不方便處理已知斷面位置</a></li>
-<li><a href="#org53ee4b9">10.3. 接近臨界水深時容易出現數值困難</a></li>
+<li><a href="#org5ef95d7">10.1. 不適合非稜柱渠道</a></li>
+<li><a href="#org559781c">10.2. 不方便處理已知斷面位置</a></li>
+<li><a href="#orge177ea9">10.3. 接近臨界水深時容易出現數值困難</a></li>
 </ul>
 </li>
-<li><a href="#orga0d0aa0">11. 與 Standard Step Method 的差異</a></li>
-<li><a href="#org18a0619">12. 教學上的簡短說法</a></li>
+<li><a href="#orgbd6f851">11. 與 Standard Step Method 的差異</a></li>
+<li><a href="#org638e6f5">12. 教學上的簡短說法</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org4e9520b" class="outline-2">
-<h2 id="org4e9520b"><span class="section-number-2">1.</span> Direct Step Method 的基本想法</h2>
+<div id="outline-container-org82655f1" class="outline-2">
+<h2 id="org82655f1"><span class="section-number-2">1.</span> Direct Step Method 的基本想法</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Direct Step Method（直接步進法）是用來計算稜柱渠道中 GVF（gradually varied flow, 漸變流）水面線的方法。
@@ -140,8 +140,8 @@ y_1 \rightarrow y_2
 </p>
 </div>
 </div>
-<div id="outline-container-org6e76b4d" class="outline-2">
-<h2 id="org6e76b4d"><span class="section-number-2">2.</span> 能量方程式</h2>
+<div id="outline-container-org95d4182" class="outline-2">
+<h2 id="org95d4182"><span class="section-number-2">2.</span> 能量方程式</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 對一段短距離渠道，兩斷面之間的能量方程式可寫成：
@@ -234,8 +234,8 @@ E_2 - E_1 = (S_0-\bar{S}_f)\Delta x
 </p>
 </div>
 </div>
-<div id="outline-container-orgb375725" class="outline-2">
-<h2 id="orgb375725"><span class="section-number-2">3.</span> 比能 \(E\) 的計算</h2>
+<div id="outline-container-org4b3f1bd" class="outline-2">
+<h2 id="org4b3f1bd"><span class="section-number-2">3.</span> 比能 \(E\) 的計算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 對一般渠道，比能為：
@@ -304,8 +304,8 @@ E = y + \frac{1}{2g}\left(\frac{Q}{By}\right)^2
 </p>
 </div>
 </div>
-<div id="outline-container-orge02995d" class="outline-2">
-<h2 id="orge02995d"><span class="section-number-2">4.</span> 摩擦坡度 \(S_f\) 的計算</h2>
+<div id="outline-container-orgc9e0534" class="outline-2">
+<h2 id="orgc9e0534"><span class="section-number-2">4.</span> 摩擦坡度 \(S_f\) 的計算</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 通常使用 Manning 公式：
@@ -366,8 +366,8 @@ R = \frac{A}{P}
 </p>
 </div>
 </div>
-<div id="outline-container-org8df7a14" class="outline-2">
-<h2 id="org8df7a14"><span class="section-number-2">5.</span> 平均摩擦坡度 \(\bar{S}_f\)</h2>
+<div id="outline-container-orge3b345b" class="outline-2">
+<h2 id="orge3b345b"><span class="section-number-2">5.</span> 平均摩擦坡度 \(\bar{S}_f\)</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 Direct Step Method 需要兩斷面之間的平均摩擦坡度。
@@ -412,12 +412,12 @@ S_{f2}=S_f(y_2)
 </p>
 </div>
 </div>
-<div id="outline-container-orgc55f379" class="outline-2">
-<h2 id="orgc55f379"><span class="section-number-2">6.</span> 計算步驟</h2>
+<div id="outline-container-orgebe87f8" class="outline-2">
+<h2 id="orgebe87f8"><span class="section-number-2">6.</span> 計算步驟</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org8d54829" class="outline-3">
-<h3 id="org8d54829"><span class="section-number-3">6.1.</span> Step 1：給定已知條件</h3>
+<div id="outline-container-orgb9796bb" class="outline-3">
+<h3 id="orgb9796bb"><span class="section-number-3">6.1.</span> Step 1：給定已知條件</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 需要知道：
@@ -452,8 +452,8 @@ y_1
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc55378e" class="outline-3">
-<h3 id="orgc55378e"><span class="section-number-3">6.2.</span> Step 2：選擇下一個水深</h3>
+<div id="outline-container-orga65c28d" class="outline-3">
+<h3 id="orga65c28d"><span class="section-number-3">6.2.</span> Step 2：選擇下一個水深</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 Direct Step Method 不是指定 \(\Delta x\)，而是指定水深變化量：
@@ -500,8 +500,8 @@ y_2 = y_1 - \Delta y
 </ul>
 </div>
 </div>
-<div id="outline-container-org5c669c4" class="outline-3">
-<h3 id="org5c669c4"><span class="section-number-3">6.3.</span> Step 3：計算兩斷面的比能</h3>
+<div id="outline-container-org6c58fa7" class="outline-3">
+<h3 id="org6c58fa7"><span class="section-number-3">6.3.</span> Step 3：計算兩斷面的比能</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 分別計算：
@@ -536,8 +536,8 @@ V_2 = \frac{Q}{A_2}
 </p>
 </div>
 </div>
-<div id="outline-container-org83d6321" class="outline-3">
-<h3 id="org83d6321"><span class="section-number-3">6.4.</span> Step 4：計算兩斷面的摩擦坡度</h3>
+<div id="outline-container-org124d04a" class="outline-3">
+<h3 id="org124d04a"><span class="section-number-3">6.4.</span> Step 4：計算兩斷面的摩擦坡度</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 分別計算：
@@ -574,8 +574,8 @@ S_{f2}
 </p>
 </div>
 </div>
-<div id="outline-container-org3be696c" class="outline-3">
-<h3 id="org3be696c"><span class="section-number-3">6.5.</span> Step 5：計算兩水深之間的距離</h3>
+<div id="outline-container-org480d9d7" class="outline-3">
+<h3 id="org480d9d7"><span class="section-number-3">6.5.</span> Step 5：計算兩水深之間的距離</h3>
 <div class="outline-text-3" id="text-6-5">
 <p>
 使用：
@@ -593,8 +593,8 @@ S_{f2}
 </p>
 </div>
 </div>
-<div id="outline-container-org2fc82d6" class="outline-3">
-<h3 id="org2fc82d6"><span class="section-number-3">6.6.</span> Step 6：重複計算水面線</h3>
+<div id="outline-container-org9a0a245" class="outline-3">
+<h3 id="org9a0a245"><span class="section-number-3">6.6.</span> Step 6：重複計算水面線</h3>
 <div class="outline-text-3" id="text-6-6">
 <p>
 接著令：
@@ -632,8 +632,8 @@ x, y
 </div>
 </div>
 </div>
-<div id="outline-container-orgae20b38" class="outline-2">
-<h2 id="orgae20b38"><span class="section-number-2">7.</span> 表格計算格式</h2>
+<div id="outline-container-org07ffbc4" class="outline-2">
+<h2 id="org07ffbc4"><span class="section-number-2">7.</span> 表格計算格式</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 實際手算或 Excel 計算時，可以整理成下列表格。
@@ -748,15 +748,15 @@ x_3 = x_2 + \Delta x
 </p>
 </div>
 </div>
-<div id="outline-container-orga28a11d" class="outline-2">
-<h2 id="orga28a11d"><span class="section-number-2">8.</span> 計算方向的重要性</h2>
+<div id="outline-container-org1c0de91" class="outline-2">
+<h2 id="org1c0de91"><span class="section-number-2">8.</span> 計算方向的重要性</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 Direct Step Method 必須注意計算方向。
 </p>
 </div>
-<div id="outline-container-org3048434" class="outline-3">
-<h3 id="org3048434"><span class="section-number-3">8.1.</span> 亞臨界流 subcritical flow</h3>
+<div id="outline-container-org87e254c" class="outline-3">
+<h3 id="org87e254c"><span class="section-number-3">8.1.</span> 亞臨界流 subcritical flow</h3>
 <div class="outline-text-3" id="text-8-1">
 <p>
 亞臨界流受下游控制，因此通常：
@@ -773,8 +773,8 @@ Direct Step Method 必須注意計算方向。
 </p>
 </div>
 </div>
-<div id="outline-container-orgb43c205" class="outline-3">
-<h3 id="orgb43c205"><span class="section-number-3">8.2.</span> 超臨界流 supercritical flow</h3>
+<div id="outline-container-orgedc07bc" class="outline-3">
+<h3 id="orgedc07bc"><span class="section-number-3">8.2.</span> 超臨界流 supercritical flow</h3>
 <div class="outline-text-3" id="text-8-2">
 <p>
 超臨界流受上游控制，因此通常：
@@ -792,8 +792,8 @@ Direct Step Method 必須注意計算方向。
 </div>
 </div>
 </div>
-<div id="outline-container-orge0f4509" class="outline-2">
-<h2 id="orge0f4509"><span class="section-number-2">9.</span> Direct Step Method 的優點</h2>
+<div id="outline-container-org470731f" class="outline-2">
+<h2 id="org470731f"><span class="section-number-2">9.</span> Direct Step Method 的優點</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 Direct Step Method 的優點是：
@@ -834,12 +834,12 @@ Direct Step Method 的優點是：
 </ol>
 </div>
 </div>
-<div id="outline-container-orgb05bd57" class="outline-2">
-<h2 id="orgb05bd57"><span class="section-number-2">10.</span> Direct Step Method 的限制</h2>
+<div id="outline-container-orgd976117" class="outline-2">
+<h2 id="orgd976117"><span class="section-number-2">10.</span> Direct Step Method 的限制</h2>
 <div class="outline-text-2" id="text-10">
 </div>
-<div id="outline-container-org8c40d8d" class="outline-3">
-<h3 id="org8c40d8d"><span class="section-number-3">10.1.</span> 不適合非稜柱渠道</h3>
+<div id="outline-container-org5ef95d7" class="outline-3">
+<h3 id="org5ef95d7"><span class="section-number-3">10.1.</span> 不適合非稜柱渠道</h3>
 <div class="outline-text-3" id="text-10-1">
 <p>
 因為它假設斷面形狀沿程不變。
@@ -850,8 +850,8 @@ Direct Step Method 的優點是：
 </p>
 </div>
 </div>
-<div id="outline-container-org4132eb5" class="outline-3">
-<h3 id="org4132eb5"><span class="section-number-3">10.2.</span> 不方便處理已知斷面位置</h3>
+<div id="outline-container-org559781c" class="outline-3">
+<h3 id="org559781c"><span class="section-number-3">10.2.</span> 不方便處理已知斷面位置</h3>
 <div class="outline-text-3" id="text-10-2">
 <p>
 Direct Step Method 是指定水深求距離。
@@ -876,8 +876,8 @@ x_1, x_2, x_3, \dots
 </p>
 </div>
 </div>
-<div id="outline-container-org53ee4b9" class="outline-3">
-<h3 id="org53ee4b9"><span class="section-number-3">10.3.</span> 接近臨界水深時容易出現數值困難</h3>
+<div id="outline-container-orge177ea9" class="outline-3">
+<h3 id="orge177ea9"><span class="section-number-3">10.3.</span> 接近臨界水深時容易出現數值困難</h3>
 <div class="outline-text-3" id="text-10-3">
 <p>
 GVF 方程式為：
@@ -907,8 +907,8 @@ Fr \approx 1
 </div>
 </div>
 </div>
-<div id="outline-container-orga0d0aa0" class="outline-2">
-<h2 id="orga0d0aa0"><span class="section-number-2">11.</span> 與 Standard Step Method 的差異</h2>
+<div id="outline-container-orgbd6f851" class="outline-2">
+<h2 id="orgbd6f851"><span class="section-number-2">11.</span> 與 Standard Step Method 的差異</h2>
 <div class="outline-text-2" id="text-11">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -959,8 +959,8 @@ Standard Step Method：給距離，算水深。
 </blockquote>
 </div>
 </div>
-<div id="outline-container-org18a0619" class="outline-2">
-<h2 id="org18a0619"><span class="section-number-2">12.</span> 教學上的簡短說法</h2>
+<div id="outline-container-org638e6f5" class="outline-2">
+<h2 id="org638e6f5"><span class="section-number-2">12.</span> 教學上的簡短說法</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 可以這樣向學生說明：
@@ -1009,7 +1009,7 @@ E = y+\frac{V^2}{2g}
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:24</p>
+<p class="date">Created: 2026-06-14 日 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

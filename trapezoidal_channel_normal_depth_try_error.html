@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:24 -->
+<!-- 2026-06-14 日 10:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>梯形渠道正規水深之試誤計算</title>
@@ -63,24 +63,24 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org9a9733a">1. 教學目標</a></li>
-<li><a href="#org7080c52">2. 題目</a></li>
-<li><a href="#org0c489f1">3. 梯形渠道的幾何關係</a></li>
-<li><a href="#orgadc91c7">4. 公制 Manning 公式</a></li>
-<li><a href="#orgddc0c4b">5. 試誤法的基本判斷</a></li>
-<li><a href="#org28fada9">6. 第一次粗略試算</a></li>
-<li><a href="#org1539d36">7. 縮小範圍</a></li>
-<li><a href="#org513323b">8. 繼續用二分法逼近</a></li>
-<li><a href="#org63673f8">9. 給學生的計算流程</a></li>
-<li><a href="#org19dc28a">10. 與其他求根問題的比較</a></li>
-<li><a href="#org266ec52">11. 教學提醒</a></li>
-<li><a href="#orgd82d68d">12. 常見錯誤</a></li>
-<li><a href="#orga6c9065">13. 課後練習</a></li>
+<li><a href="#org819693a">1. 教學目標</a></li>
+<li><a href="#org4f25000">2. 題目</a></li>
+<li><a href="#org171b87e">3. 梯形渠道的幾何關係</a></li>
+<li><a href="#org157946b">4. 公制 Manning 公式</a></li>
+<li><a href="#org27ac2d3">5. 試誤法的基本判斷</a></li>
+<li><a href="#org4e2a0b3">6. 第一次粗略試算</a></li>
+<li><a href="#org9e60d73">7. 縮小範圍</a></li>
+<li><a href="#org688470e">8. 繼續用二分法逼近</a></li>
+<li><a href="#org003cb59">9. 給學生的計算流程</a></li>
+<li><a href="#org8bd9a55">10. 與其他求根問題的比較</a></li>
+<li><a href="#orgf1187b0">11. 教學提醒</a></li>
+<li><a href="#orgecca260">12. 常見錯誤</a></li>
+<li><a href="#org95f18de">13. 課後練習</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org9a9733a" class="outline-2">
-<h2 id="org9a9733a"><span class="section-number-2">1.</span> 教學目標</h2>
+<div id="outline-container-org819693a" class="outline-2">
+<h2 id="org819693a"><span class="section-number-2">1.</span> 教學目標</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本講義說明如何使用一般計算機，以試誤法（try and error）或二分法
@@ -113,8 +113,8 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org7080c52" class="outline-2">
-<h2 id="org7080c52"><span class="section-number-2">2.</span> 題目</h2>
+<div id="outline-container-org4f25000" class="outline-2">
+<h2 id="org4f25000"><span class="section-number-2">2.</span> 題目</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 一梯形渠道之底寬為
@@ -171,8 +171,8 @@ Q=15.0~\mathrm{m^3/s}.
 </p>
 </div>
 </div>
-<div id="outline-container-org0c489f1" class="outline-2">
-<h2 id="org0c489f1"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
+<div id="outline-container-org171b87e" class="outline-2">
+<h2 id="org171b87e"><span class="section-number-2">3.</span> 梯形渠道的幾何關係</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 若水深為 \(y\)，則水面寬為
@@ -297,8 +297,8 @@ R=\frac{A}{P}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgadc91c7" class="outline-2">
-<h2 id="orgadc91c7"><span class="section-number-2">4.</span> 公制 Manning 公式</h2>
+<div id="outline-container-org157946b" class="outline-2">
+<h2 id="org157946b"><span class="section-number-2">4.</span> 公制 Manning 公式</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 公制 Manning 公式為
@@ -381,8 +381,8 @@ f(y)=Q_M(y)-15.0.
 </p>
 </div>
 </div>
-<div id="outline-container-orgddc0c4b" class="outline-2">
-<h2 id="orgddc0c4b"><span class="section-number-2">5.</span> 試誤法的基本判斷</h2>
+<div id="outline-container-org27ac2d3" class="outline-2">
+<h2 id="org27ac2d3"><span class="section-number-2">5.</span> 試誤法的基本判斷</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 在一般渠道中，當水深 \(y\) 增加時，通水面積 \(A\) 會增加，
@@ -421,8 +421,8 @@ f(y) > 0
 </p>
 </div>
 </div>
-<div id="outline-container-org28fada9" class="outline-2">
-<h2 id="org28fada9"><span class="section-number-2">6.</span> 第一次粗略試算</h2>
+<div id="outline-container-org4e2a0b3" class="outline-2">
+<h2 id="org4e2a0b3"><span class="section-number-2">6.</span> 第一次粗略試算</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 先試幾個水深，計算 \(B\)、\(A\)、\(P\)、\(R\)、\(Q_M\) 與 \(f(y)\)。
@@ -519,8 +519,8 @@ f(1.30) > 0.
 </p>
 </div>
 </div>
-<div id="outline-container-org1539d36" class="outline-2">
-<h2 id="org1539d36"><span class="section-number-2">7.</span> 縮小範圍</h2>
+<div id="outline-container-org9e60d73" class="outline-2">
+<h2 id="org9e60d73"><span class="section-number-2">7.</span> 縮小範圍</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 接著試中間值
@@ -601,8 +601,8 @@ f(1.30) > 0,
 </p>
 </div>
 </div>
-<div id="outline-container-org513323b" class="outline-2">
-<h2 id="org513323b"><span class="section-number-2">8.</span> 繼續用二分法逼近</h2>
+<div id="outline-container-org688470e" class="outline-2">
+<h2 id="org688470e"><span class="section-number-2">8.</span> 繼續用二分法逼近</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 繼續在目前的區間內試算。每次選擇區間中間附近的水深，重新計算
@@ -706,8 +706,8 @@ y_n \approx 1.289~\mathrm{m}
 </p>
 </div>
 </div>
-<div id="outline-container-org63673f8" class="outline-2">
-<h2 id="org63673f8"><span class="section-number-2">9.</span> 給學生的計算流程</h2>
+<div id="outline-container-org003cb59" class="outline-2">
+<h2 id="org003cb59"><span class="section-number-2">9.</span> 給學生的計算流程</h2>
 <div class="outline-text-2" id="text-9">
 <p>
 使用一般計算機時，可按照以下步驟：
@@ -797,8 +797,8 @@ y_n \approx 1.289~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-org19dc28a" class="outline-2">
-<h2 id="org19dc28a"><span class="section-number-2">10.</span> 與其他求根問題的比較</h2>
+<div id="outline-container-org8bd9a55" class="outline-2">
+<h2 id="org8bd9a55"><span class="section-number-2">10.</span> 與其他求根問題的比較</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 在渠道水力學中，常見需要用試誤法或數值方法求根的問題包括：
@@ -861,8 +861,8 @@ y_n \approx 1.289~\mathrm{m}
 </p>
 </div>
 </div>
-<div id="outline-container-org266ec52" class="outline-2">
-<h2 id="org266ec52"><span class="section-number-2">11.</span> 教學提醒</h2>
+<div id="outline-container-orgf1187b0" class="outline-2">
+<h2 id="orgf1187b0"><span class="section-number-2">11.</span> 教學提醒</h2>
 <div class="outline-text-2" id="text-11">
 <ol class="org-ol">
 <li><p>
@@ -922,8 +922,8 @@ y_n \approx 1.289~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-orgd82d68d" class="outline-2">
-<h2 id="orgd82d68d"><span class="section-number-2">12.</span> 常見錯誤</h2>
+<div id="outline-container-orgecca260" class="outline-2">
+<h2 id="orgecca260"><span class="section-number-2">12.</span> 常見錯誤</h2>
 <div class="outline-text-2" id="text-12">
 <ol class="org-ol">
 <li>將梯形渠道的水面寬 \(B\) 誤認為底寬 \(b\)。</li>
@@ -941,8 +941,8 @@ y_n \approx 1.289~\mathrm{m}
 </ol>
 </div>
 </div>
-<div id="outline-container-orga6c9065" class="outline-2">
-<h2 id="orga6c9065"><span class="section-number-2">13.</span> 課後練習</h2>
+<div id="outline-container-org95f18de" class="outline-2">
+<h2 id="org95f18de"><span class="section-number-2">13.</span> 課後練習</h2>
 <div class="outline-text-2" id="text-13">
 <p>
 一梯形渠道底寬為
@@ -1061,7 +1061,7 @@ Q=20.0~\mathrm{m^3/s}.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:24</p>
+<p class="date">Created: 2026-06-14 日 10:29</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
