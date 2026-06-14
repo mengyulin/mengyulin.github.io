@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:29 -->
+<!-- 2026-06-14 日 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>直接迭代法計算梯形渠道臨界水深</title>
@@ -63,33 +63,33 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org27b2379">1. 教學目標</a></li>
-<li><a href="#orga5db735">2. 一般渠道的臨界流條件</a></li>
-<li><a href="#org1ebba16">3. 直接迭代法的想法</a></li>
-<li><a href="#org3916c0b">4. 梯形渠道的幾何關係</a></li>
-<li><a href="#orgb8484ff">5. 梯形渠道的臨界水深迭代式</a></li>
-<li><a href="#org6151c9c">6. 初始值的選取</a></li>
-<li><a href="#org908b434">7. 計算流程整理</a></li>
-<li><a href="#org399bb65">8. 例題</a></li>
-<li><a href="#orgecff00a">9. 例題解答</a>
+<li><a href="#orge2670b7">1. 教學目標</a></li>
+<li><a href="#orgc6f5b93">2. 一般渠道的臨界流條件</a></li>
+<li><a href="#org28085f4">3. 直接迭代法的想法</a></li>
+<li><a href="#orgcae0e4f">4. 梯形渠道的幾何關係</a></li>
+<li><a href="#org4ce2dd1">5. 梯形渠道的臨界水深迭代式</a></li>
+<li><a href="#org983e977">6. 初始值的選取</a></li>
+<li><a href="#orgfee5767">7. 計算流程整理</a></li>
+<li><a href="#orga3c4c3a">8. 例題</a></li>
+<li><a href="#org5c45281">9. 例題解答</a>
 <ul>
-<li><a href="#orgf47c1a5">9.1. Step 1：寫出梯形渠道幾何式</a></li>
-<li><a href="#orge3102e9">9.2. Step 2：計算常數 \(C_c\)</a></li>
-<li><a href="#org45ee28e">9.3. Step 3：寫出本題的迭代公式</a></li>
-<li><a href="#org7b6e94d">9.4. Step 4：選取初始值</a></li>
-<li><a href="#org01f9449">9.5. Step 5：逐步迭代</a></li>
+<li><a href="#orge3f6060">9.1. Step 1：寫出梯形渠道幾何式</a></li>
+<li><a href="#orga993699">9.2. Step 2：計算常數 \(C_c\)</a></li>
+<li><a href="#orge47c752">9.3. Step 3：寫出本題的迭代公式</a></li>
+<li><a href="#org2fa70d1">9.4. Step 4：選取初始值</a></li>
+<li><a href="#org1a85cb5">9.5. Step 5：逐步迭代</a></li>
 </ul>
 </li>
-<li><a href="#orgdaf0489">10. 收斂特性的簡要說明</a></li>
-<li><a href="#orgce56fa1">11. 與試誤法的比較</a></li>
-<li><a href="#org8562a73">12. 與矩形渠道公式的關係</a></li>
-<li><a href="#orge13d6e1">13. 教學提醒</a></li>
-<li><a href="#org2c2b5f0">14. 結論</a></li>
+<li><a href="#org1139370">10. 收斂特性的簡要說明</a></li>
+<li><a href="#orgf8dc222">11. 與試誤法的比較</a></li>
+<li><a href="#org5bbbfb9">12. 與矩形渠道公式的關係</a></li>
+<li><a href="#org6c2d513">13. 教學提醒</a></li>
+<li><a href="#org37210d0">14. 結論</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org27b2379" class="outline-2">
-<h2 id="org27b2379"><span class="section-number-2">1.</span> 教學目標</h2>
+<div id="outline-container-orge2670b7" class="outline-2">
+<h2 id="orge2670b7"><span class="section-number-2">1.</span> 教學目標</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 本講義說明如何使用類似 Fenton 提出之直接迭代法計算正規水深的想法，計算梯形渠道的臨界水深
@@ -112,8 +112,8 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orga5db735" class="outline-2">
-<h2 id="orga5db735"><span class="section-number-2">2.</span> 一般渠道的臨界流條件</h2>
+<div id="outline-container-orgc6f5b93" class="outline-2">
+<h2 id="orgc6f5b93"><span class="section-number-2">2.</span> 一般渠道的臨界流條件</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 對一般渠道而言，臨界流條件可寫為
@@ -156,8 +156,8 @@ A(y)^3 = \frac{Q^2}{g}B(y).
 </p>
 </div>
 </div>
-<div id="outline-container-org1ebba16" class="outline-2">
-<h2 id="org1ebba16"><span class="section-number-2">3.</span> 直接迭代法的想法</h2>
+<div id="outline-container-org28085f4" class="outline-2">
+<h2 id="org28085f4"><span class="section-number-2">3.</span> 直接迭代法的想法</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 為了將臨界流條件整理成直接迭代形式，先將通水面積寫成
@@ -236,8 +236,8 @@ y_{i+1} = \left(\frac{Q^2}{g}\right)^{1/3}\frac{B(y_i)^{1/3}}{A(y_i)/y_i},
 </p>
 </div>
 </div>
-<div id="outline-container-org3916c0b" class="outline-2">
-<h2 id="org3916c0b"><span class="section-number-2">4.</span> 梯形渠道的幾何關係</h2>
+<div id="outline-container-orgcae0e4f" class="outline-2">
+<h2 id="orgcae0e4f"><span class="section-number-2">4.</span> 梯形渠道的幾何關係</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 對梯形渠道，若底寬為 \(b\)，單側邊坡為 \(m\)，水深為 \(y\)，則水面寬為
@@ -300,8 +300,8 @@ A=y(b+my).
 </p>
 </div>
 </div>
-<div id="outline-container-orgb8484ff" class="outline-2">
-<h2 id="orgb8484ff"><span class="section-number-2">5.</span> 梯形渠道的臨界水深迭代式</h2>
+<div id="outline-container-org4ce2dd1" class="outline-2">
+<h2 id="org4ce2dd1"><span class="section-number-2">5.</span> 梯形渠道的臨界水深迭代式</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 將梯形渠道的幾何關係代入一般迭代式：
@@ -366,8 +366,8 @@ y_{i+1} = C_c\frac{\left(b+2my_i\right)^{1/3}}{b+my_i}.
 </p>
 </div>
 </div>
-<div id="outline-container-org6151c9c" class="outline-2">
-<h2 id="org6151c9c"><span class="section-number-2">6.</span> 初始值的選取</h2>
+<div id="outline-container-org983e977" class="outline-2">
+<h2 id="org983e977"><span class="section-number-2">6.</span> 初始值的選取</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 為了開始迭代，需要先給定一個初始值 \(y_0\)。
@@ -438,8 +438,8 @@ B_{\mathrm{est}}=b.
 </p>
 </div>
 </div>
-<div id="outline-container-org908b434" class="outline-2">
-<h2 id="org908b434"><span class="section-number-2">7.</span> 計算流程整理</h2>
+<div id="outline-container-orgfee5767" class="outline-2">
+<h2 id="orgfee5767"><span class="section-number-2">7.</span> 計算流程整理</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 使用一般計算機時，可按照下列步驟：
@@ -542,8 +542,8 @@ B_{\mathrm{est}}=b.
 </ol>
 </div>
 </div>
-<div id="outline-container-org399bb65" class="outline-2">
-<h2 id="org399bb65"><span class="section-number-2">8.</span> 例題</h2>
+<div id="outline-container-orga3c4c3a" class="outline-2">
+<h2 id="orga3c4c3a"><span class="section-number-2">8.</span> 例題</h2>
 <div class="outline-text-2" id="text-8">
 <p>
 一梯形渠道之底寬為
@@ -590,12 +590,12 @@ g=9.81~\mathrm{m/s^2}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgecff00a" class="outline-2">
-<h2 id="orgecff00a"><span class="section-number-2">9.</span> 例題解答</h2>
+<div id="outline-container-org5c45281" class="outline-2">
+<h2 id="org5c45281"><span class="section-number-2">9.</span> 例題解答</h2>
 <div class="outline-text-2" id="text-9">
 </div>
-<div id="outline-container-orgf47c1a5" class="outline-3">
-<h3 id="orgf47c1a5"><span class="section-number-3">9.1.</span> Step 1：寫出梯形渠道幾何式</h3>
+<div id="outline-container-orge3f6060" class="outline-3">
+<h3 id="orge3f6060"><span class="section-number-3">9.1.</span> Step 1：寫出梯形渠道幾何式</h3>
 <div class="outline-text-3" id="text-9-1">
 <p>
 本題中
@@ -668,8 +668,8 @@ A=y(2.0+1.5y).
 </p>
 </div>
 </div>
-<div id="outline-container-orge3102e9" class="outline-3">
-<h3 id="orge3102e9"><span class="section-number-3">9.2.</span> Step 2：計算常數 \(C_c\)</h3>
+<div id="outline-container-orga993699" class="outline-3">
+<h3 id="orga993699"><span class="section-number-3">9.2.</span> Step 2：計算常數 \(C_c\)</h3>
 <div class="outline-text-3" id="text-9-2">
 <p>
 \[
@@ -714,8 +714,8 @@ C_c \approx 2.1683.
 </p>
 </div>
 </div>
-<div id="outline-container-org45ee28e" class="outline-3">
-<h3 id="org45ee28e"><span class="section-number-3">9.3.</span> Step 3：寫出本題的迭代公式</h3>
+<div id="outline-container-orge47c752" class="outline-3">
+<h3 id="orge47c752"><span class="section-number-3">9.3.</span> Step 3：寫出本題的迭代公式</h3>
 <div class="outline-text-3" id="text-9-3">
 <p>
 梯形渠道的迭代式為
@@ -738,8 +738,8 @@ y_{i+1} = 2.1683 \frac{(2.0+3.0y_i)^{1/3}}{2.0+1.5y_i}.
 </p>
 </div>
 </div>
-<div id="outline-container-org7b6e94d" class="outline-3">
-<h3 id="org7b6e94d"><span class="section-number-3">9.4.</span> Step 4：選取初始值</h3>
+<div id="outline-container-org2fa70d1" class="outline-3">
+<h3 id="org2fa70d1"><span class="section-number-3">9.4.</span> Step 4：選取初始值</h3>
 <div class="outline-text-3" id="text-9-4">
 <p>
 取代表性寬度為底寬：
@@ -788,8 +788,8 @@ y_0 \approx 1.3659~\mathrm{m}.
 </p>
 </div>
 </div>
-<div id="outline-container-org01f9449" class="outline-3">
-<h3 id="org01f9449"><span class="section-number-3">9.5.</span> Step 5：逐步迭代</h3>
+<div id="outline-container-org1a85cb5" class="outline-3">
+<h3 id="org1a85cb5"><span class="section-number-3">9.5.</span> Step 5：逐步迭代</h3>
 <div class="outline-text-3" id="text-9-5">
 <p>
 使用
@@ -915,8 +915,8 @@ y_c\approx 1.048~\mathrm{m}
 </div>
 </div>
 </div>
-<div id="outline-container-orgdaf0489" class="outline-2">
-<h2 id="orgdaf0489"><span class="section-number-2">10.</span> 收斂特性的簡要說明</h2>
+<div id="outline-container-org1139370" class="outline-2">
+<h2 id="org1139370"><span class="section-number-2">10.</span> 收斂特性的簡要說明</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 本例的迭代序列為
@@ -969,8 +969,8 @@ F(y) = C_c\frac{(b+2my)^{1/3}}{b+my}.
 </p>
 </div>
 </div>
-<div id="outline-container-orgce56fa1" class="outline-2">
-<h2 id="orgce56fa1"><span class="section-number-2">11.</span> 與試誤法的比較</h2>
+<div id="outline-container-orgf8dc222" class="outline-2">
+<h2 id="orgf8dc222"><span class="section-number-2">11.</span> 與試誤法的比較</h2>
 <div class="outline-text-2" id="text-11">
 <p>
 前一份講義中的試誤法是建立
@@ -1022,8 +1022,8 @@ y_{i+1}=F(y_i).
 </ol>
 </div>
 </div>
-<div id="outline-container-org8562a73" class="outline-2">
-<h2 id="org8562a73"><span class="section-number-2">12.</span> 與矩形渠道公式的關係</h2>
+<div id="outline-container-org5bbbfb9" class="outline-2">
+<h2 id="org5bbbfb9"><span class="section-number-2">12.</span> 與矩形渠道公式的關係</h2>
 <div class="outline-text-2" id="text-12">
 <p>
 若渠道為矩形，則邊坡
@@ -1110,8 +1110,8 @@ y_c = \left(\frac{q^2}{g}\right)^{1/3}.
 </p>
 </div>
 </div>
-<div id="outline-container-orge13d6e1" class="outline-2">
-<h2 id="orge13d6e1"><span class="section-number-2">13.</span> 教學提醒</h2>
+<div id="outline-container-org6c2d513" class="outline-2">
+<h2 id="org6c2d513"><span class="section-number-2">13.</span> 教學提醒</h2>
 <div class="outline-text-2" id="text-13">
 <ol class="org-ol">
 <li>本講義中的 \(b\) 表示底寬，\(B\) 表示水面寬。兩者不可混淆。</li>
@@ -1152,8 +1152,8 @@ y_c = \left(\frac{q^2}{g}\right)^{1/3}.
 </ol>
 </div>
 </div>
-<div id="outline-container-org2c2b5f0" class="outline-2">
-<h2 id="org2c2b5f0"><span class="section-number-2">14.</span> 結論</h2>
+<div id="outline-container-org37210d0" class="outline-2">
+<h2 id="org37210d0"><span class="section-number-2">14.</span> 結論</h2>
 <div class="outline-text-2" id="text-14">
 <p>
 對梯形渠道，臨界水深可使用下列直接迭代式計算：
@@ -1175,7 +1175,7 @@ y_{i+1} = \left(\frac{Q^2}{g}\right)^{1/3}\frac{\left(b+2my_i\right)^{1/3}}{b+my
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:29</p>
+<p class="date">Created: 2026-06-14 日 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

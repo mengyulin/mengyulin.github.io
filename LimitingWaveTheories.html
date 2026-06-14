@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:29 -->
+<!-- 2026-06-14 日 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Water Waves</title>
@@ -63,15 +63,15 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgf1bf154">1. Limits of Wave Theories (Matlab Code)</a>
+<li><a href="#orgffd2729">1. Limits of Wave Theories (Matlab Code)</a>
 <ul>
-<li><a href="#orgd23b40b">1.1. Graph proposed by Le Méhauté</a></li>
-<li><a href="#org55bd5ac">1.2. Matlab code</a>
+<li><a href="#org0a9be46">1.1. Graph proposed by Le Méhauté</a></li>
+<li><a href="#orgb636739">1.2. Matlab code</a>
 <ul>
-<li><a href="#orgd42c9ef">1.2.1. Source</a></li>
-<li><a href="#org713225b">1.2.2. Brief introduction of the code</a></li>
-<li><a href="#org9f3b238">1.2.3. Notes</a></li>
-<li><a href="#orgc271945">1.2.4. Result</a></li>
+<li><a href="#orga467daa">1.2.1. Source</a></li>
+<li><a href="#org42f23cc">1.2.2. Brief introduction of the code</a></li>
+<li><a href="#orgdc4d059">1.2.3. Notes</a></li>
+<li><a href="#org40c125b">1.2.4. Result</a></li>
 </ul>
 </li>
 </ul>
@@ -79,39 +79,39 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-orgf1bf154" class="outline-2">
-<h2 id="orgf1bf154"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
+<div id="outline-container-orgffd2729" class="outline-2">
+<h2 id="orgffd2729"><span class="section-number-2">1.</span> Limits of Wave Theories (Matlab Code)</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgd23b40b" class="outline-3">
-<h3 id="orgd23b40b"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
+<div id="outline-container-org0a9be46" class="outline-3">
+<h3 id="org0a9be46"><span class="section-number-3">1.1.</span> Graph proposed by Le Méhauté</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Fig. <a href="#org9b52650">2</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
+Fig. <a href="#org7af666a">2</a> shows the graph proposed by Le Méhauté indicating the validity of various wave theories. 
 </p>
 
 
-<div id="orgdd2673a" class="figure">
+<div id="orgd87388d" class="figure">
 <p><img src="./figs/LimitsWaveTheories.png" alt="LimitsWaveTheories.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 1: </span>Limits of validity for various wave theories (Le Méhauté, B., 2013. An introduction to hydrodynamics and water waves. Springer Science &amp; Business Media, p. 205).</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org55bd5ac" class="outline-3">
-<h3 id="org55bd5ac"><span class="section-number-3">1.2.</span> Matlab code</h3>
+<div id="outline-container-orgb636739" class="outline-3">
+<h3 id="orgb636739"><span class="section-number-3">1.2.</span> Matlab code</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orgd42c9ef" class="outline-4">
-<h4 id="orgd42c9ef"><span class="section-number-4">1.2.1.</span> Source</h4>
+<div id="outline-container-orga467daa" class="outline-4">
+<h4 id="orga467daa"><span class="section-number-4">1.2.1.</span> Source</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Brooklynn Byford (2023). Non-Linear Wave Solver Function (<a href="https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function">https://www.mathworks.com/matlabcentral/fileexchange/67106-non-linear-wave-solver-function</a>), MATLAB Central File Exchange. Retrieved February 23, 2023.
 </p>
 </div>
 </div>
-<div id="outline-container-org713225b" class="outline-4">
-<h4 id="org713225b"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
+<div id="outline-container-org42f23cc" class="outline-4">
+<h4 id="org42f23cc"><span class="section-number-4">1.2.2.</span> Brief introduction of the code</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <p>
 The source code and the corresponding data files can be downloaded <a href="https://www.dropbox.com/s/x0x8ey70o9awg6a/NonLinearWaveSolver.zip?dl=0">here</a>.
@@ -143,8 +143,8 @@ function[graph,xpoint,ypoint]= NonLinearWaveSolver(height,period,depth)
 </div>
 </div>
 </div>
-<div id="outline-container-org9f3b238" class="outline-4">
-<h4 id="org9f3b238"><span class="section-number-4">1.2.3.</span> Notes</h4>
+<div id="outline-container-orgdc4d059" class="outline-4">
+<h4 id="orgdc4d059"><span class="section-number-4">1.2.3.</span> Notes</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <ol class="org-ol">
 <li>The original code is with BG units, and has been modified into SI units.</li>
@@ -168,11 +168,11 @@ Outputs are
 </ol>
 </div>
 </div>
-<div id="outline-container-orgc271945" class="outline-4">
-<h4 id="orgc271945"><span class="section-number-4">1.2.4.</span> Result</h4>
+<div id="outline-container-org40c125b" class="outline-4">
+<h4 id="org40c125b"><span class="section-number-4">1.2.4.</span> Result</h4>
 <div class="outline-text-4" id="text-1-2-4">
 
-<div id="org9b52650" class="figure">
+<div id="org7af666a" class="figure">
 <p><img src="./figs/matlab_limits_waves.png" alt="matlab_limits_waves.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 2: </span>Limits of validity for various wave theories.</p>
@@ -184,7 +184,7 @@ Outputs are
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:29</p>
+<p class="date">Created: 2026-06-14 日 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

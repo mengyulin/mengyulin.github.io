@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-06-14 日 10:29 -->
+<!-- 2026-06-14 日 17:51 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Introduction to Finite Volume Method</title>
@@ -63,78 +63,78 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org2f8285f">1. 偏微分方程式 (PDE) 簡介</a>
+<li><a href="#org62fe793">1. 偏微分方程式 (PDE) 簡介</a>
 <ul>
-<li><a href="#orgaea5880">1.1. 流體力學的控制方程式</a></li>
-<li><a href="#orge091e32">1.2. PDE 的分類</a></li>
-<li><a href="#org5131049">1.3. 常見 PDE 範例</a></li>
-<li><a href="#orgc4b8fdb">1.4. 雙曲線型 PDE 範例：Wave Equation</a></li>
-<li><a href="#orgc99cfef">1.5. 拋物線 PDE 範例：Diffusion Equation</a></li>
-<li><a href="#orgfa89ce6">1.6. 橢圓型 PDE 範例：Laplace Equation</a></li>
-<li><a href="#org91bf34a">1.7. Navier-Stokes Equations 的分類</a></li>
-<li><a href="#org4264512">1.8. 為何分類重要？</a></li>
+<li><a href="#orgd904267">1.1. 流體力學的控制方程式</a></li>
+<li><a href="#org3b03d1b">1.2. PDE 的分類</a></li>
+<li><a href="#org3ab8e64">1.3. 常見 PDE 範例</a></li>
+<li><a href="#orgf6ab6ed">1.4. 雙曲線型 PDE 範例：Wave Equation</a></li>
+<li><a href="#orgbf0658e">1.5. 拋物線 PDE 範例：Diffusion Equation</a></li>
+<li><a href="#orgc169532">1.6. 橢圓型 PDE 範例：Laplace Equation</a></li>
+<li><a href="#org78c09b9">1.7. Navier-Stokes Equations 的分類</a></li>
+<li><a href="#orga8af0df">1.8. 為何分類重要？</a></li>
 </ul>
 </li>
-<li><a href="#orgc1d0559">2. 離散方法</a>
+<li><a href="#org5c225ee">2. 離散方法</a>
 <ul>
-<li><a href="#org4545c48">2.1. 為何需要離散化？</a></li>
-<li><a href="#org833aa19">2.2. 有限差分離散化（Finite Difference Discretization）</a></li>
-<li><a href="#org6ef4d68">2.3. 常見離散方法比較</a>
+<li><a href="#orge134397">2.1. 為何需要離散化？</a></li>
+<li><a href="#org7ef8d91">2.2. 有限差分離散化（Finite Difference Discretization）</a></li>
+<li><a href="#orgb67fcd4">2.3. 常見離散方法比較</a>
 <ul>
-<li><a href="#org67501c8">2.3.1. FTCS (Forward-Time Central-Space)</a></li>
-<li><a href="#org7679f03">2.3.2. Lax-Friedrichs (LF) 方法</a></li>
-<li><a href="#org224dd7c">2.3.3. Upwind 方法（迎風格式）</a></li>
-<li><a href="#org2e77858">2.3.4. Lax-Wendroff 方法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgec4067d">3. 有限體積法 (Finite Volume Method)</a>
-<ul>
-<li><a href="#org7fa72bb">3.1. FVM vs. FDM</a></li>
-</ul>
-</li>
-<li><a href="#org29abffc">4. CFL 條件之實例說明</a>
-<ul>
-<li><a href="#org210e5de">4.1. CFL 條件（Courant-Friedrichs-Lewy Condition）</a></li>
-<li><a href="#org2d84f15">4.2. 一維對流問題</a></li>
-<li><a href="#orgc404455">4.3. 數值方法</a></li>
-<li><a href="#org0b1d71c">4.4. Python 程式碼範例</a></li>
-<li><a href="#org9de4b0c">4.5. 討論</a>
-<ul>
-<li><a href="#org0e50a63">4.5.1. 一階 Upwind/FTBS 方法的誤差形式</a></li>
-<li><a href="#org3abc172">4.5.2. 結論</a></li>
-<li><a href="#org5545efa">4.5.3. 延伸問題</a></li>
-</ul>
-</li>
-<li><a href="#orga6f345d">4.6. FTBS 數值擴散項之推導</a>
-<ul>
-<li><a href="#org5622237">4.6.1. 步驟 1：泰勒展開時間與空間項</a></li>
-<li><a href="#orgba6a1dc">4.6.2. 步驟 2：代入 FTBS 離散式</a></li>
-<li><a href="#orgd070113">4.6.3. 結論：Modified Equation</a></li>
-<li><a href="#orga2aac2b">4.6.4. 小結</a></li>
+<li><a href="#orge5b4040">2.3.1. FTCS (Forward-Time Central-Space)</a></li>
+<li><a href="#orgc18c6da">2.3.2. Lax-Friedrichs (LF) 方法</a></li>
+<li><a href="#org75443da">2.3.3. Upwind 方法（迎風格式）</a></li>
+<li><a href="#orgfb6ca55">2.3.4. Lax-Wendroff 方法</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgf5d1490">5. 教學影片</a></li>
-<li><a href="#orgfc354d2">6. FVM 進階 (待修訂)</a>
+<li><a href="#org042259f">3. 有限體積法 (Finite Volume Method)</a>
 <ul>
-<li><a href="#org0cebeb5">6.1. Godunov 方法概述（Godunov Method）</a>
-<ul>
-<li><a href="#org4ba65ea">6.1.1. 特點與優點：**</a></li>
-<li><a href="#orga7f9218">6.1.2. 低階情況：**</a></li>
-<li><a href="#org27b1116">6.1.3. 實作考量：**</a></li>
+<li><a href="#org698f3fe">3.1. FVM vs. FDM</a></li>
 </ul>
 </li>
-<li><a href="#org8ce2fd5">6.2. 提升精度的方法（Toward Higher Order Accuracy）</a></li>
-<li><a href="#orgac7d745">6.3. 說明補充：多維問題中的 CFL 條件**</a></li>
-<li><a href="#org9712149">6.4. 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</a>
+<li><a href="#org0ac84aa">4. CFL 條件之實例說明</a>
 <ul>
-<li><a href="#org1b95b10">6.4.1. 特性與物理解釋：**</a></li>
-<li><a href="#org676b043">6.4.2. 解法：Godunov 方法的應用：**</a></li>
-<li><a href="#orgf2e3f80">6.4.3. 初始條件示例：**</a></li>
-<li><a href="#org1b5eb32">6.4.4. 觀察重點：**</a></li>
+<li><a href="#org69a35a1">4.1. CFL 條件（Courant-Friedrichs-Lewy Condition）</a></li>
+<li><a href="#org5e6a39f">4.2. 一維對流問題</a></li>
+<li><a href="#orgc372b4a">4.3. 數值方法</a></li>
+<li><a href="#org3eb59f7">4.4. Python 程式碼範例</a></li>
+<li><a href="#org98076ca">4.5. 討論</a>
+<ul>
+<li><a href="#org1377055">4.5.1. 一階 Upwind/FTBS 方法的誤差形式</a></li>
+<li><a href="#org774d3c3">4.5.2. 結論</a></li>
+<li><a href="#orgc532cc9">4.5.3. 延伸問題</a></li>
+</ul>
+</li>
+<li><a href="#org109fedf">4.6. FTBS 數值擴散項之推導</a>
+<ul>
+<li><a href="#org746ce99">4.6.1. 步驟 1：泰勒展開時間與空間項</a></li>
+<li><a href="#org2489203">4.6.2. 步驟 2：代入 FTBS 離散式</a></li>
+<li><a href="#org797417c">4.6.3. 結論：Modified Equation</a></li>
+<li><a href="#org24af082">4.6.4. 小結</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7412d6c">5. 教學影片</a></li>
+<li><a href="#orga12a522">6. FVM 進階 (待修訂)</a>
+<ul>
+<li><a href="#org3e890c5">6.1. Godunov 方法概述（Godunov Method）</a>
+<ul>
+<li><a href="#org4accd47">6.1.1. 特點與優點：**</a></li>
+<li><a href="#org7cc9040">6.1.2. 低階情況：**</a></li>
+<li><a href="#orgd616af8">6.1.3. 實作考量：**</a></li>
+</ul>
+</li>
+<li><a href="#org5a6026e">6.2. 提升精度的方法（Toward Higher Order Accuracy）</a></li>
+<li><a href="#org808937a">6.3. 說明補充：多維問題中的 CFL 條件**</a></li>
+<li><a href="#orgd84d596">6.4. 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</a>
+<ul>
+<li><a href="#orgd9d1ae3">6.4.1. 特性與物理解釋：**</a></li>
+<li><a href="#orgadf020c">6.4.2. 解法：Godunov 方法的應用：**</a></li>
+<li><a href="#orgc77d7d6">6.4.3. 初始條件示例：**</a></li>
+<li><a href="#org35d3c5b">6.4.4. 觀察重點：**</a></li>
 </ul>
 </li>
 </ul>
@@ -142,12 +142,12 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org2f8285f" class="outline-2">
-<h2 id="org2f8285f"><span class="section-number-2">1.</span> 偏微分方程式 (PDE) 簡介</h2>
+<div id="outline-container-org62fe793" class="outline-2">
+<h2 id="org62fe793"><span class="section-number-2">1.</span> 偏微分方程式 (PDE) 簡介</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgaea5880" class="outline-3">
-<h3 id="orgaea5880"><span class="section-number-3">1.1.</span> 流體力學的控制方程式</h3>
+<div id="outline-container-orgd904267" class="outline-3">
+<h3 id="orgd904267"><span class="section-number-3">1.1.</span> 流體力學的控制方程式</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 在計算流體力學 (Computational Fluid Dynamics, CFD) 中，常見的控制方程式是偏微分方程式 (Partial Differential Equations, PDEs)，例如 Navier Stokes equations:
@@ -170,8 +170,8 @@
 </p>
 </div>
 </div>
-<div id="outline-container-orge091e32" class="outline-3">
-<h3 id="orge091e32"><span class="section-number-3">1.2.</span> PDE 的分類</h3>
+<div id="outline-container-org3b03d1b" class="outline-3">
+<h3 id="org3b03d1b"><span class="section-number-3">1.2.</span> PDE 的分類</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 PDE 的分類主要基於其判別式（discriminant）。針對二階線性 PDE：
@@ -238,8 +238,8 @@ A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial 
 </table>
 </div>
 </div>
-<div id="outline-container-org5131049" class="outline-3">
-<h3 id="org5131049"><span class="section-number-3">1.3.</span> 常見 PDE 範例</h3>
+<div id="outline-container-org3ab8e64" class="outline-3">
+<h3 id="org3ab8e64"><span class="section-number-3">1.3.</span> 常見 PDE 範例</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li><p>
@@ -290,8 +290,8 @@ A \frac{\partial^2 u}{\partial x^2} + B \frac{\partial^2 u}{\partial x \partial 
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc4b8fdb" class="outline-3">
-<h3 id="orgc4b8fdb"><span class="section-number-3">1.4.</span> 雙曲線型 PDE 範例：Wave Equation</h3>
+<div id="outline-container-orgf6ab6ed" class="outline-3">
+<h3 id="orgf6ab6ed"><span class="section-number-3">1.4.</span> 雙曲線型 PDE 範例：Wave Equation</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 考慮一維波動方程式：
@@ -336,7 +336,7 @@ u(x,t) = \frac{1}{2} \left[ f(x - ct) + f(x + ct) \right] + \frac{1}{2c} \int_{x
 </ul>
 
 <p>
-特徵線的物理意義是：初始擾動會沿著 \(x = x_0 \pm ct\) 傳播，也就是以速率 \(c\) 向左右兩側移動 (圖 <a href="#org2804f5e">1</a>)。
+特徵線的物理意義是：初始擾動會沿著 \(x = x_0 \pm ct\) 傳播，也就是以速率 \(c\) 向左右兩側移動 (圖 <a href="#orge2a0666">1</a>)。
 這表示：
 </p>
 <ul class="org-ul">
@@ -346,7 +346,7 @@ u(x,t) = \frac{1}{2} \left[ f(x - ct) + f(x + ct) \right] + \frac{1}{2c} \int_{x
 </ul>
 
 
-<div id="org2804f5e" class="figure">
+<div id="orge2a0666" class="figure">
 <p><img src="./figs/WaveEq.gif" alt="WaveEq.gif" width="600" />
 </p>
 <p><span class="figure-number">Figure 1: </span>波動方程式之解與特徵線。</p>
@@ -362,19 +362,19 @@ u(x,t) = \frac{1}{2} \left[ f(x - ct) + f(x + ct) \right] + \frac{1}{2c} \int_{x
 </ul>
 
 <p>
-雙曲型 PDE 常與無耗散的傳播問題相關聯。當其特徵線為實數（如圖 <a href="#org0526b6c">2</a> 所示）時，表示解函數 \(u\) 在某一點 P 處所受到的擾動，只會影響特徵線所包圍的區域 CPD 中的解；反過來說，P 點的解也只會受到位於區域 APB 的擾動所影響。此外，若初始條件設定在 \(t = 0\) 的時刻（即圖 <a href="#org0526b6c">2</a> 中的 AB 線上），這些初始條件就足以唯一決定點 P 的解。
+雙曲型 PDE 常與無耗散的傳播問題相關聯。當其特徵線為實數（如圖 <a href="#orga507ea3">2</a> 所示）時，表示解函數 \(u\) 在某一點 P 處所受到的擾動，只會影響特徵線所包圍的區域 CPD 中的解；反過來說，P 點的解也只會受到位於區域 APB 的擾動所影響。此外，若初始條件設定在 \(t = 0\) 的時刻（即圖 <a href="#orga507ea3">2</a> 中的 AB 線上），這些初始條件就足以唯一決定點 P 的解。
 </p>
 
 
-<div id="org0526b6c" class="figure">
+<div id="orga507ea3" class="figure">
 <p><img src="./figs/Domain_Hyperbolic.jpg" alt="Domain_Hyperbolic.jpg" width="500" />
 </p>
 <p><span class="figure-number">Figure 2: </span>波動方程式之特徵線與影響區域。</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc99cfef" class="outline-3">
-<h3 id="orgc99cfef"><span class="section-number-3">1.5.</span> 拋物線 PDE 範例：Diffusion Equation</h3>
+<div id="outline-container-orgbf0658e" class="outline-3">
+<h3 id="orgbf0658e"><span class="section-number-3">1.5.</span> 拋物線 PDE 範例：Diffusion Equation</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 考慮一維擴散方程式，其中 \(D\) 為擴散係數：
@@ -469,7 +469,7 @@ plt.savefig("diffusion.png")
 </div>
 
 
-<div id="org47dfb35" class="figure">
+<div id="org3e8e64f" class="figure">
 <p><img src="./figs/diffusion.png" alt="diffusion.png" width="800px" />
 </p>
 <p><span class="figure-number">Figure 3: </span>擴散方程式之解 \(u(x,t)\) 隨時間之擴散情形。</p>
@@ -480,19 +480,19 @@ plt.savefig("diffusion.png")
 </p>
 
 <p>
-拋物線型問題的典型特徵是其解隨時間向前推進，同時在空間中呈現擴散特性。因此若在圖 <a href="#org4fdd445">4</a> 中的點 P 處施加擾動，則該擾動會影響所有 \(t \geq t_i\) 的計算域區域。然而擾動的強度會隨著離開 P 的距離迅速衰減。
+拋物線型問題的典型特徵是其解隨時間向前推進，同時在空間中呈現擴散特性。因此若在圖 <a href="#orge2c39b1">4</a> 中的點 P 處施加擾動，則該擾動會影響所有 \(t \geq t_i\) 的計算域區域。然而擾動的強度會隨著離開 P 的距離迅速衰減。
 </p>
 
 
-<div id="org4fdd445" class="figure">
+<div id="orge2c39b1" class="figure">
 <p><img src="./figs/Domain_Parabolic.jpg" alt="Domain_Parabolic.jpg" width="600" />
 </p>
 <p><span class="figure-number">Figure 4: </span>拋物線型 PDE 的計算區域。</p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgfa89ce6" class="outline-3">
-<h3 id="orgfa89ce6"><span class="section-number-3">1.6.</span> 橢圓型 PDE 範例：Laplace Equation</h3>
+<div id="outline-container-orgc169532" class="outline-3">
+<h3 id="orgc169532"><span class="section-number-3">1.6.</span> 橢圓型 PDE 範例：Laplace Equation</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 最簡單的橢圓型 PDE 範例為不可壓縮勢流 (potential flow) 之控制方程式 Laplce equation:
@@ -552,7 +552,7 @@ plt.savefig("laplace_analytical.png")
 </div>
 
 
-<div id="org758a35f" class="figure">
+<div id="orgce68ce6" class="figure">
 <p><img src="./figs/laplace_analytical.png" alt="laplace_analytical.png" width="600px" />
 </p>
 <p><span class="figure-number">Figure 5: </span>解析解 \( \phi(x,y) = \sin(\pi x)\, e^{-\pi y} \) 在單位方形內的分佈情形。</p>
@@ -567,11 +567,11 @@ plt.savefig("laplace_analytical.png")
 </p>
 
 <p>
-橢圓型 PDE 最重要的特徵之一是：當在某一內部點 P（如圖 <a href="#org265f2cc">6</a> 所示）引入一個微小擾動時，這個擾動會影響整個計算域中的所有點。雖然距離 P 越遠，擾動的影響程度會逐漸減弱，但它仍舊是全域性影響。這意味著，在求解橢圓型問題時，必須考慮整個計算區域的邊界條件與整體配置。
+橢圓型 PDE 最重要的特徵之一是：當在某一內部點 P（如圖 <a href="#orgff94d49">6</a> 所示）引入一個微小擾動時，這個擾動會影響整個計算域中的所有點。雖然距離 P 越遠，擾動的影響程度會逐漸減弱，但它仍舊是全域性影響。這意味著，在求解橢圓型問題時，必須考慮整個計算區域的邊界條件與整體配置。
 </p>
 
 
-<div id="org265f2cc" class="figure">
+<div id="orgff94d49" class="figure">
 <p><img src="./figs/Domain_Elliptic.jpg" alt="Domain_Elliptic.jpg" width="600" />
 </p>
 <p><span class="figure-number">Figure 6: </span>橢圓型 PDE 的計算區域。</p>
@@ -587,8 +587,8 @@ plt.savefig("laplace_analytical.png")
 </p>
 </div>
 </div>
-<div id="outline-container-org91bf34a" class="outline-3">
-<h3 id="org91bf34a"><span class="section-number-3">1.7.</span> Navier-Stokes Equations 的分類</h3>
+<div id="outline-container-org78c09b9" class="outline-3">
+<h3 id="org78c09b9"><span class="section-number-3">1.7.</span> Navier-Stokes Equations 的分類</h3>
 <div class="outline-text-3" id="text-1-7">
 <p>
 Navier-Stokes 方程式為非線性二階偏微分方程，其分類依據具體條件而定：
@@ -609,8 +609,8 @@ Navier-Stokes 方程式為非線性二階偏微分方程，其分類依據具體
 </p>
 </div>
 </div>
-<div id="outline-container-org4264512" class="outline-3">
-<h3 id="org4264512"><span class="section-number-3">1.8.</span> 為何分類重要？</h3>
+<div id="outline-container-orga8af0df" class="outline-3">
+<h3 id="orga8af0df"><span class="section-number-3">1.8.</span> 為何分類重要？</h3>
 <div class="outline-text-3" id="text-1-8">
 <p>
 不同型態的 PDE 有不同的數值性質：
@@ -627,12 +627,12 @@ Navier-Stokes 方程式為非線性二階偏微分方程，其分類依據具體
 </div>
 </div>
 </div>
-<div id="outline-container-orgc1d0559" class="outline-2">
-<h2 id="orgc1d0559"><span class="section-number-2">2.</span> 離散方法</h2>
+<div id="outline-container-org5c225ee" class="outline-2">
+<h2 id="org5c225ee"><span class="section-number-2">2.</span> 離散方法</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org4545c48" class="outline-3">
-<h3 id="org4545c48"><span class="section-number-3">2.1.</span> 為何需要離散化？</h3>
+<div id="outline-container-orge134397" class="outline-3">
+<h3 id="orge134397"><span class="section-number-3">2.1.</span> 為何需要離散化？</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 偏微分方程式是連續的，但電腦只能處理有限維度、有限精度的數據。我們以離散網格表示空間與時間變化，並用差分、積分、或插值等方法逼近導數。
@@ -643,19 +643,19 @@ Navier-Stokes 方程式為非線性二階偏微分方程，其分類依據具體
 </p>
 </div>
 </div>
-<div id="outline-container-org833aa19" class="outline-3">
-<h3 id="org833aa19"><span class="section-number-3">2.2.</span> 有限差分離散化（Finite Difference Discretization）</h3>
+<div id="outline-container-org7ef8d91" class="outline-3">
+<h3 id="org7ef8d91"><span class="section-number-3">2.2.</span> 有限差分離散化（Finite Difference Discretization）</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 數值解 PDE 的第一步通常是將連續問題轉換為離散形式，並使用有限差分法 (finite difference method, FDM) 對時間與空間導數進行近似。
 </p>
 
 <p>
-以 Cartesian 座標系為例 (圖 <a href="#org6c8fddc">7</a>)，使用均勻網格大小 \(\Delta x\)。假設網格節點為 \(x_{i-1}, x_i, x_{i+1}\)，其對應之 cell center 位於這些點上。而 cell interface 則位於 \(x_{i-1/2}, x_{i+1/2}\)。
+以 Cartesian 座標系為例 (圖 <a href="#org79b5d00">7</a>)，使用均勻網格大小 \(\Delta x\)。假設網格節點為 \(x_{i-1}, x_i, x_{i+1}\)，其對應之 cell center 位於這些點上。而 cell interface 則位於 \(x_{i-1/2}, x_{i+1/2}\)。
 </p>
 
 
-<div id="org6c8fddc" class="figure">
+<div id="org79b5d00" class="figure">
 <p><img src="./figs/CartesianGrid.png" alt="CartesianGrid.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 7: </span>Cartesian 網格。</p>
@@ -682,11 +682,11 @@ X(t) = X_0 + At \Rightarrow u(x,t) = u_0(x - At)
 </p>
 
 <p>
-這說明波形會以速度 \(A\) 向右 (若 \(A>0\)) 平移，而不改變其形狀，如圖 <a href="#org54866d8">8</a> 所示。
+這說明波形會以速度 \(A\) 向右 (若 \(A>0\)) 平移，而不改變其形狀，如圖 <a href="#orgadcdf97">8</a> 所示。
 </p>
 
 
-<div id="org54866d8" class="figure">
+<div id="orgadcdf97" class="figure">
 <p><img src="./figs/LinearAdvection1.png" alt="LinearAdvection1.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 8: </span>線性對流方程式之特徵線。</p>
@@ -717,19 +717,19 @@ t_n = t_0 + n\Delta t,\quad n = 0, 1, 2, \dots
 </p>
 
 <p>
-代表在時間&#x2013;空間網格中編號為 \((i,n)\) 處的解，如圖 <a href="#org7dc7bf6">9</a>。
+代表在時間&#x2013;空間網格中編號為 \((i,n)\) 處的解，如圖 <a href="#org882d534">9</a>。
 </p>
 
 
-<div id="org7dc7bf6" class="figure">
+<div id="org882d534" class="figure">
 <p><img src="./figs/FDMGrid.png" alt="FDMGrid.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 9: </span>均勻網格示意圖。</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org6ef4d68" class="outline-3">
-<h3 id="org6ef4d68"><span class="section-number-3">2.3.</span> 常見離散方法比較</h3>
+<div id="outline-container-orgb67fcd4" class="outline-3">
+<h3 id="orgb67fcd4"><span class="section-number-3">2.3.</span> 常見離散方法比較</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 以線性對流方程式為例：
@@ -741,8 +741,8 @@ t_n = t_0 + n\Delta t,\quad n = 0, 1, 2, \dots
 \]
 </p>
 </div>
-<div id="outline-container-org67501c8" class="outline-4">
-<h4 id="org67501c8"><span class="section-number-4">2.3.1.</span> FTCS (Forward-Time Central-Space)</h4>
+<div id="outline-container-orge5b4040" class="outline-4">
+<h4 id="orge5b4040"><span class="section-number-4">2.3.1.</span> FTCS (Forward-Time Central-Space)</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <p>
 時間前進、空間中心差分法：
@@ -803,14 +803,14 @@ plt.savefig("FTCS_Method.png")
 </div>
 
 
-<div id="orgbba51ba" class="figure">
+<div id="org8ba3be1" class="figure">
 <p><img src="./figs/FTCS_Method.png" alt="FTCS_Method.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org7679f03" class="outline-4">
-<h4 id="org7679f03"><span class="section-number-4">2.3.2.</span> Lax-Friedrichs (LF) 方法</h4>
+<div id="outline-container-orgc18c6da" class="outline-4">
+<h4 id="orgc18c6da"><span class="section-number-4">2.3.2.</span> Lax-Friedrichs (LF) 方法</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 \[
@@ -867,14 +867,14 @@ plt.savefig("L-F_Method.png")
 </div>
 
 
-<div id="orgb55b2f6" class="figure">
+<div id="orgf6d5583" class="figure">
 <p><img src="./figs/L-F_Method.png" alt="L-F_Method.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org224dd7c" class="outline-4">
-<h4 id="org224dd7c"><span class="section-number-4">2.3.3.</span> Upwind 方法（迎風格式）</h4>
+<div id="outline-container-org75443da" class="outline-4">
+<h4 id="org75443da"><span class="section-number-4">2.3.3.</span> Upwind 方法（迎風格式）</h4>
 <div class="outline-text-4" id="text-2-3-3">
 \begin{equation*}
 \frac{u_i^{n+1} - u_i^n}{\Delta t} =
@@ -932,14 +932,14 @@ plt.savefig("Upwind_Method.png")
 </div>
 
 
-<div id="org04df2eb" class="figure">
+<div id="orga17f567" class="figure">
 <p><img src="./figs/Upwind_Method.png" alt="Upwind_Method.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2e77858" class="outline-4">
-<h4 id="org2e77858"><span class="section-number-4">2.3.4.</span> Lax-Wendroff 方法</h4>
+<div id="outline-container-orgfb6ca55" class="outline-4">
+<h4 id="orgfb6ca55"><span class="section-number-4">2.3.4.</span> Lax-Wendroff 方法</h4>
 <div class="outline-text-4" id="text-2-3-4">
 <p>
 \[
@@ -1008,7 +1008,7 @@ plt.savefig("L-W_Method.png")
 </div>
 
 
-<div id="orgddf10ca" class="figure">
+<div id="orgd562b76" class="figure">
 <p><img src="./figs/L-W_Method.png" alt="L-W_Method.png" />
 </p>
 </div>
@@ -1016,15 +1016,15 @@ plt.savefig("L-W_Method.png")
 </div>
 </div>
 </div>
-<div id="outline-container-orgec4067d" class="outline-2">
-<h2 id="orgec4067d"><span class="section-number-2">3.</span> 有限體積法 (Finite Volume Method)</h2>
+<div id="outline-container-org042259f" class="outline-2">
+<h2 id="org042259f"><span class="section-number-2">3.</span> 有限體積法 (Finite Volume Method)</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org7fa72bb" class="outline-3">
-<h3 id="org7fa72bb"><span class="section-number-3">3.1.</span> FVM vs. FDM</h3>
+<div id="outline-container-org698f3fe" class="outline-3">
+<h3 id="org698f3fe"><span class="section-number-3">3.1.</span> FVM vs. FDM</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
-有限體積法 (Finite Volume Method) 使用積分的形式來滿足守衡律 (圖 <a href="#org64a866b">10</a>):
+有限體積法 (Finite Volume Method) 使用積分的形式來滿足守衡律 (圖 <a href="#orgf3009ae">10</a>):
 </p>
 
 <p>
@@ -1034,18 +1034,18 @@ U_i^n = \frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}} u(x, t_n)\,dx
 </p>
 
 
-<div id="org64a866b" class="figure">
+<div id="orgf3009ae" class="figure">
 <p><img src="./figs/FVM_FDM.png" alt="FVM_FDM.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 10: </span>FVM 與 FDM 的比較。</p>
 </div>
 
 <p>
-在有限體積法中，物理量（例如密度、動量、能量等）通常定義在 cell center，而 flux（通量）則定義在 cell interface。對於一純量守恆通式 \(\partial_t u + \partial_x f(u)=0\) 而言，其離散方式為 (圖 <a href="#org7206c51">11</a>)：
+在有限體積法中，物理量（例如密度、動量、能量等）通常定義在 cell center，而 flux（通量）則定義在 cell interface。對於一純量守恆通式 \(\partial_t u + \partial_x f(u)=0\) 而言，其離散方式為 (圖 <a href="#orgae66543">11</a>)：
 </p>
 
 
-<div id="org7206c51" class="figure">
+<div id="orgae66543" class="figure">
 <p><img src="./figs/FVMGrid.png" alt="FVMGrid.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 11: </span>FVM 的離散方式。</p>
@@ -1053,12 +1053,12 @@ U_i^n = \frac{1}{\Delta x}\int_{x_{i-1/2}}^{x_{i+1/2}} u(x, t_n)\,dx
 </div>
 </div>
 </div>
-<div id="outline-container-org29abffc" class="outline-2">
-<h2 id="org29abffc"><span class="section-number-2">4.</span> CFL 條件之實例說明</h2>
+<div id="outline-container-org0ac84aa" class="outline-2">
+<h2 id="org0ac84aa"><span class="section-number-2">4.</span> CFL 條件之實例說明</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org210e5de" class="outline-3">
-<h3 id="org210e5de"><span class="section-number-3">4.1.</span> CFL 條件（Courant-Friedrichs-Lewy Condition）</h3>
+<div id="outline-container-org69a35a1" class="outline-3">
+<h3 id="org69a35a1"><span class="section-number-3">4.1.</span> CFL 條件（Courant-Friedrichs-Lewy Condition）</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 CFL 條件為數值穩定性的一項基本準則。
@@ -1091,19 +1091,19 @@ C = \frac{A \Delta t}{\Delta x} \leq 1
 
 <p>
 其中 \(C\) 稱為 Courant number (或 CFL number)。若 \(C > 1\)，則會導致不穩定，數值結果無法收斂。
-如圖 <a href="#orgf31a87d">12</a> 所示，\(\Delta t\) 必須足夠小，如此資訊才不會在一個時步中傳遞超過一個網格。
+如圖 <a href="#org5c7b0cb">12</a> 所示，\(\Delta t\) 必須足夠小，如此資訊才不會在一個時步中傳遞超過一個網格。
 </p>
 
 
-<div id="orgf31a87d" class="figure">
+<div id="org5c7b0cb" class="figure">
 <p><img src="./figs/CFL_grid.png" alt="CFL_grid.png" width="600" />
 </p>
 <p><span class="figure-number">Figure 12: </span>Courant number 的意義。</p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2d84f15" class="outline-3">
-<h3 id="org2d84f15"><span class="section-number-3">4.2.</span> 一維對流問題</h3>
+<div id="outline-container-org5e6a39f" class="outline-3">
+<h3 id="org5e6a39f"><span class="section-number-3">4.2.</span> 一維對流問題</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 為了更具體了解 CFL 條件的實際意義，以下透過一個簡單的一維線性對流問題，說明不同 CFL 數值下的數值解行為。
@@ -1129,8 +1129,8 @@ C = \frac{A \Delta t}{\Delta x} \leq 1
 </p>
 </div>
 </div>
-<div id="outline-container-orgc404455" class="outline-3">
-<h3 id="orgc404455"><span class="section-number-3">4.3.</span> 數值方法</h3>
+<div id="outline-container-orgc372b4a" class="outline-3">
+<h3 id="orgc372b4a"><span class="section-number-3">4.3.</span> 數值方法</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 使用 FTBS（Forward Time, Backward Space）方法，即一階 upwind 顯式格式：
@@ -1157,8 +1157,8 @@ C = \frac{a \Delta t}{\Delta x} \leq 1
 </p>
 </div>
 </div>
-<div id="outline-container-org0b1d71c" class="outline-3">
-<h3 id="org0b1d71c"><span class="section-number-3">4.4.</span> Python 程式碼範例</h3>
+<div id="outline-container-org3eb59f7" class="outline-3">
+<h3 id="org3eb59f7"><span class="section-number-3">4.4.</span> Python 程式碼範例</h3>
 <div class="outline-text-3" id="text-4-4">
 <div class="org-src-container">
 <pre class="src src-python">import numpy as np
@@ -1221,20 +1221,20 @@ plt.savefig("FVM_CFL_Error.png")
 </div>
 
 
-<div id="org3fc93ec" class="figure">
+<div id="org870f4d2" class="figure">
 <p><img src="./figs/FVM_CFL.png" alt="FVM_CFL.png" />
 </p>
 </div>
 
 
-<div id="org04aba41" class="figure">
+<div id="orgac96e24" class="figure">
 <p><img src="./figs/FVM_CFL_Error.png" alt="FVM_CFL_Error.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org9de4b0c" class="outline-3">
-<h3 id="org9de4b0c"><span class="section-number-3">4.5.</span> 討論</h3>
+<div id="outline-container-org98076ca" class="outline-3">
+<h3 id="org98076ca"><span class="section-number-3">4.5.</span> 討論</h3>
 <div class="outline-text-3" id="text-4-5">
 <p>
 為何在 FTBS 方法中，CFL 越小誤差越大？
@@ -1244,8 +1244,8 @@ plt.savefig("FVM_CFL_Error.png")
 原因關鍵：數值擴散的大小與 CFL 成正比。
 </p>
 </div>
-<div id="outline-container-org0e50a63" class="outline-4">
-<h4 id="org0e50a63"><span class="section-number-4">4.5.1.</span> 一階 Upwind/FTBS 方法的誤差形式</h4>
+<div id="outline-container-org1377055" class="outline-4">
+<h4 id="org1377055"><span class="section-number-4">4.5.1.</span> 一階 Upwind/FTBS 方法的誤差形式</h4>
 <div class="outline-text-4" id="text-4-5-1">
 <p>
 對於線性對流方程 \( \frac{\partial u}{\partial t} + a \frac{\partial u}{\partial x} = 0 \)，FTBS 方法的離散式為：
@@ -1279,8 +1279,8 @@ u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
 </p>
 </div>
 </div>
-<div id="outline-container-org3abc172" class="outline-4">
-<h4 id="org3abc172"><span class="section-number-4">4.5.2.</span> 結論</h4>
+<div id="outline-container-org774d3c3" class="outline-4">
+<h4 id="org774d3c3"><span class="section-number-4">4.5.2.</span> 結論</h4>
 <div class="outline-text-4" id="text-4-5-2">
 <ul class="org-ul">
 <li>當 <b><b>CFL 趨近 1</b></b> 時：
@@ -1330,8 +1330,8 @@ u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
 </table>
 </div>
 </div>
-<div id="outline-container-org5545efa" class="outline-4">
-<h4 id="org5545efa"><span class="section-number-4">4.5.3.</span> 延伸問題</h4>
+<div id="outline-container-orgc532cc9" class="outline-4">
+<h4 id="orgc532cc9"><span class="section-number-4">4.5.3.</span> 延伸問題</h4>
 <div class="outline-text-4" id="text-4-5-3">
 <ul class="org-ul">
 <li>這也說明了: <b><b>"穩定 ≠ 精確"</b></b> ，穩定只確保不發散，但數值擴散會拖垮解析度。</li>
@@ -1344,8 +1344,8 @@ u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x}(u_i^n - u_{i-1}^n)
 </div>
 </div>
 </div>
-<div id="outline-container-orga6f345d" class="outline-3">
-<h3 id="orga6f345d"><span class="section-number-3">4.6.</span> FTBS 數值擴散項之推導</h3>
+<div id="outline-container-org109fedf" class="outline-3">
+<h3 id="org109fedf"><span class="section-number-3">4.6.</span> FTBS 數值擴散項之推導</h3>
 <div class="outline-text-3" id="text-4-6">
 <p>
 目標：從 FTBS 離散式：
@@ -1361,8 +1361,8 @@ u_i^{n+1} = u_i^n - \frac{a \Delta t}{\Delta x} (u_i^n - u_{i-1}^n)
 \]
 </p>
 </div>
-<div id="outline-container-org5622237" class="outline-4">
-<h4 id="org5622237"><span class="section-number-4">4.6.1.</span> 步驟 1：泰勒展開時間與空間項</h4>
+<div id="outline-container-org746ce99" class="outline-4">
+<h4 id="org746ce99"><span class="section-number-4">4.6.1.</span> 步驟 1：泰勒展開時間與空間項</h4>
 <div class="outline-text-4" id="text-4-6-1">
 <p>
 時間方向（LHS）：
@@ -1405,8 +1405,8 @@ u_i^n - u_{i-1}^n = \Delta x \frac{\partial u}{\partial x} - \frac{\Delta x^2}{2
 </p>
 </div>
 </div>
-<div id="outline-container-orgba6a1dc" class="outline-4">
-<h4 id="orgba6a1dc"><span class="section-number-4">4.6.2.</span> 步驟 2：代入 FTBS 離散式</h4>
+<div id="outline-container-org2489203" class="outline-4">
+<h4 id="org2489203"><span class="section-number-4">4.6.2.</span> 步驟 2：代入 FTBS 離散式</h4>
 <div class="outline-text-4" id="text-4-6-2">
 <p>
 \[
@@ -1425,8 +1425,8 @@ u(x_i, t) + \Delta t \frac{\partial u}{\partial t} + \cdots = u(x_i, t) - \frac{
 </p>
 </div>
 </div>
-<div id="outline-container-orgd070113" class="outline-4">
-<h4 id="orgd070113"><span class="section-number-4">4.6.3.</span> 結論：Modified Equation</h4>
+<div id="outline-container-org797417c" class="outline-4">
+<h4 id="org797417c"><span class="section-number-4">4.6.3.</span> 結論：Modified Equation</h4>
 <div class="outline-text-4" id="text-4-6-3">
 <p>
 \[
@@ -1445,8 +1445,8 @@ u(x_i, t) + \Delta t \frac{\partial u}{\partial t} + \cdots = u(x_i, t) - \frac{
 </ul>
 </div>
 </div>
-<div id="outline-container-orga2aac2b" class="outline-4">
-<h4 id="orga2aac2b"><span class="section-number-4">4.6.4.</span> 小結</h4>
+<div id="outline-container-org24af082" class="outline-4">
+<h4 id="org24af082"><span class="section-number-4">4.6.4.</span> 小結</h4>
 <div class="outline-text-4" id="text-4-6-4">
 <ul class="org-ul">
 <li>FTBS 是顯式、一階、穩定的 upwind 法，但伴隨「內建」擴散項</li>
@@ -1457,20 +1457,20 @@ u(x_i, t) + \Delta t \frac{\partial u}{\partial t} + \cdots = u(x_i, t) - \frac{
 </div>
 </div>
 </div>
-<div id="outline-container-orgf5d1490" class="outline-2">
-<h2 id="orgf5d1490"><span class="section-number-2">5.</span> 教學影片</h2>
+<div id="outline-container-org7412d6c" class="outline-2">
+<h2 id="org7412d6c"><span class="section-number-2">5.</span> 教學影片</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li>PDE 分類、FVM 與 CFL condition 簡介： <a href="https://youtu.be/uHxcrdPVDvA?si=wWwsVJgC1Jj6-BGu">YouTube link</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfc354d2" class="outline-2">
-<h2 id="orgfc354d2"><span class="section-number-2">6.</span> FVM 進階 (待修訂)</h2>
+<div id="outline-container-orga12a522" class="outline-2">
+<h2 id="orga12a522"><span class="section-number-2">6.</span> FVM 進階 (待修訂)</h2>
 <div class="outline-text-2" id="text-6">
 </div>
-<div id="outline-container-org0cebeb5" class="outline-3">
-<h3 id="org0cebeb5"><span class="section-number-3">6.1.</span> Godunov 方法概述（Godunov Method）</h3>
+<div id="outline-container-org3e890c5" class="outline-3">
+<h3 id="org3e890c5"><span class="section-number-3">6.1.</span> Godunov 方法概述（Godunov Method）</h3>
 <div class="outline-text-3" id="text-6-1">
 <p>
 Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於 1959 年提出，最初用於解決氣體動力學中的非線性守恆律問題。
@@ -1511,8 +1511,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 這三步驟構成了一個完整的 time step。
 </p>
 </div>
-<div id="outline-container-org4ba65ea" class="outline-4">
-<h4 id="org4ba65ea"><span class="section-number-4">6.1.1.</span> 特點與優點：**</h4>
+<div id="outline-container-org4accd47" class="outline-4">
+<h4 id="org4accd47"><span class="section-number-4">6.1.1.</span> 特點與優點：**</h4>
 <div class="outline-text-4" id="text-6-1-1">
 <ul class="org-ul">
 <li>對震波、接觸不連續有良好解析能力。</li>
@@ -1521,16 +1521,16 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </ul>
 </div>
 </div>
-<div id="outline-container-orga7f9218" class="outline-4">
-<h4 id="orga7f9218"><span class="section-number-4">6.1.2.</span> 低階情況：**</h4>
+<div id="outline-container-org7cc9040" class="outline-4">
+<h4 id="org7cc9040"><span class="section-number-4">6.1.2.</span> 低階情況：**</h4>
 <div class="outline-text-4" id="text-6-1-2">
 <p>
 若使用 piecewise constant 重建（又稱 donor cell method），Godunov 方法在解線性對流方程時與 upwind 方法一致。
 </p>
 </div>
 </div>
-<div id="outline-container-org27b1116" class="outline-4">
-<h4 id="org27b1116"><span class="section-number-4">6.1.3.</span> 實作考量：**</h4>
+<div id="outline-container-orgd616af8" class="outline-4">
+<h4 id="orgd616af8"><span class="section-number-4">6.1.3.</span> 實作考量：**</h4>
 <div class="outline-text-4" id="text-6-1-3">
 <ul class="org-ul">
 <li>解 Riemann 問題通常不需完全精確，僅需近似解（approximate Riemann solvers）即可。</li>
@@ -1544,8 +1544,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </div>
 </div>
 </div>
-<div id="outline-container-org8ce2fd5" class="outline-3">
-<h3 id="org8ce2fd5"><span class="section-number-3">6.2.</span> 提升精度的方法（Toward Higher Order Accuracy）</h3>
+<div id="outline-container-org5a6026e" class="outline-3">
+<h3 id="org5a6026e"><span class="section-number-3">6.2.</span> 提升精度的方法（Toward Higher Order Accuracy）</h3>
 <div class="outline-text-3" id="text-6-2">
 <p>
 為了提升 Godunov 方法的精度，我們可以改採較高階的函數重建，例如：
@@ -1577,8 +1577,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </ul>
 </div>
 </div>
-<div id="outline-container-orgac7d745" class="outline-3">
-<h3 id="orgac7d745"><span class="section-number-3">6.3.</span> 說明補充：多維問題中的 CFL 條件**</h3>
+<div id="outline-container-org808937a" class="outline-3">
+<h3 id="org808937a"><span class="section-number-3">6.3.</span> 說明補充：多維問題中的 CFL 條件**</h3>
 <div class="outline-text-3" id="text-6-3">
 <p>
 在二維、三維問題中，不同方向皆有訊息傳遞速度，應取所有方向的最大波速來決定時間步：
@@ -1607,8 +1607,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </p>
 </div>
 </div>
-<div id="outline-container-org9712149" class="outline-3">
-<h3 id="org9712149"><span class="section-number-3">6.4.</span> 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</h3>
+<div id="outline-container-orgd84d596" class="outline-3">
+<h3 id="orgd84d596"><span class="section-number-3">6.4.</span> 非線性守恆律：以 Burgers' 方程為例（Nonlinear Conservation Law）</h3>
 <div class="outline-text-3" id="text-6-4">
 <p>
 線性方程的特性在於特徵線不交會，解為平移變化；而非線性守恆律的特點在於特徵線會交會，形成震波、激波等現象。
@@ -1634,8 +1634,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 \]
 </p>
 </div>
-<div id="outline-container-org1b95b10" class="outline-4">
-<h4 id="org1b95b10"><span class="section-number-4">6.4.1.</span> 特性與物理解釋：**</h4>
+<div id="outline-container-orgd9d1ae3" class="outline-4">
+<h4 id="orgd9d1ae3"><span class="section-number-4">6.4.1.</span> 特性與物理解釋：**</h4>
 <div class="outline-text-4" id="text-6-4-1">
 <ul class="org-ul">
 <li>初始速度場的高峰會以較快速度傳播，因此在某時刻會與較慢點交會，形成震波（shock）。</li>
@@ -1643,8 +1643,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </ul>
 </div>
 </div>
-<div id="outline-container-org676b043" class="outline-4">
-<h4 id="org676b043"><span class="section-number-4">6.4.2.</span> 解法：Godunov 方法的應用：**</h4>
+<div id="outline-container-orgadf020c" class="outline-4">
+<h4 id="orgadf020c"><span class="section-number-4">6.4.2.</span> 解法：Godunov 方法的應用：**</h4>
 <div class="outline-text-4" id="text-6-4-2">
 <p>
 對於此非線性守恆方程，我們可使用 Godunov 方法：
@@ -1682,8 +1682,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </ol>
 </div>
 </div>
-<div id="outline-container-orgf2e3f80" class="outline-4">
-<h4 id="orgf2e3f80"><span class="section-number-4">6.4.3.</span> 初始條件示例：**</h4>
+<div id="outline-container-orgc77d7d6" class="outline-4">
+<h4 id="orgc77d7d6"><span class="section-number-4">6.4.3.</span> 初始條件示例：**</h4>
 <div class="outline-text-4" id="text-6-4-3">
 <p>
 在 \([0,1]\) 區間上設：
@@ -1704,8 +1704,8 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </p>
 </div>
 </div>
-<div id="outline-container-org1b5eb32" class="outline-4">
-<h4 id="org1b5eb32"><span class="section-number-4">6.4.4.</span> 觀察重點：**</h4>
+<div id="outline-container-org35d3c5b" class="outline-4">
+<h4 id="org35d3c5b"><span class="section-number-4">6.4.4.</span> 觀察重點：**</h4>
 <div class="outline-text-4" id="text-6-4-4">
 <ul class="org-ul">
 <li>若用高階格式但無斜率限制器，容易產生振盪。</li>
@@ -1722,7 +1722,7 @@ Godunov 方法是有限體積法的一種核心演算法，由 S. K. Godunov 於
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Meng-Yu Lin</p>
-<p class="date">Created: 2026-06-14 日 10:29</p>
+<p class="date">Created: 2026-06-14 日 17:51</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
