@@ -1,0 +1,1246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-06-14 日 10:24 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fenton 直接迭代法計算梯形渠道正規水深</title>
+<meta name="author" content="Meng-Yu Lin" />
+<meta name="generator" content="Org Mode" />
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/code-copy.css"/>
+<link rel="stylesheet" type="text/css" href="src/readtheorg_theme/css/search.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/search.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/code-copy.js"></script>
+<script>
+  window.MathJax = {
+    tex: {
+      ams: {
+        multlineWidth: '85%'
+      },
+      tags: 'ams',
+      tagSide: 'right',
+      tagIndent: '.8em'
+    },
+    chtml: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    svg: {
+      scale: 1.0,
+      displayAlign: 'center',
+      displayIndent: '0em'
+    },
+    output: {
+      font: 'mathjax-modern',
+      displayOverflow: 'overflow'
+    }
+  };
+</script>
+
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+</head>
+<body>
+<div id="org-div-home-and-up">
+ <a accesskey="h" href="index.html"> UP </a>
+ |
+ <a accesskey="H" href="index.html"> HOME </a>
+</div><div id="content" class="content">
+<h1 class="title">Fenton 直接迭代法計算梯形渠道正規水深</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgdb023a8">1. 教學目標</a></li>
+<li><a href="#orgc97257f">2. 正規水深問題</a></li>
+<li><a href="#orgcd3be1f">3. Fenton 直接迭代法的想法</a></li>
+<li><a href="#orgba3d190">4. 為什麼這個方法通常會收斂很快？</a></li>
+<li><a href="#orgdae0659">5. 初始值的選取</a></li>
+<li><a href="#org93336e6">6. 梯形渠道的幾何關係</a></li>
+<li><a href="#org9f5fa19">7. 梯形渠道的 Fenton 迭代式</a></li>
+<li><a href="#orgf7c156c">8. 計算流程整理</a></li>
+<li><a href="#org905fd9f">9. 例題</a></li>
+<li><a href="#org246a232">10. 例題解答</a>
+<ul>
+<li><a href="#org30c418a">10.1. Step 1：寫出梯形渠道幾何式</a></li>
+<li><a href="#org1306253">10.2. Step 2：計算常數 \(C\)</a></li>
+<li><a href="#org8506a88">10.3. Step 3：寫出本題的迭代公式</a></li>
+<li><a href="#orgd563937">10.4. Step 4：選取初始值</a></li>
+<li><a href="#orgf3fb1c8">10.5. Step 5：逐步迭代</a></li>
+</ul>
+</li>
+<li><a href="#org490103b">11. 與 try and error 方法的比較</a></li>
+<li><a href="#orge1e1ef3">12. 學習提醒</a></li>
+<li><a href="#org1c471ad">13. 結論</a></li>
+<li><a href="#org562592f">14. 參考資料</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdb023a8" class="outline-2">
+<h2 id="orgdb023a8"><span class="section-number-2">1.</span> 教學目標</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+本講義說明如何使用 Fenton 所提出的直接迭代法，計算梯形渠道的正規水深
+（normal depth）。此方法是將 Manning 公式重新整理為固定點迭代形式：
+</p>
+
+<p>
+\[
+y_{i+1}=F(y_i).
+\]
+</p>
+
+<p>
+如此一來，只要給定初始值 \(y_0\)，便可重複代入同一公式，逐步求得正規水深。
+</p>
+
+<p>
+本講義使用下列符號：
+</p>
+
+<ul class="org-ul">
+<li>\(y\)：水深。</li>
+<li>\(y_n\)：正規水深。</li>
+<li>\(b\)：梯形渠道底寬。</li>
+<li>\(B\)：水面寬。</li>
+<li>\(m\)：單側邊坡，水平比垂直。</li>
+<li>\(A\)：通水面積。</li>
+<li>\(P\)：潤周。</li>
+<li>\(R\)：水力半徑。</li>
+<li>\(Q\)：流量。</li>
+<li>\(n\)：Manning 粗糙係數。</li>
+<li>\(S_0\)：底床坡度。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgc97257f" class="outline-2">
+<h2 id="orgc97257f"><span class="section-number-2">2.</span> 正規水深問題</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+對一均勻流而言，水深稱為正規水深 \(y_n\)。
+</p>
+
+<p>
+若已知：
+</p>
+
+<p>
+\[
+Q,\quad n,\quad S_0,
+\]
+</p>
+
+<p>
+以及渠道斷面幾何關係 \(A(y)\)、\(P(y)\)，則 Manning 公式可寫成
+</p>
+
+<p>
+\[
+Q=
+\frac{1}{n}AR^{2/3}S_0^{1/2}.
+\]
+</p>
+
+<p>
+其中
+</p>
+
+<p>
+\[
+R=\frac{A}{P}.
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+Q=
+\frac{1}{n}
+A
+\left(\frac{A}{P}\right)^{2/3}
+S_0^{1/2}.
+\]
+</p>
+
+<p>
+整理得
+</p>
+
+<p>
+\[
+Q=
+\frac{1}{n}
+\frac{A^{5/3}}{P^{2/3}}
+S_0^{1/2}.
+\]
+</p>
+
+<p>
+由於 \(A\) 與 \(P\) 都是水深 \(y\) 的函數，因此這是一個關於 \(y\) 的
+非線性方程。正規水深 \(y_n\) 就是使此方程成立的水深。
+</p>
+</div>
+</div>
+<div id="outline-container-orgcd3be1f" class="outline-2">
+<h2 id="orgcd3be1f"><span class="section-number-2">3.</span> Fenton 直接迭代法的想法</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Fenton 方法的關鍵是將 Manning 公式改寫成容易迭代的形式。
+</p>
+
+<p>
+先將通水面積 \(A\) 寫成
+</p>
+
+<p>
+\[
+A
+=
+y\left(\frac{A}{y}\right).
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+A^{5/3}
+=
+y^{5/3}
+\left(\frac{A}{y}\right)^{5/3}.
+\]
+</p>
+
+<p>
+代入 Manning 公式：
+</p>
+
+<p>
+\[
+Q=
+\frac{1}{n}
+\frac{
+y^{5/3}
+\left(\dfrac{A}{y}\right)^{5/3}
+}
+{P^{2/3}}
+S_0^{1/2}.
+\]
+</p>
+
+<p>
+將 \(y^{5/3}\) 移到左邊，可得
+</p>
+
+<p>
+\[
+\frac{Q}{y^{5/3}}
+=
+\frac{1}{n}
+S_0^{1/2}
+\frac{
+\left(\dfrac{A}{y}\right)^{5/3}
+}
+{P^{2/3}}.
+\]
+</p>
+
+<p>
+接著將 \(y\) 解出，得到
+</p>
+
+<p>
+\[
+y
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{P(y)^{2/5}}{A(y)/y}.
+\]
+</p>
+
+<p>
+因此可定義迭代公式：
+</p>
+
+<p>
+\[
+\boxed{
+y_{i+1}
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{P(y_i)^{2/5}}{A(y_i)/y_i}.
+}
+\]
+</p>
+
+<p>
+其中 \(y_{i}\) 是第 \(i\) 次的迭代值，這就是 Fenton 直接迭代法。
+</p>
+</div>
+</div>
+<div id="outline-container-orgba3d190" class="outline-2">
+<h2 id="orgba3d190"><span class="section-number-2">4.</span> 為什麼這個方法通常會收斂很快？</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+在許多渠道中，尤其是寬度相對水深較大的渠道，\(A/y\) 可以視為一種
+代表性寬度，而 \(P\) 也不會隨水深劇烈變化。
+</p>
+
+<p>
+因此，在
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{P(y_i)^{2/5}}{A(y_i)/y_i}
+\]
+</p>
+
+<p>
+中，右側除了常數項之外，隨 \(y_i\) 變化的部分通常變化較緩慢。
+這使得直接迭代法對一般梯形渠道常能快速收斂。
+</p>
+</div>
+</div>
+<div id="outline-container-orgdae0659" class="outline-2">
+<h2 id="orgdae0659"><span class="section-number-2">5.</span> 初始值的選取</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Fenton 建議先取一個代表性寬度，並用寬渠道近似估計初始水深。
+</p>
+
+<p>
+為避免與實際水面寬 \(B\) 混淆，本講義將初始估計用的代表性寬度記為
+</p>
+
+<p>
+\[
+B_{\mathrm{est}}.
+\]
+</p>
+
+<p>
+在寬渠道近似下：
+</p>
+
+<p>
+\[
+\frac{A}{y}\approx B_{\mathrm{est}},
+\]
+</p>
+
+<p>
+\[
+P\approx B_{\mathrm{est}}.
+\]
+</p>
+
+<p>
+將此近似代入 Fenton 迭代式，可得初始水深估計式：
+</p>
+
+<p>
+\[
+\boxed{
+y_0
+=
+\left(
+\frac{nQ}
+{B_{\mathrm{est}}\sqrt{S_0}}
+\right)^{3/5}.
+}
+\]
+</p>
+
+<p>
+若沒有更好的估計，可以先取
+</p>
+
+<p>
+\[
+B_{\mathrm{est}}=b.
+\]
+</p>
+
+<p>
+也就是用底寬作為代表性寬度。
+</p>
+</div>
+</div>
+<div id="outline-container-org93336e6" class="outline-2">
+<h2 id="org93336e6"><span class="section-number-2">6.</span> 梯形渠道的幾何關係</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+對梯形渠道，若底寬為 \(b\)，單側邊坡為 \(m\)，水深為 \(y\)，則水面寬為
+</p>
+
+<p>
+\[
+B=b+2my.
+\]
+</p>
+
+<p>
+通水面積為
+</p>
+
+<p>
+\[
+A=\frac{(b+B)y}{2}.
+\]
+</p>
+
+<p>
+由於
+</p>
+
+<p>
+\[
+B=b+2my,
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+A=by+my^2.
+\]
+</p>
+
+<p>
+也可寫成
+</p>
+
+<p>
+\[
+A=y(b+my).
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+\frac{A}{y}=b+my.
+\]
+</p>
+
+<p>
+潤周為
+</p>
+
+<p>
+\[
+P=b+2y\sqrt{1+m^2}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org9f5fa19" class="outline-2">
+<h2 id="org9f5fa19"><span class="section-number-2">7.</span> 梯形渠道的 Fenton 迭代式</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+將梯形渠道的幾何關係代入 Fenton 公式：
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{P(y_i)^{2/5}}{A(y_i)/y_i}.
+\]
+</p>
+
+<p>
+由於
+</p>
+
+<p>
+\[
+P(y_i)=b+2y_i\sqrt{1+m^2},
+\]
+</p>
+
+<p>
+且
+</p>
+
+<p>
+\[
+\frac{A(y_i)}{y_i}=b+my_i,
+\]
+</p>
+
+<p>
+所以梯形渠道的迭代式為
+</p>
+
+<p>
+\[
+\boxed{
+y_{i+1}
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{
+\left[b+2y_i\sqrt{1+m^2}\right]^{2/5}
+}
+{b+my_i}.
+}
+\]
+</p>
+
+<p>
+為簡化計算，可先定義常數
+</p>
+
+<p>
+\[
+C=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}.
+\]
+</p>
+
+<p>
+則
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+C
+\frac{
+\left[b+2y_i\sqrt{1+m^2}\right]^{2/5}
+}
+{b+my_i}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgf7c156c" class="outline-2">
+<h2 id="orgf7c156c"><span class="section-number-2">8.</span> 計算流程整理</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+使用一般計算機時，可按照下列步驟：
+</p>
+
+<ol class="org-ol">
+<li><p>
+寫出梯形渠道幾何式：
+</p>
+
+<p>
+\[
+   A=y(b+my),
+   \]
+</p>
+
+<p>
+\[
+   P=b+2y\sqrt{1+m^2}.
+   \]
+</p></li>
+
+<li><p>
+計算常數：
+</p>
+
+<p>
+\[
+   C=
+   \left(
+   \frac{nQ}{\sqrt{S_0}}
+   \right)^{3/5}.
+   \]
+</p></li>
+
+<li><p>
+寫出迭代式：
+</p>
+
+<p>
+\[
+   y_{i+1}
+   =
+   C
+   \frac{
+   \left[b+2y_i\sqrt{1+m^2}\right]^{2/5}
+   }
+   {b+my_i}.
+   \]
+</p></li>
+
+<li><p>
+選擇代表性寬度 \(B_{\mathrm{est}}\)，並計算初始值：
+</p>
+
+<p>
+\[
+   y_0
+   =
+   \left(
+   \frac{nQ}
+   {B_{\mathrm{est}}\sqrt{S_0}}
+   \right)^{3/5}.
+   \]
+</p></li>
+
+<li><p>
+若無其他資料，可先取
+</p>
+
+<p>
+\[
+   B_{\mathrm{est}}=b.
+   \]
+</p></li>
+
+<li>將 \(y_0\) 代入迭代式，求得 \(y_1\)。</li>
+
+<li>再將 \(y_1\) 代入迭代式，求得 \(y_2\)。</li>
+
+<li><p>
+重複計算：
+</p>
+
+<p>
+\[
+   y_0 \rightarrow y_1 \rightarrow y_2 \rightarrow y_3 \rightarrow \cdots
+   \]
+</p></li>
+
+<li><p>
+當相鄰兩次結果差異很小，例如
+</p>
+
+<p>
+\[
+   \vert y_{i+1}-y_i \vert < 0.001~\mathrm{m},
+   \]
+</p>
+
+<p>
+即可停止，並取該值為正規水深 \(y_n\)。
+</p></li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org905fd9f" class="outline-2">
+<h2 id="org905fd9f"><span class="section-number-2">9.</span> 例題</h2>
+<div class="outline-text-2" id="text-9">
+<p>
+一梯形渠道之底寬為
+</p>
+
+<p>
+\[
+b=3.0~\mathrm{m},
+\]
+</p>
+
+<p>
+邊坡為
+</p>
+
+<p>
+\[
+m=1.5,
+\]
+</p>
+
+<p>
+也就是水平：垂直為 \(1.5:1\)。渠道底床坡度為
+</p>
+
+<p>
+\[
+S_0=0.0016,
+\]
+</p>
+
+<p>
+Manning 粗糙係數為
+</p>
+
+<p>
+\[
+n=0.015,
+\]
+</p>
+
+<p>
+流量為
+</p>
+
+<p>
+\[
+Q=15.0~\mathrm{m^3/s}.
+\]
+</p>
+
+<p>
+試使用 Fenton 直接迭代法求正規水深 \(y_n\)。
+</p>
+</div>
+</div>
+<div id="outline-container-org246a232" class="outline-2">
+<h2 id="org246a232"><span class="section-number-2">10.</span> 例題解答</h2>
+<div class="outline-text-2" id="text-10">
+</div>
+<div id="outline-container-org30c418a" class="outline-3">
+<h3 id="org30c418a"><span class="section-number-3">10.1.</span> Step 1：寫出梯形渠道幾何式</h3>
+<div class="outline-text-3" id="text-10-1">
+<p>
+本題中
+</p>
+
+<p>
+\[
+b=3.0,
+\qquad
+m=1.5.
+\]
+</p>
+
+<p>
+水面寬為
+</p>
+
+<p>
+\[
+B=3.0+2(1.5)y,
+\]
+</p>
+
+<p>
+即
+</p>
+
+<p>
+\[
+B=3.0+3.0y.
+\]
+</p>
+
+<p>
+通水面積為
+</p>
+
+<p>
+\[
+A=y(b+my),
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+A=y(3.0+1.5y).
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+\frac{A}{y}=3.0+1.5y.
+\]
+</p>
+
+<p>
+潤周為
+</p>
+
+<p>
+\[
+P=b+2y\sqrt{1+m^2}.
+\]
+</p>
+
+<p>
+代入 \(b=3.0\)、\(m=1.5\)：
+</p>
+
+<p>
+\[
+P=3.0+2y\sqrt{1+1.5^2}.
+\]
+</p>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+\sqrt{1+1.5^2}
+=
+\sqrt{3.25}
+\approx 1.8028,
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+P=3.0+3.6056y.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org1306253" class="outline-3">
+<h3 id="org1306253"><span class="section-number-3">10.2.</span> Step 2：計算常數 \(C\)</h3>
+<div class="outline-text-3" id="text-10-2">
+<p>
+\[
+C=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}.
+\]
+</p>
+
+<p>
+代入
+</p>
+
+<p>
+\[
+n=0.015,
+\qquad
+Q=15.0,
+\qquad
+S_0=0.0016.
+\]
+</p>
+
+<p>
+因為
+</p>
+
+<p>
+\[
+\sqrt{S_0}=\sqrt{0.0016}=0.04,
+\]
+</p>
+
+<p>
+所以
+</p>
+
+<p>
+\[
+C=
+\left(
+\frac{0.015(15.0)}{0.04}
+\right)^{3/5}.
+\]
+</p>
+
+<p>
+\[
+C=(5.625)^{3/5}.
+\]
+</p>
+
+<p>
+計算得
+</p>
+
+<p>
+\[
+C\approx 2.8189.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-org8506a88" class="outline-3">
+<h3 id="org8506a88"><span class="section-number-3">10.3.</span> Step 3：寫出本題的迭代公式</h3>
+<div class="outline-text-3" id="text-10-3">
+<p>
+\[
+y_{i+1}
+=
+C
+\frac{
+\left[b+2y_i\sqrt{1+m^2}\right]^{2/5}
+}
+{b+my_i}.
+\]
+</p>
+
+<p>
+代入本題數值：
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+2.8189
+\frac{
+(3.0+3.6056y_i)^{2/5}
+}
+{3.0+1.5y_i}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgd563937" class="outline-3">
+<h3 id="orgd563937"><span class="section-number-3">10.4.</span> Step 4：選取初始值</h3>
+<div class="outline-text-3" id="text-10-4">
+<p>
+取代表性寬度為底寬：
+</p>
+
+<p>
+\[
+B_{\mathrm{est}}=b=3.0~\mathrm{m}.
+\]
+</p>
+
+<p>
+因此
+</p>
+
+<p>
+\[
+y_0
+=
+\left(
+\frac{nQ}
+{B_{\mathrm{est}}\sqrt{S_0}}
+\right)^{3/5}.
+\]
+</p>
+
+<p>
+代入：
+</p>
+
+<p>
+\[
+y_0
+=
+\left(
+\frac{0.015(15.0)}
+{3.0(0.04)}
+\right)^{3/5}.
+\]
+</p>
+
+<p>
+\[
+y_0
+=
+(1.875)^{3/5}.
+\]
+</p>
+
+<p>
+計算得
+</p>
+
+<p>
+\[
+y_0\approx 1.4581~\mathrm{m}.
+\]
+</p>
+</div>
+</div>
+<div id="outline-container-orgf3fb1c8" class="outline-3">
+<h3 id="orgf3fb1c8"><span class="section-number-3">10.5.</span> Step 5：逐步迭代</h3>
+<div class="outline-text-3" id="text-10-5">
+<p>
+使用
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+2.8189
+\frac{
+(3.0+3.6056y_i)^{2/5}
+}
+{3.0+1.5y_i}.
+\]
+</p>
+
+<p>
+由
+</p>
+
+<p>
+\[
+y_0=1.4581~\mathrm{m}
+\]
+</p>
+
+<p>
+開始計算。
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption class="t-above"><span class="table-number">Table 1:</span> Fenton 直接迭代法計算正規水深</caption>
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">迭代次數 \(i\)</th>
+<th scope="col" class="org-right">\(y_i\) (m)</th>
+<th scope="col" class="org-right">\(y_{i+1}\) (m)</th>
+<th scope="col" class="org-right">\(\vert y_{i+1}-y_i \vert\) (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">0</td>
+<td class="org-right">1.4581</td>
+<td class="org-right">1.2644</td>
+<td class="org-right">0.1938</td>
+</tr>
+
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">1.2644</td>
+<td class="org-right">1.2929</td>
+<td class="org-right">0.0285</td>
+</tr>
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">1.2929</td>
+<td class="org-right">1.2886</td>
+<td class="org-right">0.0043</td>
+</tr>
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">1.2886</td>
+<td class="org-right">1.2893</td>
+<td class="org-right">0.0006</td>
+</tr>
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">1.2893</td>
+<td class="org-right">1.2892</td>
+<td class="org-right">0.0001</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+當
+</p>
+
+<p>
+\[
+\vert y_{i+1}-y_i \vert <0.001~\mathrm{m}
+\]
+</p>
+
+<p>
+時，可停止迭代。
+</p>
+
+<p>
+因此本題正規水深為
+</p>
+
+<p>
+\[
+\boxed{
+y_n \approx 1.289~\mathrm{m}
+}
+\]
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org490103b" class="outline-2">
+<h2 id="org490103b"><span class="section-number-2">11.</span> 與 try and error 方法的比較</h2>
+<div class="outline-text-2" id="text-11">
+<p>
+前一份講義中的 try and error 方法是：
+</p>
+
+<p>
+\[
+\text{猜 } y
+\rightarrow
+\text{算 } A,P,R
+\rightarrow
+\text{算 } Q_M
+\rightarrow
+\text{比較 } Q_M \text{ 與 } Q.
+\]
+</p>
+
+<p>
+若
+</p>
+
+<p>
+\[
+Q_M<Q,
+\]
+</p>
+
+<p>
+則表示水深太小；若
+</p>
+
+<p>
+\[
+Q_M>Q,
+\]
+</p>
+
+<p>
+則表示水深太大。接著需要靠人工判斷逐步縮小水深範圍。
+</p>
+
+<p>
+Fenton 方法則是：
+</p>
+
+<p>
+\[
+\text{給定 } y_i
+\rightarrow
+\text{代入迭代式}
+\rightarrow
+\text{得到 } y_{i+1}.
+\]
+</p>
+
+<p>
+因此它不需要每一步判斷水深太大或太小，而是直接重複使用同一個公式，
+直到相鄰兩次的結果幾乎相同。
+</p>
+</div>
+</div>
+<div id="outline-container-orge1e1ef3" class="outline-2">
+<h2 id="orge1e1ef3"><span class="section-number-2">12.</span> 學習提醒</h2>
+<div class="outline-text-2" id="text-12">
+<ol class="org-ol">
+<li>初始估計式中的 \(B_{\mathrm{est}}\) 是代表性寬度，不一定等於實際水面寬。</li>
+
+<li>Fenton 方法是固定點迭代法。對一般梯形渠道通常收斂很快，但仍應檢查
+\[
+   \vert y_{i+1}-y_i \vert
+   \]
+是否逐漸變小。</li>
+
+<li>若迭代結果振盪或發散，應改用 try and error、二分法或 Newton 法等其他數值方法。</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org1c471ad" class="outline-2">
+<h2 id="org1c471ad"><span class="section-number-2">13.</span> 結論</h2>
+<div class="outline-text-2" id="text-13">
+<p>
+Fenton 直接迭代法將 Manning 正規水深問題整理成
+</p>
+
+<p>
+\[
+y_{i+1}=F(y_i),
+\]
+</p>
+
+<p>
+其中對梯形渠道：
+</p>
+
+<p>
+\[
+y_{i+1}
+=
+\left(
+\frac{nQ}{\sqrt{S_0}}
+\right)^{3/5}
+\frac{
+\left[b+2y_i\sqrt{1+m^2}\right]^{2/5}
+}
+{b+my_i}.
+\]
+</p>
+
+<p>
+此方法的優點是計算流程固定，適合使用一般計算機反覆代入。
+</p>
+</div>
+</div>
+<div id="outline-container-org562592f" class="outline-2">
+<h2 id="org562592f"><span class="section-number-2">14.</span> 參考資料</h2>
+<div class="outline-text-2" id="text-14">
+<ul class="org-ul">
+<li>John D. Fenton, <i>River Engineering</i>, Section 2.8, Computation of normal flow.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Meng-Yu Lin</p>
+<p class="date">Created: 2026-06-14 日 10:24</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
